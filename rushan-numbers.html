@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Laddus Zahlen-Abenteuer 🔢🌈</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", "Tahoma", "Arial", sans-serif;
+            min-height: 100vh;
+            color: #263238;
+
+            background:
+                radial-gradient(circle at 10% 10%, #fee2e2 0%, transparent 35%),
+                radial-gradient(circle at 90% 15%, #fef3c7 0%, transparent 35%),
+                radial-gradient(circle at 50% 90%, #dbeafe 0%, transparent 35%),
+                linear-gradient(135deg, #fff5f5, #fffbeb);
+
+            padding: 18px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        .top {
+            text-align: center;
+            padding: 28px 10px 22px;
+        }
+
+        .rocket {
+            font-size: 62px;
+            margin-bottom: 10px;
+        }
+
+        .top h1 {
+            color: #dc2626;
+            font-size: clamp(32px, 6vw, 52px);
+            font-weight: 900;
+        }
+
+        .top h2 {
+            margin-top: 8px;
+            color: #ea580c;
+            font-size: 23px;
+        }
+
+        .top p {
+            color: #687786;
+            margin-top: 11px;
+            line-height: 1.6;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 11px 18px;
+            border-radius: 25px;
+            background: white;
+            border: 2px solid #fee2e2;
+            color: #dc2626;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .back-home:hover {
+            background: #dc2626;
+            color: white;
+            border-color: #dc2626;
+        }
+
+        /* MAGIC AREA */
+        .magic-area {
+            background: linear-gradient(135deg, #dc2626, #ea580c, #f59e0b);
+            color: white;
+            border-radius: 27px;
+            padding: 32px;
+            margin: 18px 0 32px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(220,38,38,0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .magic-area::before {
+            content: "🌈";
+            position: absolute;
+            left: 8%;
+            top: 20px;
+            font-size: 32px;
+            opacity: 0.5;
+        }
+
+        .magic-area::after {
+            content: "🔢";
+            position: absolute;
+            right: 8%;
+            bottom: 20px;
+            font-size: 30px;
+            opacity: 0.5;
+        }
+
+        .magic-area h2 {
+            color: #fef3c7;
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .magic-area p {
+            color: #fff7ed;
+            line-height: 1.65;
+            max-width: 720px;
+            margin: 0 auto 18px;
+        }
+
+        .brave-button {
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(135deg, #facc15, #fbbf24);
+            color: #7c2d12;
+            padding: 16px 32px;
+            border-radius: 16px;
+            font-size: 21px;
+            font-weight: 900;
+            box-shadow: 0 7px 0 #b45309, 0 12px 25px rgba(0,0,0,0.2);
+            transition: 0.15s;
+        }
+
+        .brave-button:hover { transform: translateY(-2px); }
+        .brave-button:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 #b45309, 0 5px 12px rgba(0,0,0,0.2);
+        }
+
+        #brave-message {
+            min-height: 28px;
+            margin-top: 18px;
+            color: #fef3c7;
+            font-weight: 800;
+            font-size: 17px;
+        }
+
+        /* SCORE */
+        .score-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 13px;
+            margin-bottom: 30px;
+        }
+
+        .score-card {
+            background: white;
+            border-radius: 17px;
+            padding: 15px 23px;
+            min-width: 150px;
+            text-align: center;
+            box-shadow: 0 7px 20px rgba(40,60,80,0.07);
+            border: 2px solid #fee2e2;
+        }
+
+        .score-card .number {
+            display: block;
+            color: #dc2626;
+            font-size: 27px;
+            font-weight: 900;
+        }
+
+        .score-card .label {
+            display: block;
+            color: #7b8794;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        /* CATEGORY SELECTOR */
+        .category-selector {
+            background: white;
+            border-radius: 22px;
+            padding: 24px;
+            margin-bottom: 26px;
+            box-shadow: 0 8px 22px rgba(40,60,80,0.07);
+        }
+
+        .category-selector h3 {
+            color: #dc2626;
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 22px;
+        }
+
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .cat-btn {
+            border: 3px solid;
+            background: white;
+            border-radius: 18px;
+            padding: 14px 20px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 16px;
+            transition: 0.2s;
+            min-width: 140px;
+        }
+
+        .cat-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+        }
+
+        .cat-btn.active {
+            color: white;
+        }
+
+        .cat-btn.learn { border-color: #dc2626; color: #991b1b; }
+        .cat-btn.learn.active { background: #dc2626; }
+        .cat-btn.count { border-color: #f59e0b; color: #92400e; }
+        .cat-btn.count.active { background: #f59e0b; }
+        .cat-btn.add { border-color: #10b981; color: #065f46; }
+        .cat-btn.add.active { background: #10b981; }
+        .cat-btn.compare { border-color: #8b5cf6; color: #5b21b6; }
+        .cat-btn.compare.active { background: #8b5cf6; }
+        .cat-btn.songs { border-color: #3b82f6; color: #1e40af; }
+        .cat-btn.songs.active { background: #3b82f6; }
+
+        /* CATEGORY ROOMS */
+        .category-room {
+            display: none;
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 10px 30px rgba(40,60,80,0.08);
+        }
+
+        .category-room.active { display: block; }
+
+        .room-header {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .room-header .room-icon {
+            font-size: 52px;
+            margin-bottom: 8px;
+        }
+
+        .room-header h2 {
+            color: #dc2626;
+            font-size: 27px;
+            margin-bottom: 6px;
+        }
+
+        .room-header p {
+            color: #718096;
+            font-size: 15px;
+        }
+
+        /* NUMBER GRID */
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .number-card {
+            border-radius: 18px;
+            padding: 18px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 3px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            color: white;
+            font-weight: 900;
+        }
+
+        .number-card:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .number-card .big-number {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .number-card .number-word {
+            font-size: 15px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .number-card .number-emoji {
+            font-size: 14px;
+            display: block;
+            line-height: 1.3;
+            word-wrap: break-word;
+        }
+
+        /* QUIZ BOX */
+        .quiz-box {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            border: 3px solid #fca5a5;
+            border-radius: 22px;
+            padding: 32px;
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        .quiz-box h3 {
+            color: #dc2626;
+            font-size: 22px;
+            margin-bottom: 14px;
+        }
+
+        .quiz-display {
+            font-size: 40px;
+            margin: 18px 0;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .quiz-question {
+            color: #718096;
+            font-size: 17px;
+            margin-bottom: 18px;
+            font-weight: 600;
+        }
+
+        .quiz-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .quiz-btn {
+            border: 3px solid #dc2626;
+            background: white;
+            color: #991b1b;
+            border-radius: 16px;
+            padding: 14px 22px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 20px;
+            transition: 0.2s;
+            min-width: 80px;
+        }
+
+        .quiz-btn:hover {
+            background: #dc2626;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .quiz-btn.big {
+            font-size: 28px;
+            padding: 18px 28px;
+            min-width: 100px;
+        }
+
+        #quiz-feedback {
+            min-height: 34px;
+            margin-top: 20px;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .next-btn {
+            border: none;
+            background: #dc2626;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 13px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 14px;
+            transition: 0.2s;
+        }
+
+        .next-btn:hover {
+            background: #991b1b;
+            transform: translateY(-2px);
+        }
+
+        /* ADDITION DISPLAY */
+        .add-display {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border: 3px solid #10b981;
+            border-radius: 22px;
+            padding: 28px;
+            text-align: center;
+            margin: 18px 0;
+        }
+
+        .add-equation {
+            font-size: clamp(32px, 6vw, 50px);
+            font-weight: 900;
+            color: #065f46;
+            margin: 14px 0;
+        }
+
+        .add-visual {
+            font-size: 32px;
+            margin: 14px 0;
+            line-height: 1.5;
+        }
+
+        .add-visual .plus {
+            color: #dc2626;
+            font-weight: 900;
+            margin: 0 12px;
+        }
+
+        .add-visual .equals {
+            color: #10b981;
+            font-weight: 900;
+            margin: 0 12px;
+        }
+
+        /* COMPARE BOX */
+        .compare-box {
+            background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+            border: 3px solid #8b5cf6;
+            border-radius: 22px;
+            padding: 28px;
+            text-align: center;
+            margin: 18px 0;
+        }
+
+        .compare-display {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 18px 0;
+        }
+
+        .compare-side {
+            background: white;
+            border-radius: 18px;
+            padding: 18px;
+            min-width: 150px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .compare-emoji {
+            font-size: 32px;
+            margin: 8px 0;
+            line-height: 1.3;
+        }
+
+        .compare-number {
+            font-size: 36px;
+            font-weight: 900;
+            color: #5b21b6;
+            margin-top: 8px;
+        }
+
+        .compare-vs {
+            font-size: 32px;
+            font-weight: 900;
+            color: #8b5cf6;
+        }
+
+        .compare-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .compare-btn {
+            border: 3px solid #8b5cf6;
+            background: white;
+            color: #5b21b6;
+            border-radius: 16px;
+            padding: 14px 24px;
+            cursor: pointer;
+            font-weight: 900;
+            font-size: 28px;
+            transition: 0.2s;
+            min-width: 80px;
+        }
+
+        .compare-btn:hover {
+            background: #8b5cf6;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* SONG CARD */
+        .song-card {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border: 3px solid #3b82f6;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+
+        .song-card h4 {
+            color: #1e40af;
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .song-lyrics {
+            background: white;
+            border-radius: 14px;
+            padding: 18px;
+            font-size: 17px;
+            line-height: 1.9;
+            color: #374151;
+            font-style: italic;
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .song-lyrics .line {
+            margin-bottom: 6px;
+        }
+
+        .sing-button {
+            border: none;
+            background: #3b82f6;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 14px;
+            transition: 0.2s;
+        }
+
+        .sing-button:hover {
+            background: #1e40af;
+            transform: translateY(-2px);
+        }
+
+        /* TEACHER TIP */
+        .teacher-tip {
+            background: #fff9db;
+            border-left: 5px solid #f59f00;
+            border-radius: 10px;
+            padding: 18px;
+            margin-top: 24px;
+            color: #6b5b20;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .teacher-tip h4 {
+            color: #b9770e;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .teacher-tip ul {
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+
+        .teacher-tip li {
+            margin-bottom: 8px;
+        }
+
+        /* ACHIEVEMENTS */
+        .achievements {
+            background: white;
+            border-radius: 22px;
+            padding: 26px;
+            margin-top: 28px;
+            box-shadow: 0 8px 22px rgba(40,60,80,0.07);
+        }
+
+        .achievements h3 {
+            color: #dc2626;
+            text-align: center;
+            margin-bottom: 18px;
+            font-size: 22px;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
+        }
+
+        .achievement {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 18px;
+            text-align: center;
+            border: 2px solid #e5edf5;
+            opacity: 0.5;
+            transition: 0.3s;
+        }
+
+        .achievement.unlocked {
+            opacity: 1;
+            border-color: #fbbf24;
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+        }
+
+        .achievement .badge-icon {
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .achievement h4 {
+            color: #dc2626;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .achievement p {
+            color: #718096;
+            font-size: 12px;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 42px 10px 22px;
+            color: #8795a1;
+            font-size: 14px;
+        }
+
+        footer strong { color: #dc2626; }
+
+        /* MOBILE */
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .magic-area { padding: 26px 18px; }
+            .category-room { padding: 22px 15px; }
+            .quiz-btn { min-width: 70px; padding: 12px 16px; font-size: 18px; }
+            .cat-btn { min-width: 120px; font-size: 14px; padding: 12px 14px; }
+            .number-grid { grid-template-columns: repeat(3, 1fr); }
+            .compare-display { flex-direction: column; }
+            .add-visual { font-size: 24px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <header class="top">
+        <div class="rocket">🔢🌈</div>
+        <h1>Laddus Zahlen-Abenteuer</h1>
+        <h2>Zählen · Rechnen · Vergleichen</h2>
+        <p>
+            Zahlen sind überall! Lass uns gemeinsam zählen!<br>
+            Eins, zwei, drei ... los geht's! ⭐
+        </p>
+        <a href="rushan.html" class="back-home">← Zurück zu Laddus Welt</a>
+    </header>
+
+    <!-- MAGIC BRAVE BUTTON -->
+    <section class="magic-area">
+        <h2>🦸‍♂️ Der mutige Prinz Laddu</h2>
+        <p>
+            Erinnerst du dich? Du bist so mutig!
+            Und jetzt lernst du auch noch Zahlen!
+        </p>
+        <p><strong>Eins · Zwei · Drei · MUTIG!</strong></p>
+        <button class="brave-button" onclick="activateBrave()">🌟 ICH BIN MUTIG!</button>
+        <div id="brave-message">Dein Mut wartet auf dich ... ✨</div>
+    </section>
+
+    <!-- SCORE -->
+    <div class="score-row">
+        <div class="score-card">
+            <span class="number" id="total-stars">0 ⭐</span>
+            <span class="label">Deine Sterne</span>
+        </div>
+        <div class="score-card">
+            <span class="number" id="today-correct">0</span>
+            <span class="label">Heute richtig</span>
+        </div>
+        <div class="score-card">
+            <span class="number" id="streak">0 🔥</span>
+            <span class="label">Serie</span>
+        </div>
+    </div>
+
+    <!-- CATEGORY SELECTOR -->
+    <section class="category-selector">
+        <h3>🎯 Was möchtest du heute machen?</h3>
+        <div class="category-buttons">
+            <button class="cat-btn learn active" id="learn-btn" onclick="openCategory('learn-room')">🔢 Zahlen 1-20</button>
+            <button class="cat-btn count" id="count-btn" onclick="openCategory('count-room')">🎯 Zählen</button>
+            <button class="cat-btn add" id="add-btn" onclick="openCategory('add-room')">➕ Mini-Rechnen</button>
+            <button class="cat-btn compare" id="compare-btn" onclick="openCategory('compare-room')">⚖️ Vergleichen</button>
+            <button class="cat-btn songs" id="songs-btn" onclick="openCategory('songs-room')">🎵 Zahlenlieder</button>
+        </div>
+    </section>
+
+    <!-- LEARN ROOM -->
+    <section id="learn-room" class="category-room active">
+        <div class="room-header">
+            <div class="room-icon">🔢</div>
+            <h2>Zahlen von 1 bis 20</h2>
+            <p>Klicke auf eine Zahl und lerne sie!</p>
+        </div>
+
+        <div class="number-grid" id="number-grid">
+            <!-- Wird per JavaScript gefüllt -->
+        </div>
+
+        <div class="quiz-box">
+            <h3>🎯 Zahlen-Quiz</h3>
+            <div class="quiz-question">Wie viele siehst du?</div>
+            <div class="quiz-display" id="count-display">🍎🍎🍎</div>
+            <div class="quiz-options" id="count-options"></div>
+            <div id="count-feedback"></div>
+            <button class="next-btn" onclick="generateCountQuiz()">Nächste Frage →</button>
+        </div>
+
+        <div class="teacher-tip">
+            <h4>💡 Tipp für Mama und Papa</h4>
+            <ul>
+                <li>Zählt <strong>alles</strong> im Alltag: Treppen, Äpfel, Autos, Spielzeug.</li>
+                <li>Zeigt mit den Fingern: „Zeig mal <strong>fünf</strong>!"</li>
+                <li>Singt: „<strong>Eins, zwei, drei, vier, fünf, sechs, sieben</strong> ..."</li>
+                <li>Zählt rückwärts: „<strong>Zehn, neun, acht ... Start!</strong>" 🚀</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- COUNT ROOM -->
+    <section id="count-room" class="category-room">
+        <div class="room-header">
+            <div class="room-icon">🎯</div>
+            <h2>Zählen lernen</h2>
+            <p>Wie viele Dinge siehst du?</p>
+        </div>
+
+        <div class="quiz-box">
+            <h3>🎯 Zähl-Quiz</h3>
+            <div class="quiz-question">Zähle genau und wähle die richtige Zahl!</div>
+            <div class="quiz-display" id="count-quiz-display">🌟🌟🌟🌟🌟</div>
+            <div class="quiz-options" id="count-quiz-options"></div>
+            <div id="count-quiz-feedback"></div>
+            <button class="next-btn" onclick="generateCountQuiz2()">Nächste Frage →</button>
+        </div>
+
+        <div class="teacher-tip">
+            <h4>💡 Tipp für Mama und Papa</h4>
+            <ul>
+                <li>Lasst Laddu <strong>laut mitzählen</strong>: „Eins, zwei, drei ..."</li>
+                <li>Zeigt mit dem Finger auf jedes Objekt beim Zählen.</li>
+                <li>„<strong>Wie viele Sterne</strong> siehst du? Zähle mal!"</li>
+                <li>Macht es <strong>spielerisch</strong> - mit Keksen, Bausteinen oder Spielzeug.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ADDITION ROOM -->
+    <section id="add-room" class="category-room">
+        <div class="room-header">
+            <div class="room-icon">➕</div>
+            <h2>Mini-Rechnen</h2>
+            <p>Wie viele sind es zusammen?</p>
+        </div>
+
+        <div class="add-display">
+            <div class="quiz-question">Rechne zusammen!</div>
+            <div class="add-visual" id="add-visual">
+                🍎🍎 <span class="plus">+</span> 🍎 <span class="equals">=</span> ❓
+            </div>
+            <div class="add-equation" id="add-equation">2 + 1 = ?</div>
+            <div class="quiz-options" id="add-options"></div>
+            <div id="add-feedback"></div>
+            <button class="next-btn" onclick="generateAddQuiz()">Nächste Aufgabe →</button>
+        </div>
+
+        <div class="teacher-tip">
+            <h4>💡 Tipp für Mama und Papa</h4>
+            <ul>
+                <li>Fangt mit <strong>ganz kleinen Zahlen</strong> an: 1+1, 2+1, 1+2.</li>
+                <li>Benutzt <strong>reale Gegenstände</strong>: „Zwei Kekse + ein Keks = ?"</li>
+                <li>Zeigt mit den <strong>Fingern</strong>: „Zwei Finger hier, einer dort - zähl zusammen!"</li>
+                <li>„<strong>Was ist mehr?</strong> Was ist weniger?" - das ist auch Rechnen!</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- COMPARE ROOM -->
+    <section id="compare-room" class="category-room">
+        <div class="room-header">
+            <div class="room-icon">⚖️</div>
+            <h2>Vergleichen</h2>
+            <p>Wo sind mehr? Wo sind weniger?</p>
+        </div>
+
+        <div class="compare-box">
+            <div class="quiz-question">Was ist mehr?</div>
+            <div class="compare-display">
+                <div class="compare-side">
+                    <div class="compare-emoji" id="left-emoji">🍎🍎</div>
+                    <div class="compare-number" id="left-number">2</div>
+                </div>
+                <div class="compare-vs">VS</div>
+                <div class="compare-side">
+                    <div class="compare-emoji" id="right-emoji">🍎🍎🍎🍎</div>
+                    <div class="compare-number" id="right-number">4</div>
+                </div>
+            </div>
+            <div class="compare-buttons">
+                <button class="compare-btn" onclick="checkCompare('left')">← Links</button>
+                <button class="compare-btn" onclick="checkCompare('equal')">= Gleich</button>
+                <button class="compare-btn" onclick="checkCompare('right')">Rechts →</button>
+            </div>
+            <div id="compare-feedback"></div>
+            <button class="next-btn" onclick="generateCompareQuiz()">Nächste Frage →</button>
+        </div>
+
+        <div class="teacher-tip">
+            <h4>💡 Tipp für Mama und Papa</h4>
+            <ul>
+                <li>„<strong>Wo sind mehr</strong> Kekse? Hier oder da?"</li>
+                <li>„Wer hat <strong>mehr Bausteine</strong>?"</li>
+                <li>„Ist das <strong>gleich viel</strong> oder unterschiedlich?"</li>
+                <li>Benutzt Symbole: <strong>&lt; (kleiner), &gt; (größer), = (gleich)</strong></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SONGS ROOM -->
+    <section id="songs-room" class="category-room">
+        <div class="room-header">
+            <div class="room-icon">🎵</div>
+            <h2>Zahlenlieder</h2>
+            <p>Sing mit und lerne die Zahlen!</p>
+        </div>
+
+        <div class="song-card">
+            <h4>🔢 Eins, zwei, drei, vier, fünf</h4>
+            <div class="song-lyrics">
+                <div class="line">Eins, zwei, drei, vier, fünf,</div>
+                <div class="line">sechs, sieben, acht, neun, aus!</div>
+                <div class="line">Alle Kinder lernen lesen,</div>
+                <div class="line">Laddu ist auch schon dabei!</div>
+            </div>
+            <button class="sing-button" onclick="singSong('count')">🎤 Mitsingen!</button>
+        </div>
+
+        <div class="song-card">
+            <h4>🦇 Zehn kleine Fledermäuse</h4>
+            <div class="song-lyrics">
+                <div class="line">Zehn kleine Fledermäuse,</div>
+                <div class="line">fliegen durch das Haus.</div>
+                <div class="line">Eine flog ins Bett hinein,</div>
+                <div class="line">da waren's nur noch neun!</div>
+                <div class="line">...</div>
+            </div>
+            <button class="sing-button" onclick="singSong('bats')">🎤 Mitsingen!</button>
+        </div>
+
+        <div class="song-card">
+            <h4>🐘 Fünf kleine Entchen</h4>
+            <div class="song-lyrics">
+                <div class="line">Fünf kleine Entchen schwammen im See,</div>
+                <div class="line">schwammen im See, tief blau und schön.</div>
+                <div class="line">Eins kam heraus, da rief es: „Quack!"</div>
+                <div class="line">Und alle Entchen kamen auch!</div>
+            </div>
+            <button class="sing-button" onclick="singSong('ducks')">🎤 Mitsingen!</button>
+        </div>
+
+        <div class="song-card">
+            <h4>🚀 Zehn kleine Raketen</h4>
+            <div class="song-lyrics">
+                <div class="line">Zehn, neun, acht, sieben, sechs,</div>
+                <div class="line">fünf, vier, drei, zwei, eins -</div>
+                <div class="line">START! 🚀</div>
+            </div>
+            <button class="sing-button" onclick="singSong('rocket')">🎤 Mitsingen!</button>
+        </div>
+
+        <div class="teacher-tip">
+            <h4>💡 Tipp für Mama und Papa</h4>
+            <ul>
+                <li>Singt die Lieder <strong>jeden Tag</strong> - am besten mit Gesten!</li>
+                <li>Zeigt mit den Fingern die Zahlen beim Singen.</li>
+                <li>„<strong>Rückwärts zählen</strong>" ist super für den Start einer Rakete! 🚀</li>
+                <li>Erfindet eigene Zähl-Lieder mit Laddus Namen!</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section class="achievements">
+        <h3>🏆 Laddus Zahlen-Erfolge</h3>
+        <div class="achievement-grid">
+            <div class="achievement" id="first-star">
+                <div class="badge-icon">⭐</div>
+                <h4>Erste Zahl</h4>
+                <p>Erste Aufgabe gelöst!</p>
+            </div>
+            <div class="achievement" id="five-correct">
+                <div class="badge-icon">🎯</div>
+                <h4>5 Richtige</h4>
+                <p>5 Aufgaben geschafft!</p>
+            </div>
+            <div class="achievement" id="ten-correct">
+                <div class="badge-icon">🚀</div>
+                <h4>10 Richtige</h4>
+                <p>10 Aufgaben richtig!</p>
+            </div>
+            <div class="achievement" id="all-rooms">
+                <div class="badge-icon">🌟</div>
+                <h4>Zahlen-Meister</h4>
+                <p>Alle 5 Bereiche besucht!</p>
+            </div>
+            <div class="achievement" id="singer">
+                <div class="badge-icon">🎤</div>
+                <h4>Sänger</h4>
+                <p>Ein Lied gesungen!</p>
+            </div>
+            <div class="achievement" id="twenty-stars">
+                <div class="badge-icon">🏆</div>
+                <h4>20 Sterne</h4>
+                <p>20 Sterne gesammelt!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>🔢 <strong>Laddu</strong>, du zählst wie ein kleiner Mathe-Star! ❤️</p>
+        <p style="margin-top: 9px;">Mama Tabassum & Papa Farhad ❤️</p>
+    </footer>
+
+</div>
+
+<script>
+    /* ========================================================
+       GLOBAL DATA
+    ========================================================= */
+    let totalStars = 0;
+    let todayCorrect = 0;
+    let streak = 0;
+    let roomsVisited = new Set();
+
+    let currentCompareAnswer = "";
+
+    /* ========================================================
+       NUMBER DATA (1-20)
+    ========================================================= */
+    const numbersData = [
+        { num: 1, word: "Eins", emoji: "🍎" },
+        { num: 2, word: "Zwei", emoji: "🍎🍎" },
+        { num: 3, word: "Drei", emoji: "🍎🍎🍎" },
+        { num: 4, word: "Vier", emoji: "🍎🍎🍎🍎" },
+        { num: 5, word: "Fünf", emoji: "🖐️" },
+        { num: 6, word: "Sechs", emoji: "🎲" },
+        { num: 7, word: "Sieben", emoji: "🌈" },
+        { num: 8, word: "Acht", emoji: "🐙" },
+        { num: 9, word: "Neun", emoji: "🎈🎈🎈🎈🎈🎈🎈🎈🎈" },
+        { num: 10, word: "Zehn", emoji: "👐" },
+        { num: 11, word: "Elf", emoji: "⚽⚽⚽⚽⚽⚽⚽⚽⚽⚽⚽" },
+        { num: 12, word: "Zwölf", emoji: "🕛" },
+        { num: 13, word: "Dreizehn", emoji: "🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀🍀" },
+        { num: 14, word: "Vierzehn", emoji: "❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️" },
+        { num: 15, word: "Fünfzehn", emoji: "⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐" },
+        { num: 16, word: "Sechzehn", emoji: "🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸" },
+        { num: 17, word: "Siebzehn", emoji: "🎵🎵🎵🎵🎵🎵🎵🎵🎵🎵🎵🎵🎵🎵🎵🎵🎵" },
+        { num: 18, word: "Achtzehn", emoji: "🌺🌺🌺🌺🌺🌺🌺🌺🌺🌺🌺🌺🌺🌺🌺🌺🌺🌺" },
+        { num: 19, word: "Neunzehn", emoji: "🎁🎁🎁🎁🎁🎁🎁🎁🎁🎁🎁🎁🎁🎁🎁🎁🎁🎁🎁" },
+        { num: 20, word: "Zwanzig", emoji: "👏👏👏👏👏👏👏👏👏👏👏👏👏👏👏👏👏👏👏👏" }
+    ];
+
+    /* ========================================================
+       INIT NUMBER GRID
+    ========================================================= */
+    function initNumberGrid() {
+        const grid = document.getElementById("number-grid");
+        const colors = [
+            "#ef4444", "#f97316", "#f59e0b", "#eab308", "#84cc16",
+            "#22c55e", "#10b981", "#14b8a6", "#06b6d4", "#0ea5e9",
+            "#3b82f6", "#6366f1", "#8b5cf6", "#a855f7", "#d946ef",
+            "#ec4899", "#f43f5e", "#dc2626", "#ea580c", "#ca8a04"
+        ];
+        
+        numbersData.forEach((item, index) => {
+            const card = document.createElement("div");
+            card.className = "number-card";
+            card.style.background = `linear-gradient(135deg, ${colors[index]}, ${colors[(index+3) % colors.length]})`;
+            card.innerHTML = `
+                <span class="big-number">${item.num}</span>
+                <span class="number-word">${item.word}</span>
+                <span class="number-emoji">${item.emoji}</span>
+            `;
+            card.onclick = () => learnNumber(item.num, item.word);
+            grid.appendChild(card);
+        });
+    }
+
+    function learnNumber(num, word) {
+        totalStars++;
+        updateScore();
+        alert(num + " = " + word + "! ⭐");
+        checkAchievements();
+    }
+
+    /* ========================================================
+       BRAVE BUTTON
+    ========================================================= */
+    function activateBrave() {
+        const message = document.getElementById("brave-message");
+        const messages = [
+            "🦸‍♂️ DU BIST MUTIG! Wie Prinz Laddu!",
+            "🌈 Laddu, du schaffst alles!",
+            "💪 Mut bedeutet: Ich versuche es trotzdem!",
+            "🚀 Unser kleiner Held ist bereit!",
+            "❤️ Papa ist stolz auf dich!",
+            "🔢 Zahlen sind toll mit dir!"
+        ];
+        const random = messages[Math.floor(Math.random() * messages.length)];
+        message.innerText = random;
+        setTimeout(() => {
+            message.innerText = "✨ Mutig, fröhlich und neugierig – das bist du!";
+        }, 3500);
+    }
+
+    /* ========================================================
+       CATEGORY SWITCHER
+    ========================================================= */
+    function openCategory(roomId) {
+        document.querySelectorAll(".category-room").forEach(room => room.classList.remove("active"));
+        document.querySelectorAll(".cat-btn").forEach(btn => btn.classList.remove("active"));
+        
+        document.getElementById(roomId).classList.add("active");
+        const btnId = roomId.replace("-room", "-btn");
+        document.getElementById(btnId).classList.add("active");
+        
+        roomsVisited.add(roomId);
+        if (roomsVisited.size >= 5) {
+            document.getElementById("all-rooms").classList.add("unlocked");
+        }
+        
+        document.getElementById(roomId).scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    /* ========================================================
+       COUNT QUIZ (in Learn Room)
+    ========================================================= */
+    const countEmojis = ["🍎", "🌟", "❤️", "🎈", "🌸", "⭐", "🍓", "🐟", "🌺", "🎁"];
+
+    function generateCountQuiz() {
+        document.getElementById("count-feedback").innerText = "";
+        const correct = Math.floor(Math.random() * 10) + 1;
+        const emoji = countEmojis[Math.floor(Math.random() * countEmojis.length)];
+        
+        let display = "";
+        for (let i = 0; i < correct; i++) display += emoji;
+        document.getElementById("count-display").innerText = display;
+        
+        const options = [correct];
+        while (options.length < 3) {
+            const rand = Math.floor(Math.random() * 10) + 1;
+            if (!options.includes(rand)) options.push(rand);
+        }
+        
+        const shuffled = [...options].sort(() => Math.random() - 0.5);
+        const container = document.getElementById("count-options");
+        container.innerHTML = "";
+        
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "quiz-btn big";
+            btn.innerText = opt;
+            btn.onclick = () => checkQuiz(opt, correct, 'count-feedback', generateCountQuiz);
+            container.appendChild(btn);
+        });
+    }
+
+    /* ========================================================
+       COUNT QUIZ 2 (in Count Room)
+    ========================================================= */
+    function generateCountQuiz2() {
+        document.getElementById("count-quiz-feedback").innerText = "";
+        const correct = Math.floor(Math.random() * 15) + 1;
+        const emoji = countEmojis[Math.floor(Math.random() * countEmojis.length)];
+        
+        let display = "";
+        for (let i = 0; i < correct; i++) display += emoji;
+        document.getElementById("count-quiz-display").innerText = display;
+        
+        const options = [correct];
+        while (options.length < 3) {
+            const rand = Math.floor(Math.random() * 15) + 1;
+            if (!options.includes(rand)) options.push(rand);
+        }
+        
+        const shuffled = [...options].sort(() => Math.random() - 0.5);
+        const container = document.getElementById("count-quiz-options");
+        container.innerHTML = "";
+        
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "quiz-btn big";
+            btn.innerText = opt;
+            btn.onclick = () => checkQuiz(opt, correct, 'count-quiz-feedback', generateCountQuiz2);
+            container.appendChild(btn);
+        });
+    }
+
+    /* ========================================================
+       ADDITION QUIZ
+    ========================================================= */
+    function generateAddQuiz() {
+        document.getElementById("add-feedback").innerText = "";
+        const a = Math.floor(Math.random() * 5) + 1;
+        const b = Math.floor(Math.random() * 5) + 1;
+        const correct = a + b;
+        const emoji = countEmojis[Math.floor(Math.random() * countEmojis.length)];
+        
+        let visualA = "";
+        for (let i = 0; i < a; i++) visualA += emoji;
+        let visualB = "";
+        for (let i = 0; i < b; i++) visualB += emoji;
+        
+        document.getElementById("add-visual").innerHTML = 
+            `${visualA} <span class="plus">+</span> ${visualB} <span class="equals">=</span> ❓`;
+        document.getElementById("add-equation").innerText = `${a} + ${b} = ?`;
+        
+        const options = [correct];
+        while (options.length < 3) {
+            const rand = Math.floor(Math.random() * 10) + 1;
+            if (!options.includes(rand)) options.push(rand);
+        }
+        
+        const shuffled = [...options].sort(() => Math.random() - 0.5);
+        const container = document.getElementById("add-options");
+        container.innerHTML = "";
+        
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "quiz-btn big";
+            btn.innerText = opt;
+            btn.onclick = () => checkQuiz(opt, correct, 'add-feedback', generateAddQuiz);
+            container.appendChild(btn);
+        });
+    }
+
+    /* ========================================================
+       COMPARE QUIZ
+    ========================================================= */
+    function generateCompareQuiz() {
+        document.getElementById("compare-feedback").innerText = "";
+        const left = Math.floor(Math.random() * 10) + 1;
+        const right = Math.floor(Math.random() * 10) + 1;
+        const emoji = countEmojis[Math.floor(Math.random() * countEmojis.length)];
+        
+        let leftEmoji = "";
+        for (let i = 0; i < left; i++) leftEmoji += emoji;
+        let rightEmoji = "";
+        for (let i = 0; i < right; i++) rightEmoji += emoji;
+        
+        document.getElementById("left-emoji").innerText = leftEmoji || "—";
+        document.getElementById("left-number").innerText = left;
+        document.getElementById("right-emoji").innerText = rightEmoji || "—";
+        document.getElementById("right-number").innerText = right;
+        
+        if (left > right) currentCompareAnswer = "left";
+        else if (right > left) currentCompareAnswer = "right";
+        else currentCompareAnswer = "equal";
+    }
+
+    function checkCompare(answer) {
+        const feedback = document.getElementById("compare-feedback");
+        if (answer === currentCompareAnswer) {
+            totalStars++; todayCorrect++; streak++;
+            updateScore();
+            feedback.innerText = "🎉 Super! Richtig verglichen! +1 Stern ⭐";
+            feedback.style.color = "#16a34a";
+            checkAchievements();
+            setTimeout(generateCompareQuiz, 2000);
+        } else {
+            streak = 0; updateScore();
+            const correctText = currentCompareAnswer === "left" ? "Links" : 
+                               currentCompareAnswer === "right" ? "Rechts" : "Gleich";
+            feedback.innerText = "💪 Fast! Richtig wäre: " + correctText;
+            feedback.style.color = "#e74c3c";
+        }
+    }
+
+    /* ========================================================
+       SING SONG
+    ========================================================= */
+    function singSong(song) {
+        totalStars++;
+        updateScore();
+        document.getElementById("singer").classList.add("unlocked");
+        const messages = {
+            'count': "🔢 Eins, zwei, drei! Toll gesungen!",
+            'bats': "🦇 Zehn kleine Fledermäuse! Wunderbar!",
+            'ducks': "🐘 Quack quack! Super!",
+            'rocket': "🚀 Zehn, neun, acht ... START! Fantastisch!"
+        };
+        alert(messages[song] + " 🎤 +1 Stern ⭐");
+        checkAchievements();
+    }
+
+    /* ========================================================
+       GENERIC QUIZ CHECKER
+    ========================================================= */
+    function checkQuiz(answer, correct, feedbackId, nextFunction) {
+        const feedback = document.getElementById(feedbackId);
+        if (answer === correct) {
+            totalStars++; todayCorrect++; streak++;
+            updateScore();
+            feedback.innerText = "🎉 Super! " + correct + " ist richtig! +1 Stern ⭐";
+            feedback.style.color = "#16a34a";
+            checkAchievements();
+            setTimeout(nextFunction, 2000);
+        } else {
+            streak = 0; updateScore();
+            feedback.innerText = "💪 Fast! Das war: " + correct;
+            feedback.style.color = "#e74c3c";
+        }
+    }
+
+    /* ========================================================
+       SCORE & ACHIEVEMENTS
+    ========================================================= */
+    function updateScore() {
+        document.getElementById("total-stars").innerText = totalStars + " ⭐";
+        document.getElementById("today-correct").innerText = todayCorrect;
+        document.getElementById("streak").innerText = streak + " 🔥";
+    }
+
+    function checkAchievements() {
+        if (totalStars >= 1) document.getElementById("first-star").classList.add("unlocked");
+        if (todayCorrect >= 5) document.getElementById("five-correct").classList.add("unlocked");
+        if (todayCorrect >= 10) document.getElementById("ten-correct").classList.add("unlocked");
+        if (totalStars >= 20) document.getElementById("twenty-stars").classList.add("unlocked");
+    }
+
+    /* ========================================================
+       INIT
+    ========================================================= */
+    initNumberGrid();
+    generateCountQuiz();
+    generateCountQuiz2();
+    generateAddQuiz();
+    generateCompareQuiz();
+    roomsVisited.add("learn-room");
+</script>
+
+</body>
+</html>

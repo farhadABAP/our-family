@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Laddus Deutsch-Abenteuer 🇩🇪🌈</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", "Tahoma", "Arial", sans-serif;
+            min-height: 100vh;
+            color: #263238;
+
+            background:
+                radial-gradient(circle at 10% 10%, #fee2e2 0%, transparent 35%),
+                radial-gradient(circle at 90% 15%, #fef3c7 0%, transparent 35%),
+                radial-gradient(circle at 50% 90%, #dbeafe 0%, transparent 35%),
+                linear-gradient(135deg, #fff5f5, #fffbeb);
+
+            padding: 18px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        .top {
+            text-align: center;
+            padding: 28px 10px 22px;
+        }
+
+        .rocket {
+            font-size: 62px;
+            margin-bottom: 10px;
+        }
+
+        .top h1 {
+            color: #dc2626;
+            font-size: clamp(32px, 6vw, 52px);
+            font-weight: 900;
+        }
+
+        .top h2 {
+            margin-top: 8px;
+            color: #ea580c;
+            font-size: 23px;
+        }
+
+        .top p {
+            color: #687786;
+            margin-top: 11px;
+            line-height: 1.6;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 11px 18px;
+            border-radius: 25px;
+            background: white;
+            border: 2px solid #fee2e2;
+            color: #dc2626;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .back-home:hover {
+            background: #dc2626;
+            color: white;
+            border-color: #dc2626;
+        }
+
+        /* MAGIC AREA */
+        .magic-area {
+            background: linear-gradient(135deg, #dc2626, #ea580c, #f59e0b);
+            color: white;
+            border-radius: 27px;
+            padding: 32px;
+            margin: 18px 0 32px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(220,38,38,0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .magic-area::before {
+            content: "🌈";
+            position: absolute;
+            left: 8%;
+            top: 20px;
+            font-size: 32px;
+            opacity: 0.5;
+        }
+
+        .magic-area::after {
+            content: "🇩🇪";
+            position: absolute;
+            right: 8%;
+            bottom: 20px;
+            font-size: 30px;
+            opacity: 0.5;
+        }
+
+        .magic-area h2 {
+            color: #fef3c7;
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .magic-area p {
+            color: #fff7ed;
+            line-height: 1.65;
+            max-width: 720px;
+            margin: 0 auto 18px;
+        }
+
+        .brave-button {
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(135deg, #facc15, #fbbf24);
+            color: #7c2d12;
+            padding: 16px 32px;
+            border-radius: 16px;
+            font-size: 21px;
+            font-weight: 900;
+            box-shadow: 0 7px 0 #b45309, 0 12px 25px rgba(0,0,0,0.2);
+            transition: 0.15s;
+        }
+
+        .brave-button:hover { transform: translateY(-2px); }
+        .brave-button:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 #b45309, 0 5px 12px rgba(0,0,0,0.2);
+        }
+
+        #brave-message {
+            min-height: 28px;
+            margin-top: 18px;
+            color: #fef3c7;
+            font-weight: 800;
+            font-size: 17px;
+        }
+
+        /* SONG BOX */
+        .song-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 3px solid #f59e0b;
+            border-radius: 22px;
+            padding: 24px;
+            margin: 20px 0 30px;
+            text-align: center;
+        }
+
+        .song-box h3 {
+            color: #92400e;
+            margin-bottom: 12px;
+            font-size: 22px;
+        }
+
+        .song-box p {
+            color: #78350f;
+            line-height: 1.8;
+            font-size: 17px;
+            font-style: italic;
+        }
+
+        .song-emoji {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        /* SCORE */
+        .score-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 13px;
+            margin-bottom: 30px;
+        }
+
+        .score-card {
+            background: white;
+            border-radius: 17px;
+            padding: 15px 23px;
+            min-width: 150px;
+            text-align: center;
+            box-shadow: 0 7px 20px rgba(40,60,80,0.07);
+            border: 2px solid #fee2e2;
+        }
+
+        .score-card .number {
+            display: block;
+            color: #dc2626;
+            font-size: 27px;
+            font-weight: 900;
+        }
+
+        .score-card .label {
+            display: block;
+            color: #7b8794;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        /* CATEGORY SELECTOR */
+        .category-selector {
+            background: white;
+            border-radius: 22px;
+            padding: 24px;
+            margin-bottom: 26px;
+            box-shadow: 0 8px 22px rgba(40,60,80,0.07);
+        }
+
+        .category-selector h3 {
+            color: #dc2626;
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 22px;
+        }
+
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .cat-btn {
+            border: 3px solid;
+            background: white;
+            border-radius: 18px;
+            padding: 14px 20px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 16px;
+            transition: 0.2s;
+            min-width: 150px;
+        }
+
+        .cat-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+        }
+
+        .cat-btn.active {
+            color: white;
+        }
+
+        .cat-btn.abc { border-color: #dc2626; color: #991b1b; }
+        .cat-btn.abc.active { background: #dc2626; }
+        .cat-btn.words { border-color: #f59e0b; color: #92400e; }
+        .cat-btn.words.active { background: #f59e0b; }
+        .cat-btn.sounds { border-color: #10b981; color: #065f46; }
+        .cat-btn.sounds.active { background: #10b981; }
+        .cat-btn.rhymes { border-color: #8b5cf6; color: #5b21b6; }
+        .cat-btn.rhymes.active { background: #8b5cf6; }
+        .cat-btn.sentences { border-color: #3b82f6; color: #1e40af; }
+        .cat-btn.sentences.active { background: #3b82f6; }
+
+        /* CATEGORY ROOMS */
+        .category-room {
+            display: none;
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 10px 30px rgba(40,60,80,0.08);
+        }
+
+        .category-room.active { display: block; }
+
+        .room-header {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .room-header .room-icon {
+            font-size: 52px;
+            margin-bottom: 8px;
+        }
+
+        .room-header h2 {
+            color: #dc2626;
+            font-size: 27px;
+            margin-bottom: 6px;
+        }
+
+        .room-header p {
+            color: #718096;
+            font-size: 15px;
+        }
+
+        /* ABC GRID */
+        .abc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .abc-card {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border: 3px solid #dc2626;
+            border-radius: 16px;
+            padding: 18px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .abc-card:hover {
+            transform: translateY(-4px) scale(1.05);
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: white;
+        }
+
+        .abc-card .big-letter {
+            font-size: 42px;
+            font-weight: 900;
+            color: #991b1b;
+            display: block;
+        }
+
+        .abc-card:hover .big-letter { color: white; }
+
+        .abc-card .letter-word {
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 4px;
+            color: #991b1b;
+        }
+
+        .abc-card:hover .letter-word { color: white; }
+
+        /* WORD GRID */
+        .word-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .word-card {
+            border-radius: 18px;
+            padding: 20px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 3px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            color: white;
+            font-weight: 900;
+        }
+
+        .word-card:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .word-card .card-emoji {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .word-card .card-word {
+            font-size: 20px;
+            display: block;
+        }
+
+        /* QUIZ BOX */
+        .quiz-box {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            border: 3px solid #fca5a5;
+            border-radius: 22px;
+            padding: 32px;
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        .quiz-box h3 {
+            color: #dc2626;
+            font-size: 22px;
+            margin-bottom: 14px;
+        }
+
+        .quiz-display {
+            font-size: 80px;
+            margin: 18px 0;
+        }
+
+        .big-letter-display {
+            font-size: 120px;
+            font-weight: 900;
+            color: #dc2626;
+            margin: 18px 0;
+        }
+
+        .quiz-question {
+            color: #718096;
+            font-size: 17px;
+            margin-bottom: 18px;
+            font-weight: 600;
+        }
+
+        .quiz-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .quiz-btn {
+            border: 3px solid #dc2626;
+            background: white;
+            color: #991b1b;
+            border-radius: 16px;
+            padding: 14px 22px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 17px;
+            transition: 0.2s;
+            min-width: 110px;
+        }
+
+        .quiz-btn:hover {
+            background: #dc2626;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        #quiz-feedback {
+            min-height: 34px;
+            margin-top: 20px;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .next-btn {
+            border: none;
+            background: #dc2626;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 13px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 14px;
+            transition: 0.2s;
+        }
+
+        .next-btn:hover {
+            background: #991b1b;
+            transform: translateY(-2px);
+        }
+
+        /* RHYME CARD */
+        .rhyme-card {
+            background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+            border: 3px solid #8b5cf6;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+
+        .rhyme-card h4 {
+            color: #5b21b6;
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .rhyme-text {
+            background: white;
+            border-radius: 14px;
+            padding: 18px;
+            font-size: 18px;
+            line-height: 1.9;
+            color: #374151;
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .rhyme-text .line {
+            margin-bottom: 6px;
+        }
+
+        .rhyme-text .blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 3px dashed #8b5cf6;
+            color: #8b5cf6;
+            font-weight: 900;
+            text-align: center;
+        }
+
+        /* SENTENCE BUILDER */
+        .sentence-box {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border: 3px solid #3b82f6;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+
+        .sentence-box h4 {
+            color: #1e40af;
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .word-bank {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 18px 0;
+            min-height: 60px;
+            padding: 15px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 16px;
+        }
+
+        .word-chip {
+            background: white;
+            border: 2px solid #3b82f6;
+            color: #1e40af;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .word-chip:hover {
+            background: #3b82f6;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .word-chip.used {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .sentence-build-area {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 18px 0;
+            min-height: 60px;
+            padding: 15px;
+            background: white;
+            border: 2px dashed #3b82f6;
+            border-radius: 16px;
+        }
+
+        .placed-word {
+            background: #3b82f6;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .placed-word:hover {
+            background: #2563eb;
+        }
+
+        #sentence-feedback {
+            min-height: 34px;
+            margin-top: 18px;
+            font-weight: 800;
+            font-size: 17px;
+        }
+
+        /* TEACHER TIP */
+        .teacher-tip {
+            background: #fff9db;
+            border-left: 5px solid #f59f00;
+            border-radius: 10px;
+            padding: 18px;
+            margin-top: 24px;
+            color: #6b5b20;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .teacher-tip h4 {
+            color: #b9770e;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .teacher-tip ul {
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+
+        .teacher-tip li {
+            margin-bottom: 8px;
+        }
+
+        /* ACHIEVEMENTS */
+        .achievements {
+            background: white;
+            border-radius: 22px;
+            padding: 26px;
+            margin-top: 28px;
+            box-shadow: 0 8px 22px rgba(40,60,80,0.07);
+        }
+
+        .achievements h3 {
+            color: #dc2626;
+            text-align: center;
+            margin-bottom: 18px;
+            font-size: 22px;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
+        }
+
+        .achievement {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 18px;
+            text-align: center;
+            border: 2px solid #e5edf5;
+            opacity: 0.5;
+            transition: 0.3s;
+        }
+
+        .achievement.unlocked {
+            opacity: 1;
+            border-color: #fbbf24;
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+        }
+
+        .achievement .badge-icon {
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .achievement h4 {
+            color: #dc2626;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .achievement p {
+            color: #718096;
+            font-size: 12px;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 42px 10px 22px;
+            color: #8795a1;
+            font-size: 14px;
+        }
+
+        footer strong { color: #dc2626; }
+
+        /* MOBILE */
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .magic-area { padding: 26px 18px; }
+            .category-room { padding: 22px 15px; }
+            .quiz-btn { min-width: 100px; padding: 12px 16px; font-size: 15px; }
+            .cat-btn { min-width: 130px; font-size: 14px; padding: 12px 14px; }
+            .abc-grid { grid-template-columns: repeat(4, 1fr); }
+            .word-grid { grid-template-columns: repeat(2, 1fr); }
+            .big-letter-display { font-size: 80px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <header class="top">
+        <div class="rocket">🇩🇪🌈</div>
+        <h1>Laddus Deutsch-Abenteuer</h1>
+        <h2>ABC · Wörter · Reime · Sätze</h2>
+        <p>
+            Deutsche Buchstaben und Wörter spielerisch lernen!<br>
+            Jeder Buchstabe ist ein kleines Abenteuer! ⭐
+        </p>
+        <a href="rushan.html" class="back-home">← Zurück zu Laddus Welt</a>
+    </header>
+
+    <!-- MAGIC BRAVE BUTTON -->
+    <section class="magic-area">
+        <h2>🦸‍♂️ Der mutige Prinz Laddu</h2>
+        <p>
+            Erinnerst du dich? Du bist so mutig!
+            Und jetzt lernst du auch noch Deutsch!
+        </p>
+        <p><strong>Mutig · Fröhlich · Neugierig</strong></p>
+        <button class="brave-button" onclick="activateBrave()">🌟 ICH BIN MUTIG!</button>
+        <div id="brave-message">Dein Mut wartet auf dich ... ✨</div>
+    </section>
+
+    <!-- SONG BOX -->
+    <section class="song-box">
+        <div class="song-emoji">🎵🌈</div>
+        <h3>Laddus Lieblingslieder</h3>
+        <p>
+            🌸 „Ich kenne eine Blume ..." 🌸<br>
+            🌈 „Ich geb dir einen Regenbogen" 🌈
+        </p>
+    </section>
+
+    <!-- SCORE -->
+    <div class="score-row">
+        <div class="score-card">
+            <span class="number" id="total-stars">0 ⭐</span>
+            <span class="label">Deine Sterne</span>
+        </div>
+        <div class="score-card">
+            <span class="number" id="today-correct">0</span>
+            <span class="label">Heute richtig</span>
+        </div>
+        <div class="score-card">
+            <span class="number" id="streak">0 🔥</span>
+            <span class="label">Serie</span>
+        </div>
+    </div>
+
+    <!-- CATEGORY SELECTOR -->
+    <section class="category-selector">
+        <h3>🎯 Was möchtest du heute lernen?</h3>
+        <div class="category-buttons">
+            <button class="cat-btn abc active" id="abc-btn" onclick="openCategory('abc-room')">🅰️ ABC</button>
+            <button class="cat-btn words" id="words-btn" onclick="openCategory('words-room')">📖 Wörter</button>
+            <button class="cat-btn sounds" id="sounds-btn" onclick="openCategory('sounds-room')">👂 Anlaute</button>
+            <button class="cat-btn rhymes" id="rhymes-btn" onclick="openCategory('rhymes-room')">🎵 Reime</button>
+            <button class="cat-btn sentences" id="sentences-btn" onclick="openCategory('sentences-room')">📝 Sätze</button>
+        </div>
+    </section>
+
+    <!-- ABC ROOM -->
+    <section id="abc-room" class="category-room active">
+        <div class="room-header">
+            <div class="room-icon">🅰️</div>
+            <h2>Das ABC</h2>
+            <p>Klicke auf einen Buchstaben und lerne ihn!</p>
+        </div>
+
+        <div class="abc-grid" id="abc-grid">
+            <!-- Wird per JavaScript gefüllt -->
+        </div>
+
+        <div class="quiz-box">
+            <h3>🎯 Buchstaben-Quiz</h3>
+            <div class="quiz-question">Welcher Buchstabe ist das?</div>
+            <div class="big-letter-display" id="letter-display">A</div>
+            <div class="quiz-options" id="letter-options"></div>
+            <div id="letter-feedback"></div>
+            <button class="next-btn" onclick="generateLetterQuiz()">Nächster Buchstabe →</button>
+        </div>
+
+        <div class="teacher-tip">
+            <h4>💡 Tipp für Mama und Papa</h4>
+            <ul>
+                <li>Singt das <strong>ABC-Lied</strong> zusammen: „A B C D E F G ..."</li>
+                <li>Zeigt Buchstaben im Alltag: „Das ist ein <strong>A</strong> wie <strong>Apfel</strong>!"</li>
+                <li>Schreibt Laddus Namen mit großen Buchstaben: <strong>L-A-D-D-U</strong></li>
+                <li>Malt Buchstaben mit Fingerfarben oder in Sand.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- WORDS ROOM -->
+    <section id="words-room" class="category-room">
+        <div class="room-header">
+            <div class="room-icon">📖</div>
+            <h2>Erste Wörter</h2>
+            <p>Klicke auf ein Wort und lerne es!</p>
+        </div>
+
+        <div class="word-grid">
+            <div class="word-card" style="background: linear-gradient(135deg, #fee2e2, #fecaca); color: #991b1b; border: 3px solid #dc2626;" onclick="learnWord('Hallo', '👋')">
+                <span class="card-emoji">👋</span>
+                <span class="card-word">Hallo</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; border: 3px solid #f59e0b;" onclick="learnWord('Danke', '🙏')">
+                <span class="card-emoji">🙏</span>
+                <span class="card-word">Danke</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; border: 3px solid #10b981;" onclick="learnWord('Bitte', '😊')">
+                <span class="card-emoji">😊</span>
+                <span class="card-word">Bitte</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; border: 3px solid #3b82f6;" onclick="learnWord('Ja', '✅')">
+                <span class="card-emoji">✅</span>
+                <span class="card-word">Ja</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #5b21b6; border: 3px solid #8b5cf6;" onclick="learnWord('Nein', '❌')">
+                <span class="card-emoji">❌</span>
+                <span class="card-word">Nein</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #fee2e2, #fecaca); color: #991b1b; border: 3px solid #dc2626;" onclick="learnWord('Tschüss', '👋')">
+                <span class="card-emoji">👋</span>
+                <span class="card-word">Tschüss</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; border: 3px solid #f59e0b;" onclick="learnWord('Mama', '👩')">
+                <span class="card-emoji">👩</span>
+                <span class="card-word">Mama</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; border: 3px solid #10b981;" onclick="learnWord('Papa', '👨')">
+                <span class="card-emoji">👨</span>
+                <span class="card-word">Papa</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; border: 3px solid #3b82f6;" onclick="learnWord('Wasser', '💧')">
+                <span class="card-emoji">💧</span>
+                <span class="card-word">Wasser</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #5b21b6; border: 3px solid #8b5cf6;" onclick="learnWord('Milch', '🥛')">
+                <span class="card-emoji">🥛</span>
+                <span class="card-word">Milch</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #fee2e2, #fecaca); color: #991b1b; border: 3px solid #dc2626;" onclick="learnWord('Brot', '🍞')">
+                <span class="card-emoji">🍞</span>
+                <span class="card-word">Brot</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; border: 3px solid #f59e0b;" onclick="learnWord('Apfel', '🍎')">
+                <span class="card-emoji">🍎</span>
+                <span class="card-word">Apfel</span>
+            </div>
+        </div>
+
+        <div class="quiz-box">
+            <h3>🎯 Wörter-Quiz</h3>
+            <div class="quiz-question">Was ist das?</div>
+            <div class="quiz-display" id="word-display">💧</div>
+            <div class="quiz-options" id="word-options"></div>
+            <div id="word-feedback"></div>
+            <button class="next-btn" onclick="generateWordQuiz()">Nächstes Wort →</button>
+        </div>
+
+        <div class="teacher-tip">
+            <h4>💡 Tipp für Mama und Papa</h4>
+            <ul>
+                <li>Übt <strong>alltägliche Wörter</strong>: „Sag mal <strong>Bitte</strong>!", „Wie sagt man <strong>Danke</strong>?"</li>
+                <li>Beim Essen: „Möchtest du <strong>Wasser</strong> oder <strong>Milch</strong>?"</li>
+                <li>Lest <strong>einfache Bilderbücher</strong> und zeigt auf die Wörter.</li>
+                <li>Singt: „<strong>Backe backe Kuchen</strong>, der Bäcker hat gebacken ..."</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SOUNDS ROOM (ANLAUTE) -->
+    <section id="sounds-room" class="category-room">
+        <div class="room-header">
+            <div class="room-icon">👂</div>
+            <h2>Anlaute hören</h2>
+            <p>Mit welchem Buchstaben beginnt das Wort?</p>
+        </div>
+
+        <div class="quiz-box">
+            <h3>🎯 Anlaut-Quiz</h3>
+            <div class="quiz-question">Womit beginnt dieses Wort?</div>
+            <div class="quiz-display" id="sound-display">🍎</div>
+            <div id="sound-word" style="font-size: 24px; font-weight: 800; color: #dc2626; margin: 10px 0;">Apfel</div>
+            <div class="quiz-options" id="sound-options"></div>
+            <div id="sound-feedback"></div>
+            <button class="next-btn" onclick="generateSoundQuiz()">Nächstes Wort →</button>
+        </div>
+
+        <div class="teacher-tip">
+            <h4>💡 Tipp für Mama und Papa</h4>
+            <ul>
+                <li>Spielt <strong>„Ich sehe was, was du nicht siehst"</strong> - mit Anlauten!</li>
+                <li>„<strong>A</strong> wie <strong>A</strong>pfel, <strong>B</strong> wie <strong>B</strong>all, <strong>M</strong> wie <strong>M</strong>ama ..."</li>
+                <li>Klatscht die <strong>Silben</strong>: „<strong>Ba</strong>-<strong>na</strong>-<strong>ne</strong>" = 3 Klatscher 👏👏👏</li>
+                <li>Reimt: „<strong>Haus</strong> - <strong>Maus</strong> - <strong>Maus</strong>!"</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- RHYMES ROOM -->
+    <section id="rhymes-room" class="category-room">
+        <div class="room-header">
+            <div class="room-icon">🎵</div>
+            <h2>Reime & Lieder</h2>
+            <p>Finde das fehlende Wort!</p>
+        </div>
+
+        <div id="rhyme-container">
+            <!-- Wird per JavaScript gefüllt -->
+        </div>
+
+        <div class="teacher-tip">
+            <h4>💡 Tipp für Mama und Papa</h4>
+            <ul>
+                <li>Lest <strong>Reime</strong> zusammen vor und lasst Laddu das letzte Wort sagen.</li>
+                <li>„<strong>Backe backe Kuchen</strong>, der Bäcker hat gebacken ..." 🎵</li>
+                <li>„<strong>Hoppe hoppe Reiter</strong>, ..."</li>
+                <li>„<strong>Alle meine Entchen</strong>, schwimmen auf dem See ..."</li>
+                <li>Erfindet eigene Reime - das macht Spaß!</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SENTENCES ROOM -->
+    <section id="sentences-room" class="category-room">
+        <div class="room-header">
+            <div class="room-icon">📝</div>
+            <h2>Erste Sätze</h2>
+            <p>Baue einen Satz aus den Wörtern!</p>
+        </div>
+
+        <div class="sentence-box">
+            <h4>Baue einen Satz:</h4>
+            <div class="word-bank" id="word-bank"></div>
+            <div class="sentence-build-area" id="sentence-build-area"></div>
+            <div id="sentence-feedback"></div>
+            <button class="next-btn" onclick="generateSentence()">Nächster Satz →</button>
+        </div>
+
+        <div class="teacher-tip">
+            <h4>💡 Tipp für Mama und Papa</h4>
+            <ul>
+                <li>Fangt mit <strong>ganz kurzen Sätzen</strong> an: „<strong>Ich mag dich</strong>."</li>
+                <li>„<strong>Ich bin Laddu</strong>." - ein schöner erster Satz!</li>
+                <li>„<strong>Das ist Mama</strong>." - zeigt auf Mama.</li>
+                <li>„<strong>Ich habe Hunger</strong>." - ein nützlicher Satz!</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section class="achievements">
+        <h3>🏆 Laddus Deutsch-Erfolge</h3>
+        <div class="achievement-grid">
+            <div class="achievement" id="first-star">
+                <div class="badge-icon">⭐</div>
+                <h4>Erste Aufgabe</h4>
+                <p>Erste Aufgabe gelöst!</p>
+            </div>
+            <div class="achievement" id="five-correct">
+                <div class="badge-icon">🎯</div>
+                <h4>5 Richtige</h4>
+                <p>5 Aufgaben geschafft!</p>
+            </div>
+            <div class="achievement" id="ten-correct">
+                <div class="badge-icon">🚀</div>
+                <h4>10 Richtige</h4>
+                <p>10 Aufgaben richtig!</p>
+            </div>
+            <div class="achievement" id="all-rooms">
+                <div class="badge-icon">🌟</div>
+                <h4>Entdecker</h4>
+                <p>Alle 5 Bereiche besucht!</p>
+            </div>
+            <div class="achievement" id="brave-prince">
+                <div class="badge-icon">🦸‍♂️</div>
+                <h4>Mutiger Prinz</h4>
+                <p>Mut-Knopf gedrückt!</p>
+            </div>
+            <div class="achievement" id="twenty-stars">
+                <div class="badge-icon">🏆</div>
+                <h4>20 Sterne</h4>
+                <p>20 Sterne gesammelt!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>🇩🇪 <strong>Laddu</strong>, du lernst so toll Deutsch! ❤️</p>
+        <p style="margin-top: 9px;">Mama Tabassum & Papa Farhad ❤️</p>
+    </footer>
+
+</div>
+
+<script>
+    /* ========================================================
+       GLOBAL DATA
+    ========================================================= */
+    let totalStars = 0;
+    let todayCorrect = 0;
+    let streak = 0;
+    let roomsVisited = new Set();
+    let placedWords = [];
+    let correctSentence = [];
+
+    /* ========================================================
+       ABC DATA
+    ========================================================= */
+    const abcData = [
+        { letter: "A", word: "Apfel 🍎" },
+        { letter: "B", word: "Ball 🏀" },
+        { letter: "C", word: "Clown 🤡" },
+        { letter: "D", word: "Dogge 🐕" },
+        { letter: "E", word: "Eis 🍦" },
+        { letter: "F", word: "Fisch 🐟" },
+        { letter: "G", word: "Gabel 🍴" },
+        { letter: "H", word: "Haus 🏠" },
+        { letter: "I", word: "Igel 🦔" },
+        { letter: "J", word: "Jacke 🧥" },
+        { letter: "K", word: "Katze 🐱" },
+        { letter: "L", word: "Löwe 🦁" },
+        { letter: "M", word: "Mama 👩" },
+        { letter: "N", word: "Nase 👃" },
+        { letter: "O", word: "Oma 👵" },
+        { letter: "P", word: "Papa 👨" },
+        { letter: "Q", word: "Qualle 🪼" },
+        { letter: "R", word: "Rose 🌹" },
+        { letter: "S", word: "Sonne 🌞" },
+        { letter: "T", word: "Tiger 🐯" },
+        { letter: "U", word: "Uhu 🦉" },
+        { letter: "V", word: "Vogel 🐦" },
+        { letter: "W", word: "Wasser 💧" },
+        { letter: "X", word: "Xylofon 🎵" },
+        { letter: "Y", word: "Yak 🐂" },
+        { letter: "Z", word: "Zebra 🦓" }
+    ];
+
+    /* ========================================================
+       INIT ABC GRID
+    ========================================================= */
+    function initAbcGrid() {
+        const grid = document.getElementById("abc-grid");
+        abcData.forEach(item => {
+            const card = document.createElement("div");
+            card.className = "abc-card";
+            card.innerHTML = `
+                <span class="big-letter">${item.letter}</span>
+                <span class="letter-word">${item.word}</span>
+            `;
+            card.onclick = () => learnLetter(item.letter, item.word);
+            grid.appendChild(card);
+        });
+    }
+
+    function learnLetter(letter, word) {
+        totalStars++;
+        updateScore();
+        alert(letter + " wie " + word + " ⭐");
+        checkAchievements();
+    }
+
+    /* ========================================================
+       BRAVE BUTTON
+    ========================================================= */
+    function activateBrave() {
+        const message = document.getElementById("brave-message");
+        const messages = [
+            "🦸‍♂️ DU BIST MUTIG! Wie Prinz Laddu!",
+            "🌈 Laddu, du schaffst alles!",
+            "💪 Mut bedeutet: Ich versuche es trotzdem!",
+            "🚀 Unser kleiner Held ist bereit!",
+            "❤️ Papa ist stolz auf dich!",
+            "🇩🇪 Deutsch ist toll mit dir!"
+        ];
+        const random = messages[Math.floor(Math.random() * messages.length)];
+        message.innerText = random;
+        document.getElementById("brave-prince").classList.add("unlocked");
+        setTimeout(() => {
+            message.innerText = "✨ Mutig, fröhlich und neugierig – das bist du!";
+        }, 3500);
+    }
+
+    /* ========================================================
+       CATEGORY SWITCHER
+    ========================================================= */
+    function openCategory(roomId) {
+        document.querySelectorAll(".category-room").forEach(room => room.classList.remove("active"));
+        document.querySelectorAll(".cat-btn").forEach(btn => btn.classList.remove("active"));
+        
+        document.getElementById(roomId).classList.add("active");
+        const btnId = roomId.replace("-room", "-btn");
+        document.getElementById(btnId).classList.add("active");
+        
+        roomsVisited.add(roomId);
+        if (roomsVisited.size >= 5) {
+            document.getElementById("all-rooms").classList.add("unlocked");
+        }
+        
+        document.getElementById(roomId).scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    /* ========================================================
+       LEARN WORD
+    ========================================================= */
+    function learnWord(word, emoji) {
+        totalStars++;
+        updateScore();
+        alert(emoji + " " + word + "! ⭐");
+        checkAchievements();
+    }
+
+    /* ========================================================
+       LETTER QUIZ
+    ========================================================= */
+    function generateLetterQuiz() {
+        document.getElementById("letter-feedback").innerText = "";
+        const item = abcData[Math.floor(Math.random() * abcData.length)];
+        
+        document.getElementById("letter-display").innerText = item.letter;
+        
+        const optionsContainer = document.getElementById("letter-options");
+        optionsContainer.innerHTML = "";
+        
+        // Get 3 random options including correct one
+        const options = [item.letter];
+        while (options.length < 3) {
+            const random = abcData[Math.floor(Math.random() * abcData.length)].letter;
+            if (!options.includes(random)) options.push(random);
+        }
+        
+        const shuffled = [...options].sort(() => Math.random() - 0.5);
+        
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "quiz-btn";
+            btn.innerText = opt;
+            btn.onclick = () => checkQuiz(opt, item.letter, 'letter-feedback', generateLetterQuiz);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    /* ========================================================
+       WORD QUIZ
+    ========================================================= */
+    const wordsData = [
+        { emoji: "💧", word: "Wasser", options: ["Wasser", "Milch", "Saft"] },
+        { emoji: "🥛", word: "Milch", options: ["Milch", "Wasser", "Tee"] },
+        { emoji: "🍞", word: "Brot", options: ["Brot", "Kuchen", "Käse"] },
+        { emoji: "🍎", word: "Apfel", options: ["Apfel", "Banane", "Orange"] },
+        { emoji: "👩", word: "Mama", options: ["Mama", "Papa", "Bruder"] },
+        { emoji: "👨", word: "Papa", options: ["Papa", "Mama", "Baby"] },
+        { emoji: "🙏", word: "Danke", options: ["Danke", "Bitte", "Hallo"] },
+        { emoji: "😊", word: "Bitte", options: ["Bitte", "Danke", "Nein"] },
+        { emoji: "✅", word: "Ja", options: ["Ja", "Nein", "Vielleicht"] },
+        { emoji: "❌", word: "Nein", options: ["Nein", "Ja", "Hallo"] }
+    ];
+
+    function generateWordQuiz() {
+        document.getElementById("word-feedback").innerText = "";
+        const item = wordsData[Math.floor(Math.random() * wordsData.length)];
+        
+        document.getElementById("word-display").innerText = item.emoji;
+        
+        const optionsContainer = document.getElementById("word-options");
+        optionsContainer.innerHTML = "";
+        
+        const shuffled = [...item.options].sort(() => Math.random() - 0.5);
+        
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "quiz-btn";
+            btn.innerText = opt;
+            btn.onclick = () => checkQuiz(opt, item.word, 'word-feedback', generateWordQuiz);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    /* ========================================================
+       SOUND QUIZ (ANLAUTE)
+    ========================================================= */
+    const soundsData = [
+        { emoji: "🍎", word: "Apfel", first: "A", options: ["A", "B", "M"] },
+        { emoji: "🏀", word: "Ball", first: "B", options: ["B", "P", "D"] },
+        { emoji: "🐱", word: "Katze", first: "K", options: ["K", "G", "H"] },
+        { emoji: "🏠", word: "Haus", first: "H", options: ["H", "A", "U"] },
+        { emoji: "👩", word: "Mama", first: "M", options: ["M", "N", "P"] },
+        { emoji: "👨", word: "Papa", first: "P", options: ["P", "B", "D"] },
+        { emoji: "🌞", word: "Sonne", first: "S", options: ["S", "Z", "T"] },
+        { emoji: "🐟", word: "Fisch", first: "F", options: ["F", "V", "B"] },
+        { emoji: "🐕", word: "Hund", first: "H", options: ["H", "U", "N"] },
+        { emoji: "🌹", word: "Rose", first: "R", options: ["R", "L", "O"] },
+        { emoji: "🍦", word: "Eis", first: "E", options: ["E", "A", "I"] },
+        { emoji: "🦁", word: "Löwe", first: "L", options: ["L", "R", "N"] }
+    ];
+
+    function generateSoundQuiz() {
+        document.getElementById("sound-feedback").innerText = "";
+        const item = soundsData[Math.floor(Math.random() * soundsData.length)];
+        
+        document.getElementById("sound-display").innerText = item.emoji;
+        document.getElementById("sound-word").innerText = item.word;
+        
+        const optionsContainer = document.getElementById("sound-options");
+        optionsContainer.innerHTML = "";
+        
+        const shuffled = [...item.options].sort(() => Math.random() - 0.5);
+        
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "quiz-btn";
+            btn.innerText = opt;
+            btn.onclick = () => checkQuiz(opt, item.first, 'sound-feedback', generateSoundQuiz);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    /* ========================================================
+       RHYMES
+    ========================================================= */
+    const rhymesData = [
+        {
+            title: "🌸 Ich kenne eine Blume",
+            lines: [
+                "Ich kenne eine Blume,",
+                "die ist so wunderschön.",
+                "Sie steht auf der Wiese,",
+                "man kann sie ____."
+            ],
+            answer: "seh'n",
+            options: ["seh'n", "geh'n", "steh'n"]
+        },
+        {
+            title: "🌈 Ich geb dir einen Regenbogen",
+            lines: [
+                "Ich geb dir einen Regenbogen,",
+                "Ich geb dir einen ____.",
+                "Ich geb dir einen Sonnenstrahl,",
+                "und einen grünen Wald."
+            ],
+            answer: "Stern",
+            options: ["Stern", "Hund", "Tisch"]
+        },
+        {
+            title: "🐻 Backe backe Kuchen",
+            lines: [
+                "Backe, backe Kuchen,",
+                "der Bäcker hat ____.",
+                "Hat er genug?"
+            ],
+            answer: "gebacken",
+            options: ["gebacken", "geschlafen", "getrunken"]
+        },
+        {
+            title: "🐥 Alle meine Entchen",
+            lines: [
+                "Alle meine Entchen,",
+                "schwimmen auf dem ____.",
+                "Köpfchen in das Wasser,",
+                "Schwänzchen in die Höh."
+            ],
+            answer: "See",
+            options: ["See", "Haus", "Berg"]
+        },
+        {
+            title: "⭐ Twinkle Twinkle (Deutsch)",
+            lines: [
+                "Funkel, funkel, kleiner ____.",
+                "Wie ich wunder was du bist.",
+                "Oben in der Welt so hoch,",
+                "wie ein Diamant so ____."
+            ],
+            answer: "Stern / groß",
+            options: ["Stern / groß", "Mond / klein", "Licht / nah"]
+        }
+    ];
+
+    function initRhymes() {
+        const container = document.getElementById("rhyme-container");
+        rhymesData.forEach((rhyme, index) => {
+            const card = document.createElement("div");
+            card.className = "rhyme-card";
+            
+            let linesHtml = "";
+            rhyme.lines.forEach(line => {
+                linesHtml += `<div class="line">${line}</div>`;
+            });
+            
+            let optionsHtml = "";
+            rhyme.options.forEach(opt => {
+                optionsHtml += `<button class="quiz-btn" onclick="checkRhyme(${index}, '${opt}')">${opt}</button>`;
+            });
+            
+            card.innerHTML = `
+                <h4>${rhyme.title}</h4>
+                <div class="rhyme-text">${linesHtml}</div>
+                <div style="margin-top: 14px;">
+                    <div style="color: #5b21b6; font-weight: 700; margin-bottom: 10px;">Welches Wort fehlt?</div>
+                    <div class="quiz-options" id="rhyme-options-${index}">${optionsHtml}</div>
+                    <div id="rhyme-feedback-${index}" style="min-height: 30px; margin-top: 12px; font-weight: 800;"></div>
+                </div>
+            `;
+            
+            container.appendChild(card);
+        });
+    }
+
+    function checkRhyme(index, answer) {
+        const rhyme = rhymesData[index];
+        const feedback = document.getElementById(`rhyme-feedback-${index}`);
+        
+        if (answer === rhyme.answer) {
+            totalStars++; todayCorrect++; streak++;
+            updateScore();
+            feedback.innerText = "🎉 Super! Richtig! +1 Stern ⭐";
+            feedback.style.color = "#16a34a";
+            checkAchievements();
+        } else {
+            streak = 0; updateScore();
+            feedback.innerText = "💪 Fast! Das richtige Wort ist: " + rhyme.answer;
+            feedback.style.color = "#e74c3c";
+        }
+    }
+
+    /* ========================================================
+       SENTENCE BUILDER
+    ========================================================= */
+    const sentences = [
+        ["Ich", "bin", "Laddu"],
+        ["Das", "ist", "Mama"],
+        ["Ich", "habe", "Hunger"],
+        ["Ich", "mag", "dich"],
+        ["Das", "ist", "Papa"],
+        ["Ich", "liebe", "dich"],
+        ["Ich", "bin", "müde"],
+        ["Das", "ist", "mein", "Ball"],
+        ["Ich", "trinke", "Wasser"],
+        ["Ich", "esse", "Brot"]
+    ];
+
+    function generateSentence() {
+        document.getElementById("sentence-feedback").innerText = "";
+        placedWords = [];
+        
+        const randomIndex = Math.floor(Math.random() * sentences.length);
+        correctSentence = [...sentences[randomIndex]];
+        
+        const shuffled = [...correctSentence].sort(() => Math.random() - 0.5);
+        
+        const bank = document.getElementById("word-bank");
+        bank.innerHTML = "";
+        
+        shuffled.forEach(word => {
+            const chip = document.createElement("span");
+            chip.className = "word-chip";
+            chip.innerText = word;
+            chip.onclick = () => placeWord(chip, word);
+            bank.appendChild(chip);
+        });
+        
+        document.getElementById("sentence-build-area").innerHTML = "";
+    }
+
+    function placeWord(chip, word) {
+        if (chip.classList.contains("used")) return;
+        
+        chip.classList.add("used");
+        placedWords.push(word);
+        
+        const buildArea = document.getElementById("sentence-build-area");
+        const placed = document.createElement("span");
+        placed.className = "placed-word";
+        placed.innerText = word;
+        placed.onclick = () => removeWord(placed, chip, word);
+        
+        buildArea.appendChild(placed);
+        checkSentence();
+    }
+
+    function removeWord(placed, chip, word) {
+        placed.remove();
+        placedWords = placedWords.filter(w => w !== word);
+        chip.classList.remove("used");
+        checkSentence();
+    }
+
+    function checkSentence() {
+        const feedback = document.getElementById("sentence-feedback");
+        
+        if (placedWords.length !== correctSentence.length) {
+            feedback.innerText = "";
+            return;
+        }
+        
+        const isCorrect = placedWords.every((word, index) => word === correctSentence[index]);
+        
+        if (isCorrect) {
+            totalStars++; todayCorrect++; streak++;
+            updateScore();
+            feedback.innerText = "🎉 Super! Das ist ein perfekter Satz! +1 Stern ⭐";
+            feedback.style.color = "#16a34a";
+            checkAchievements();
+            setTimeout(generateSentence, 2500);
+        } else {
+            streak = 0; updateScore();
+            feedback.innerText = "💪 Nicht ganz richtig. Versuch es noch einmal!";
+            feedback.style.color = "#e74c3c";
+        }
+    }
+
+    /* ========================================================
+       GENERIC QUIZ CHECKER
+    ========================================================= */
+    function checkQuiz(answer, correct, feedbackId, nextFunction) {
+        const feedback = document.getElementById(feedbackId);
+        if (answer === correct) {
+            totalStars++; todayCorrect++; streak++;
+            updateScore();
+            feedback.innerText = "🎉 Super! " + correct + "! +1 Stern ⭐";
+            feedback.style.color = "#16a34a";
+            checkAchievements();
+            setTimeout(nextFunction, 2000);
+        } else {
+            streak = 0; updateScore();
+            feedback.innerText = "💪 Fast! Das war: " + correct;
+            feedback.style.color = "#e74c3c";
+        }
+    }
+
+    /* ========================================================
+       SCORE & ACHIEVEMENTS
+    ========================================================= */
+    function updateScore() {
+        document.getElementById("total-stars").innerText = totalStars + " ⭐";
+        document.getElementById("today-correct").innerText = todayCorrect;
+        document.getElementById("streak").innerText = streak + " 🔥";
+    }
+
+    function checkAchievements() {
+        if (totalStars >= 1) document.getElementById("first-star").classList.add("unlocked");
+        if (todayCorrect >= 5) document.getElementById("five-correct").classList.add("unlocked");
+        if (todayCorrect >= 10) document.getElementById("ten-correct").classList.add("unlocked");
+        if (totalStars >= 20) document.getElementById("twenty-stars").classList.add("unlocked");
+    }
+
+    /* ========================================================
+       INIT
+    ========================================================= */
+    initAbcGrid();
+    initRhymes();
+    generateLetterQuiz();
+    generateWordQuiz();
+    generateSoundQuiz();
+    generateSentence();
+    roomsVisited.add("abc-room");
+</script>
+
+</body>
+</html>

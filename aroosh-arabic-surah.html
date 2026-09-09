@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TomToms Am-Para & Gebetsregeln 📖</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: "Segoe UI", "Tahoma", "Arial", sans-serif;
+            min-height: 100vh;
+            color: #263238;
+            background: linear-gradient(135deg, #f0fdf4, #fffbeb);
+            padding: 18px;
+        }
+        .container { max-width: 1150px; margin: 0 auto; }
+        .top { text-align: center; padding: 28px 10px 22px; }
+        .rocket { font-size: 58px; margin-bottom: 10px; }
+        .top h1 { color: #173f73; font-size: clamp(30px, 6vw, 48px); font-weight: 900; }
+        .top h2 { margin-top: 8px; color: #10b981; font-size: 22px; }
+        .top p { color: #687786; margin-top: 11px; line-height: 1.6; }
+        .back-home {
+            display: inline-block; margin-top: 18px; padding: 11px 18px;
+            border-radius: 25px; background: white; border: 2px solid #d1fae5;
+            color: #173f73; text-decoration: none; font-weight: 700; transition: 0.2s;
+        }
+        .back-home:hover { background: #10b981; color: white; border-color: #10b981; }
+        .tab-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 25px 0; }
+        .tab-btn {
+            border: 3px solid #d1fae5; background: white; color: #065f46;
+            border-radius: 16px; padding: 13px 22px; cursor: pointer;
+            font-weight: 800; font-size: 15px; transition: 0.2s;
+        }
+        .tab-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(16,185,129,0.15); }
+        .tab-btn.active { background: #10b981; color: white; border-color: #10b981; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .surah-container { display: grid; gap: 20px; }
+        .surah-card-full {
+            background: white; border-radius: 20px; padding: 28px;
+            border: 3px solid #d1fae5; box-shadow: 0 5px 15px rgba(40,60,80,0.06);
+            position: relative; overflow: hidden;
+        }
+        .surah-header {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border-radius: 14px; padding: 18px; margin-bottom: 20px;
+            text-align: center; border: 2px solid #6ee7b7;
+        }
+        .surah-number-badge {
+            display: inline-block; background: #10b981; color: white;
+            width: 42px; height: 42px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 18px; margin-bottom: 8px;
+        }
+        .surah-arabic-title {
+            font-family: "Traditional Arabic", "Arial", sans-serif;
+            font-size: 36px; color: #065f46; direction: rtl;
+            margin: 8px 0; line-height: 1.3;
+        }
+        .surah-name-de { color: #173f73; font-size: 20px; font-weight: 800; margin: 6px 0; }
+        .surah-meaning-de { color: #718096; font-size: 15px; font-style: italic; }
+        .surah-meta { display: flex; justify-content: center; gap: 20px; margin-top: 12px; flex-wrap: wrap; }
+        .meta-item {
+            background: white; padding: 4px 12px; border-radius: 12px;
+            font-size: 13px; color: #065f46; font-weight: 700; border: 1px solid #6ee7b7;
+        }
+        .bismillah {
+            font-family: "Traditional Arabic", "Arial", sans-serif;
+            font-size: 28px; color: #065f46; text-align: center;
+            direction: rtl; margin: 20px 0; padding: 15px;
+            background: #f0fdf4; border-radius: 10px;
+        }
+        .surah-text {
+            font-family: "Traditional Arabic", "Amiri", "Arial", sans-serif;
+            font-size: 26px; line-height: 2.2; color: #065f46;
+            direction: rtl; text-align: right;
+            background: #fafafa; padding: 25px; border-radius: 14px;
+            border: 2px solid #e5e7eb; margin-bottom: 16px;
+        }
+        .ayah-number {
+            display: inline-block; color: #10b981; font-size: 18px;
+            font-weight: 700; margin: 0 8px;
+        }
+        .surah-info-box {
+            background: #fffbeb; border-left: 4px solid #f59e0b;
+            border-radius: 10px; padding: 14px; margin-top: 16px;
+        }
+        .surah-info-box h4 { color: #92400e; margin-bottom: 6px; font-size: 16px; }
+        .surah-info-box p { color: #78350f; line-height: 1.6; font-size: 14px; }
+        .prayer-intro {
+            background: white; border-radius: 22px; padding: 28px;
+            border: 2px solid #d1fae5; margin-bottom: 24px;
+            box-shadow: 0 5px 15px rgba(40,60,80,0.06);
+        }
+        .prayer-intro h2 { color: #173f73; font-size: 26px; margin-bottom: 12px; text-align: center; }
+        .prayer-intro p { color: #52606d; line-height: 1.7; text-align: center; max-width: 700px; margin: 0 auto; }
+        .prayer-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+        .prayer-card {
+            background: white; border-radius: 20px; padding: 24px;
+            border: 3px solid; box-shadow: 0 8px 22px rgba(40,60,80,0.07); transition: 0.2s;
+        }
+        .prayer-card:hover { transform: translateY(-3px); }
+        .prayer-card.fajr { border-color: #f59e0b; }
+        .prayer-card.dhuhr { border-color: #3b82f6; }
+        .prayer-card.asr { border-color: #f97316; }
+        .prayer-card.maghrib { border-color: #ef4444; }
+        .prayer-card.isha { border-color: #8b5cf6; }
+        .prayer-card .prayer-icon { font-size: 42px; margin-bottom: 8px; text-align: center; }
+        .prayer-card h3 { color: #173f73; font-size: 22px; text-align: center; margin-bottom: 4px; }
+        .prayer-card .prayer-arabic {
+            font-family: "Traditional Arabic", "Arial", sans-serif;
+            font-size: 26px; color: #065f46; text-align: center; direction: rtl; margin-bottom: 12px;
+        }
+        .prayer-card .prayer-time { color: #718096; font-size: 14px; text-align: center; margin-bottom: 14px; }
+        .rakat-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .rakat-table th, .rakat-table td { padding: 8px 10px; text-align: center; font-size: 14px; border-bottom: 1px solid #e5e7eb; }
+        .rakat-table th { color: #173f73; font-weight: 700; background: #f8fafc; }
+        .rakat-table td { color: #52606d; }
+        .rakat-table .total { font-weight: 800; color: #173f73; background: #ecfdf5; }
+        .special-prayer {
+            background: white; border-radius: 22px; padding: 30px;
+            border: 3px solid #fbbf24; margin-bottom: 24px; box-shadow: 0 8px 22px rgba(40,60,80,0.07);
+        }
+        .special-prayer h2 { color: #173f73; font-size: 26px; margin-bottom: 6px; text-align: center; }
+        .special-prayer .arabic-title {
+            font-family: "Traditional Arabic", "Arial", sans-serif;
+            font-size: 30px; color: #065f46; text-align: center; direction: rtl; margin-bottom: 16px;
+        }
+        .special-prayer p { color: #52606d; line-height: 1.75; margin-bottom: 12px; }
+        .step-list { list-style: none; margin: 16px 0; }
+        .step-list li {
+            background: #f8fafc; border-radius: 14px; padding: 14px 18px;
+            margin-bottom: 10px; border-left: 4px solid #10b981; line-height: 1.6; color: #374151;
+        }
+        .step-list li strong { color: #173f73; }
+        .step-list .step-num {
+            display: inline-block; background: #10b981; color: white;
+            width: 28px; height: 28px; border-radius: 50%; text-align: center;
+            line-height: 28px; font-weight: 800; font-size: 14px; margin-right: 10px;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+            border: 2px solid #6ee7b7; border-radius: 16px; padding: 18px; margin: 18px 0;
+        }
+        .highlight-box h4 { color: #065f46; margin-bottom: 8px; }
+        .highlight-box p { color: #374151; margin-bottom: 6px; }
+        .teacher-tip {
+            background: #fff9db; border-left: 5px solid #f59f00;
+            border-radius: 10px; padding: 18px; margin-top: 24px;
+            color: #6b5b20; line-height: 1.6; text-align: left;
+        }
+        .teacher-tip h4 { color: #b9770e; margin-bottom: 10px; font-size: 17px; }
+        .teacher-tip ul { margin-left: 20px; margin-top: 8px; }
+        .teacher-tip li { margin-bottom: 8px; }
+        footer { text-align: center; padding: 42px 10px 22px; color: #8795a1; font-size: 14px; }
+        footer strong { color: #173f73; }
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .surah-text { font-size: 22px; padding: 15px; }
+            .surah-arabic-title { font-size: 28px; }
+            .prayer-grid { grid-template-columns: 1fr; }
+            .tab-btn { padding: 10px 14px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="top">
+        <div class="rocket">🕌📖🌙</div>
+        <h1>Am-Para & Gebetsregeln</h1>
+        <h2>37 Suren zum Lesen · 5 Gebete · Eid · Janaza</h2>
+        <p>Der Am-Para (Juz 30) ist der letzte Teil des Quran.<br>Hier kannst du alle Suren lesen und die Gebetsregeln lernen! ⭐</p>
+        <a href="aroosh-arabic.html" class="back-home">← Zurück zur Arabisch-Welt</a>
+    </header>
+
+    <nav class="tab-nav">
+        <button class="tab-btn active" onclick="openTab('surah-tab')">📖 37 Suren</button>
+        <button class="tab-btn" onclick="openTab('prayer-tab')">🕌 5 Gebete</button>
+        <button class="tab-btn" onclick="openTab('eid-tab')"> Eid-Gebet</button>
+        <button class="tab-btn" onclick="openTab('janaza-tab')">🤲 Janaza-Gebet</button>
+    </nav>
+
+    <!-- TAB 1: ALL 37 SURAHS WITH FULL ARABIC TEXT -->
+    <div id="surah-tab" class="tab-content active">
+        <div class="prayer-intro">
+            <h2> Die 37 Suren des Am-Para - Zum Lesen</h2>
+            <p>Lies jede Sure mit. Beginne mit den kurzen Suren am Ende!</p>
+        </div>
+
+        <div class="surah-container">
+
+            <!-- SURAH 78: AN-NABA -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">78</div>
+                    <div class="surah-arabic-title">النَّبَأ</div>
+                    <div class="surah-name-de">An-Naba</div>
+                    <div class="surah-meaning-de">Die Ankündigung</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">40 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    عَمَّ يَتَسَاءَلُونَ <span class="ayah-number">١</span>
+                    عَنِ النَّبَإِ الْعَظِيمِ <span class="ayah-number">٢</span>
+                    الَّذِي هُمْ فِيهِ مُخْتَلِفُونَ <span class="ayah-number">٣</span>
+                    كَلَّا سَيَعْلَمُونَ <span class="ayah-number">٤</span>
+                    ثُمَّ كَلَّا سَيَعْلَمُونَ <span class="ayah-number">٥</span>
+                    أَلَمْ نَجْعَلِ الْأَرْضَ مِهَادًا <span class="ayah-number"></span>
+                    وَالْجِبَالَ أَوْتَادًا <span class="ayah-number">٧</span>
+                    وَخَلَقْنَاكُمْ أَزْوَاجًا <span class="ayah-number">٨</span>
+                    وَجَعَلْنَا نَوْمَكُمْ سُبَاتًا <span class="ayah-number"></span>
+                    وَجَعَلْنَا اللَّيْلَ لِبَاسًا <span class="ayah-number">١٠</span>
+                    وَجَعَلْنَا النَّهَارَ مَعَاشًا <span class="ayah-number">١١</span>
+                    وَبَنَيْنَا فَوْقَكُمْ سَبْعًا شِدَادًا <span class="ayah-number">١٢</span>
+                    وَجَعَلْنَا سِرَاجًا وَهَّاجًا <span class="ayah-number">١</span>
+                    وَأَنزَلْنَا مِنَ الْمُعْصِرَاتِ مَاءً ثَجَّاجًا <span class="ayah-number">١٤</span>
+                    لِنُخْرِجَ بِهِ حَبًّا وَنَبَاتًا <span class="ayah-number">٥</span>
+                    وَجَنَّاتٍ أَلْفَافًا <span class="ayah-number">١٦</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4> Worum geht es?</h4>
+                    <p>Diese Sure spricht über den Tag des Gerichts und die große Nachricht. Sie beschreibt Allahs Macht in der Schöpfung.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 79: AN-NAZI'AT -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">79</div>
+                    <div class="surah-arabic-title">النَّازِعَات</div>
+                    <div class="surah-name-de">An-Nazi'at</div>
+                    <div class="surah-meaning-de">Die Entreißenden</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">46 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    وَالنَّازِعَاتِ غَرْقًا <span class="ayah-number">١</span>
+                    وَالنَّاشِطَاتِ نَشْطًا <span class="ayah-number">٢</span>
+                    وَالسَّابِحَاتِ سَبْحًا <span class="ayah-number">٣</span>
+                    فَالسَّابِقَاتِ سَبْقًا <span class="ayah-number">٤</span>
+                    فَالْمُدَبِّرَاتِ أَمْرًا <span class="ayah-number">٥</span>
+                    يَوْمَ تَرْجُفُ الرَّاجِفَةُ <span class="ayah-number">٦</span>
+                    تَتْبَعُهَا الرَّادِفَةُ <span class="ayah-number">٧</span>
+                    قُلُوبٌ يَوْمَئِذٍ وَاجِفَةٌ <span class="ayah-number">٨</span>
+                    أَبْصَارُهَا خَاشِعَةٌ <span class="ayah-number">٩</span>
+                    يَقُولُونَ أَإِنَّا لَمَرْدُودُونَ فِي الْحَافِرَةِ <span class="ayah-number">١٠</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Über die Engel, die die Seelen entnehmen, und über die Auferstehung. Sie erinnert an Musa (Moses) und Fir'aun.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 80: 'ABASA -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">80</div>
+                    <div class="surah-arabic-title">عَبَسَ</div>
+                    <div class="surah-name-de">'Abasa</div>
+                    <div class="surah-meaning-de">Er runzelte die Stirn</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">42 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    عَبَسَ وَتَوَلَّىٰ <span class="ayah-number">١</span>
+                    أَن جَاءَهُ الْأَعْمَىٰ <span class="ayah-number">٢</span>
+                    وَمَا يُدْرِيكَ لَعَلَّهُ يَزَّكَّىٰ <span class="ayah-number">٣</span>
+                    أَوْ يَذَّكَّرُ فَتَنفَعَهُ الذِّكْرَىٰ <span class="ayah-number">٤</span>
+                    أَمَّا مَنِ اسْتَغْنَىٰ <span class="ayah-number">٥</span>
+                    فَأَنتَ لَهُ تَصَدَّىٰ <span class="ayah-number"></span>
+                    وَمَا عَلَيْكَ أَلَّا يَزَّكَّىٰ <span class="ayah-number">٧</span>
+                    وَأَمَّا مَن جَاءَكَ يَسْعَىٰ <span class="ayah-number">٨</span>
+                    وَهُوَ يَخْشَىٰ <span class="ayah-number">٩</span>
+                    فَأَنتَ عَنْهُ تَلَهَّىٰ <span class="ayah-number">١٠</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4> Worum geht es?</h4>
+                    <p>Jeder Mensch ist wichtig – egal ob reich oder arm. Allah weiß, wer sich reinigen möchte.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 81: AT-TAKWIR -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">81</div>
+                    <div class="surah-arabic-title">التَّكْوِير</div>
+                    <div class="surah-name-de">At-Takwir</div>
+                    <div class="surah-meaning-de">Das Zusammenrollen</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">29 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    إِذَا الشَّمْسُ كُوِّرَتْ <span class="ayah-number">١</span>
+                    وَإِذَا النُّجُومُ انكَدَرَتْ <span class="ayah-number">٢</span>
+                    وَإِذَا الْجِبَالُ سُيِّرَتْ <span class="ayah-number">٣</span>
+                    وَإِذَا الْعِشَارُ عُطِّلَتْ <span class="ayah-number">٤</span>
+                    وَإِذَا الْوُحُوشُ حُشِرَتْ <span class="ayah-number">٥</span>
+                    وَإِذَا الْبِحَارُ سُجِّرَتْ <span class="ayah-number">٦</span>
+                    وَإِذَا النُّفُوسُ زُوِّجَتْ <span class="ayah-number">٧</span>
+                    وَإِذَا الْمَوْءُودَةُ سُئِلَتْ <span class="ayah-number">٨</span>
+                    بِأَيِّ ذَنبٍ قُتِلَتْ <span class="ayah-number">٩</span>
+                    وَإِذَا الصُّحُفُ نُشِرَتْ <span class="ayah-number">٠</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Beschreibt, wie die Sonne zusammenrollt und die Sterne fallen am Tag des Gerichts.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 82: AL-INFITAR -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">82</div>
+                    <div class="surah-arabic-title">الانْفِطَار</div>
+                    <div class="surah-name-de">Al-Infitar</div>
+                    <div class="surah-meaning-de">Das Zerbrechen</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">19 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    إِذَا السَّمَاءُ انفَطَرَتْ <span class="ayah-number"></span>
+                    وَإِذَا الْكَوَاكِبُ انتَثَرَتْ <span class="ayah-number">٢</span>
+                    وَإِذَا الْبِحَارُ فُجِّرَتْ <span class="ayah-number">٣</span>
+                    وَإِذَا الْقُبُورُ بُعْثِرَتْ <span class="ayah-number">٤</span>
+                    عَلِمَتْ نَفْسٌ مَّا قَدَّمَتْ وَأَخَّرَتْ <span class="ayah-number">٥</span>
+                    يَا أَيُّهَا الْإِنسَانُ مَا غَرَّكَ بِرَبِّكَ الْكَرِيمِ <span class="ayah-number">٦</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Wenn der Himmel zerbricht und die Meere überfluten – der Tag der Abrechnung.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 83: AL-MUTAFFIFIN -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">83</div>
+                    <div class="surah-arabic-title">المُطَفِّفِين</div>
+                    <div class="surah-name-de">Al-Mutaffifin</div>
+                    <div class="surah-meaning-de">Die Betrüger</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">36 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    وَيْلٌ لِّلْمُطَفِّفِينَ <span class="ayah-number"></span>
+                    الَّذِينَ إِذَا اكْتَالُوا عَلَى النَّاسِ يَسْتَوْفُونَ <span class="ayah-number"></span>
+                    وَإِذَا كَالُوهُمْ أَو وَّزَنُوهُمْ يُخْسِرُونَ <span class="ayah-number">٣</span>
+                    أَلَا يَظُنُّ أُولَٰئِكَ أَنَّهُم مَّبْعُوثُونَ <span class="ayah-number"></span>
+                    لِيَوْمٍ عَظِيمٍ <span class="ayah-number">٥</span>
+                    يَوْمَ يَقُومُ النَّاسُ لِرَبِّ الْعَالَمِينَ <span class="ayah-number">٦</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Eine Warnung an diejenigen, die beim Wiegen und Messen betrügen.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 84: AL-INSHIQAQ -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">84</div>
+                    <div class="surah-arabic-title">الانْشِقَاق</div>
+                    <div class="surah-name-de">Al-Inshiqaq</div>
+                    <div class="surah-meaning-de">Das Auseinanderbrechen</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">25 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    إِذَا السَّمَاءُ انشَقَّتْ <span class="ayah-number">١</span>
+                    وَأَذِنَتْ رَبَّهَا وَحُقَّتْ <span class="ayah-number">٢</span>
+                    وَإِذَا الْأَرْضُ مُدَّتْ <span class="ayah-number">٣</span>
+                    وَأَلْقَتْ مَا فِيهَا وَتَخَلَّتْ <span class="ayah-number">٤</span>
+                    وَأَذِنَتْ رَبَّهَا وَحُقَّتْ <span class="ayah-number">٥</span>
+                    يَا أَيُّهَا الْإِنسَانُ إِنَّكَ كَادِحٌ إِلَىٰ رَبِّكَ كَدْحًا فَمُلَاقِيهِ <span class="ayah-number">٦</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Wenn der Himmel aufbricht und die Erde sich ausdehnt am Jüngsten Tag.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 85: AL-BURUJ -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">85</div>
+                    <div class="surah-arabic-title">البُرُوج</div>
+                    <div class="surah-name-de">Al-Buruj</div>
+                    <div class="surah-meaning-de">Die Türme (Sternbilder)</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">22 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    وَالسَّمَاءِ ذَاتِ الْبُرُوجِ <span class="ayah-number">١</span>
+                    وَالْيَوْمِ الْمَوْعُودِ <span class="ayah-number"></span>
+                    وَشَاهِدٍ وَمَشْهُودٍ <span class="ayah-number">٣</span>
+                    قُتِلَ أَصْحَابُ الْأُخْدُودِ <span class="ayah-number">٤</span>
+                    النَّارِ ذَاتِ الْوَقُودِ <span class="ayah-number"></span>
+                    إِذْ هُمْ عَلَيْهَا قُعُودٌ <span class="ayah-number">٦</span>
+                    وَهُمْ عَلَىٰ مَا يَفْعَلُونَ بِالْمُؤْمِنِينَ شُهُودٌ <span class="ayah-number"></span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Über die Gläubigen, die für ihren Glauben geprüft wurden, und Allahs Macht.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 86: AT-TARIQ -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">86</div>
+                    <div class="surah-arabic-title">الطَّارِق</div>
+                    <div class="surah-name-de">At-Tariq</div>
+                    <div class="surah-meaning-de">Der Pochende</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">17 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    وَالسَّمَاءِ وَالطَّارِقِ <span class="ayah-number"></span>
+                    وَمَا أَدْرَاكَ مَا الطَّارِقُ <span class="ayah-number">٢</span>
+                    النَّجْمُ الثَّاقِبُ <span class="ayah-number">٣</span>
+                    إِن كُلُّ نَفْسٍ لَّمَّا عَلَيْهَا حَافِظٌ <span class="ayah-number">٤</span>
+                    فَلْيَنظُرِ الْإِنسَانُ مِمَّ خُلِقَ <span class="ayah-number">٥</span>
+                    خُلِقَ مِن مَّاءٍ دَافِقٍ <span class="ayah-number">٦</span>
+                    يَخْرُجُ مِن بَيْنِ الصُّلْبِ وَالتَّرَائِبِ <span class="ayah-number"></span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Schwört bei dem hellen Stern in der Nacht und erinnert an Allahs Schöpfung.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 87: AL-A'LA -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">87</div>
+                    <div class="surah-arabic-title">الأَعْلَى</div>
+                    <div class="surah-name-de">Al-A'la</div>
+                    <div class="surah-meaning-de">Der Höchste</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">19 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    سَبِّحِ اسْمَ رَبِّكَ الْأَعْلَى <span class="ayah-number">١</span>
+                    الَّذِي خَلَقَ فَسَوَّىٰ <span class="ayah-number">٢</span>
+                    وَالَّذِي قَدَّرَ فَهَدَىٰ <span class="ayah-number">٣</span>
+                    وَالَّذِي أَخْرَجَ الْمَرْعَىٰ <span class="ayah-number">٤</span>
+                    فَجَعَلَهُ غُثَاءً أَحْوَىٰ <span class="ayah-number">٥</span>
+                    سَنُقْرِئُكَ فَلَا تَنسَىٰ <span class="ayah-number">٦</span>
+                    إِلَّا مَا شَاءَ اللَّهُ ۚ إِنَّهُ يَعْلَمُ الْجَهْرَ وَمَا يَخْفَىٰ <span class="ayah-number">٧</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Preist Allah, den Höchsten, der alles erschaffen und geordnet hat.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 88: AL-GHASHIYAH -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">88</div>
+                    <div class="surah-arabic-title">الغَاشِيَة</div>
+                    <div class="surah-name-de">Al-Ghashiyah</div>
+                    <div class="surah-meaning-de">Die Überdeckende</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">26 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    هَلْ أَتَاكَ حَدِيثُ الْغَاشِيَةِ <span class="ayah-number">١</span>
+                    وُجُوهٌ خَاشِعَةٌ <span class="ayah-number">٢</span>
+                    عَامِلَةٌ نَّاصِبَةٌ <span class="ayah-number">٣</span>
+                    تَصْلَىٰ نَارًا حَامِيَةً <span class="ayah-number">٤</span>
+                    تُسْقَىٰ مِنْ عَيْنٍ آنِيَةٍ <span class="ayah-number"></span>
+                    لَّيْسَ لَهُمْ طَعَامٌ إِلَّا مِن ضَرِيعٍ <span class="ayah-number">٦</span>
+                    لَّا يُسْمِنُ وَلَا يُغْنِي مِن جُوعٍ <span class="ayah-number">٧</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Beschreibt die Gesichter am Tag des Gerichts – manche strahlend, manche demütig.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 89: AL-FAJR -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">89</div>
+                    <div class="surah-arabic-title">الفَجْر</div>
+                    <div class="surah-name-de">Al-Fajr</div>
+                    <div class="surah-meaning-de">Die Morgendämmerung</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">30 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    وَالْفَجْرِ <span class="ayah-number"></span>
+                    وَلَيَالٍ عَشْرٍ <span class="ayah-number">٢</span>
+                    وَالشَّفْعِ وَالْوَتْرِ <span class="ayah-number">٣</span>
+                    وَاللَّيْلِ إِذَا يَسْرِ <span class="ayah-number">٤</span>
+                    هَلْ فِي ذَٰلِكَ قَسَمٌ لِّذِي حِجْرٍ <span class="ayah-number">٥</span>
+                    أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِعَادٍ <span class="ayah-number">٦</span>
+                    إِرَمَ ذَاتِ الْعِمَادِ <span class="ayah-number">٧</span>
+                    الَّتِي لَمْ يُخْلَقْ مِثْلُهَا فِي الْبِلَادِ <span class="ayah-number">٨</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Schwört bei der Morgendämmerung und erinnert an vergangene Völker und ihre Prüfung.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 90: AL-BALAD -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">90</div>
+                    <div class="surah-arabic-title">البَلَد</div>
+                    <div class="surah-name-de">Al-Balad</div>
+                    <div class="surah-meaning-de">Die Stadt</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">20 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    لَا أُقْسِمُ بِهَٰذَا الْبَلَدِ <span class="ayah-number">١</span>
+                    وَأَنتَ حِلٌّ بِهَٰذَا الْبَلَدِ <span class="ayah-number"></span>
+                    وَوَالِدٍ وَمَا وَلَدَ <span class="ayah-number">٣</span>
+                    لَقَدْ خَلَقْنَا الْإِنسَانَ فِي كَبَدٍ <span class="ayah-number">٤</span>
+                    أَيَحْسَبُ أَن لَّن يَقْدِرَ عَلَيْهِ أَحَدٌ <span class="ayah-number">٥</span>
+                    يَقُولُ أَهْلَكْتُ مَالًا لُّبَدًا <span class="ayah-number">٦</span>
+                    أَيَحْسَبُ أَن لَّمْ يَرَهُ أَحَدٌ <span class="ayah-number"></span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Über die heilige Stadt Mekka und den schwierigen Weg des Glaubens.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 91: ASH-SHAMS -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">91</div>
+                    <div class="surah-arabic-title">الشَّمْس</div>
+                    <div class="surah-name-de">Ash-Shams</div>
+                    <div class="surah-meaning-de">Die Sonne</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">15 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    وَالشَّمْسِ وَضُحَاهَا <span class="ayah-number">١</span>
+                    وَالْقَمَرِ إِذَا تَلَاهَا <span class="ayah-number">٢</span>
+                    وَالنَّهَارِ إِذَا جَلَّاهَا <span class="ayah-number">٣</span>
+                    وَاللَّيْلِ إِذَا يَغْشَاهَا <span class="ayah-number">٤</span>
+                    وَالسَّمَاءِ وَمَا بَنَاهَا <span class="ayah-number">٥</span>
+                    وَالْأَرْضِ وَمَا طَحَاهَا <span class="ayah-number">٦</span>
+                    وَنَفْسٍ وَمَا سَوَّاهَا <span class="ayah-number">٧</span>
+                    فَأَلْهَمَهَا فُجُورَهَا وَتَقْوَاهَا <span class="ayah-number">٨</span>
+                    قَدْ أَفْلَحَ مَن زَكَّاهَا <span class="ayah-number">٩</span>
+                    وَقَدْ خَابَ مَن دَسَّاهَا <span class="ayah-number">١٠</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Schwört bei der Sonne und dem Mond. Wer seine Seele reinigt, hat Erfolg.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 92: AL-LAYL -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">92</div>
+                    <div class="surah-arabic-title">اللَّيْل</div>
+                    <div class="surah-name-de">Al-Layl</div>
+                    <div class="surah-meaning-de">Die Nacht</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">21 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    وَاللَّيْلِ إِذَا يَغْشَىٰ <span class="ayah-number">١</span>
+                    وَالنَّهَارِ إِذَا تَجَلَّىٰ <span class="ayah-number">٢</span>
+                    وَمَا خَلَقَ الذَّكَرَ وَالْأُنثَىٰ <span class="ayah-number">٣</span>
+                    إِنَّ سَعْيَكُمْ لَشَتَّىٰ <span class="ayah-number">٤</span>
+                    فَأَمَّا مَنْ أَعْطَىٰ وَاتَّقَىٰ <span class="ayah-number">٥</span>
+                    وَصَدَّقَ بِالْحُسْنَىٰ <span class="ayah-number">٦</span>
+                    فَسَنُيَسِّرُهُ لِلْيُسْرَىٰ <span class="ayah-number">٧</span>
+                    وَأَمَّا مَن بَخِلَ وَاسْتَغْنَىٰ <span class="ayah-number"></span>
+                    وَكَذَّبَ بِالْحُسْنَىٰ <span class="ayah-number">٩</span>
+                    فَسَنُيَسِّرُهُ لِلْعُسْرَىٰ <span class="ayah-number">١٠</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Über zwei Wege: den Weg des Gebens und Glaubens und den Weg der Gier.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 93: AD-DUHA -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">93</div>
+                    <div class="surah-arabic-title">الضُّحَى</div>
+                    <div class="surah-name-de">Ad-Duha</div>
+                    <div class="surah-meaning-de">Der Vormittag</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">11 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    وَالضُّحَىٰ <span class="ayah-number"></span>
+                    وَاللَّيْلِ إِذَا سَجَىٰ <span class="ayah-number">٢</span>
+                    مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ <span class="ayah-number">٣</span>
+                    وَلَلْآخِرَةُ خَيْرٌ لَّكَ مِنَ الْأُولَىٰ <span class="ayah-number">٤</span>
+                    وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰ <span class="ayah-number">٥</span>
+                    أَلَمْ يَجِدْكَ يَتِيمًا فَآوَىٰ <span class="ayah-number">٦</span>
+                    وَوَجَدَكَ ضَالًّا فَهَدَىٰ <span class="ayah-number"></span>
+                    وَوَجَدَكَ عَائِلًا فَأَغْنَىٰ <span class="ayah-number"></span>
+                    فَأَمَّا الْيَتِيمَ فَلَا تَقْهَرْ <span class="ayah-number">٩</span>
+                    وَأَمَّا السَّائِلَ فَلَا تَنْهَرْ <span class="ayah-number">١٠</span>
+                    وَأَمَّا بِنِعْمَةِ رَبِّكَ فَحَدِّثْ <span class="ayah-number">١١</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Eine tröstende Sure für den Propheten: „Dein Herr hat dich nicht verlassen."</p>
+                </div>
+            </div>
+
+            <!-- SURAH 94: ASH-SHARH -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">94</div>
+                    <div class="surah-arabic-title">الشَّرْح</div>
+                    <div class="surah-name-de">Ash-Sharh</div>
+                    <div class="surah-meaning-de">Die Erweiterung</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">8 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    أَلَمْ نَشْرَحْ لَكَ صَدْرَكَ <span class="ayah-number">١</span>
+                    وَوَضَعْنَا عَنكَ وِزْرَكَ <span class="ayah-number"></span>
+                    الَّذِي أَنقَضَ ظَهْرَكَ <span class="ayah-number">٣</span>
+                    وَرَفَعْنَا لَكَ ذِكْرَكَ <span class="ayah-number">٤</span>
+                    فَإِنَّ مَعَ الْعُسْرِ يُسْرًا <span class="ayah-number"></span>
+                    إِنَّ مَعَ الْعُسْرِ يُسْرًا <span class="ayah-number">٦</span>
+                    فَإِذَا فَرَغْتَ فَانسَبْ <span class="ayah-number">٧</span>
+                    وَإِلَىٰ رَبِّكَ فَارْغَب <span class="ayah-number">٨</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>„Mit der Erschwernis kommt die Erleichterung." Eine der hoffnungsvollsten Suren!</p>
+                </div>
+            </div>
+
+            <!-- SURAH 95: AT-TIN -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">95</div>
+                    <div class="surah-arabic-title">التِّين</div>
+                    <div class="surah-name-de">At-Tin</div>
+                    <div class="surah-meaning-de">Die Feige</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">8 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    وَالتِّينِ وَالزَّيْتُونِ <span class="ayah-number">١</span>
+                    وَطُورِ سِينِينَ <span class="ayah-number">٢</span>
+                    وَهَٰذَا الْبَلَدِ الْأَمِينِ <span class="ayah-number"></span>
+                    لَقَدْ خَلَقْنَا الْإِنسَانَ فِي أَحْسَنِ تَقْوِيمٍ <span class="ayah-number">٤</span>
+                    ثُمَّ رَدَدْنَاهُ أَسْفَلَ سَافِلِينَ <span class="ayah-number">٥</span>
+                    إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ فَلَهُمْ أَجْرٌ غَيْرُ مَمْنُونٍ <span class="ayah-number">٦</span>
+                    فَمَا يُكَذِّبُكَ بَعْدُ بِالدِّينِ <span class="ayah-number">٧</span>
+                    أَلَيْسَ اللَّهُ بِأَحْكَمِ الْحَاكِمِينَ <span class="ayah-number">٨</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Schwört bei der Feige und der Olive. Allah hat den Menschen in bester Form erschaffen.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 96: AL-'ALAQ -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">96</div>
+                    <div class="surah-arabic-title">العَلَق</div>
+                    <div class="surah-name-de">Al-'Alaq</div>
+                    <div class="surah-meaning-de">Der Blutklumpen</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">19 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ <span class="ayah-number">١</span>
+                    خَلَقَ الْإِنسَانَ مِنْ عَلَقٍ <span class="ayah-number">٢</span>
+                    اقْرَأْ وَرَبُّكَ الْأَكْرَمُ <span class="ayah-number"></span>
+                    الَّذِي عَلَّمَ بِالْقَلَمِ <span class="ayah-number">٤</span>
+                    عَلَّمَ الْإِنسَانَ مَا لَمْ يَعْلَمْ <span class="ayah-number">٥</span>
+                    كَلَّا إِنَّ الْإِنسَانَ لَيَطْغَىٰ <span class="ayah-number">٦</span>
+                    أَن رَّآهُ اسْتَغْنَىٰ <span class="ayah-number">٧</span>
+                    إِنَّ إِلَىٰ رَبِّكَ الرُّجْعَىٰ <span class="ayah-number">٨</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Die allererste Offenbarung! „Lies! Im Namen deines Herrn, der erschaffen hat."</p>
+                </div>
+            </div>
+
+            <!-- SURAH 97: AL-QADR -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">97</div>
+                    <div class="surah-arabic-title">القَدْر</div>
+                    <div class="surah-name-de">Al-Qadr</div>
+                    <div class="surah-meaning-de">Die Nacht der Macht</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">5 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    إِنَّا أَنزَلْنَاهُ فِي لَيْلَةِ الْقَدْرِ <span class="ayah-number">١</span>
+                    وَمَا أَدْرَاكَ مَا لَيْلَةُ الْقَدْرِ <span class="ayah-number"></span>
+                    لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ <span class="ayah-number">٣</span>
+                    تَنَزَّلُ الْمَلَائِكَةُ وَالرُّوحُ فِيهَا بِإِذْنِ رَبِّهِم مِّن كُلِّ أَمْرٍ <span class="ayah-number">٤</span>
+                    سَلَامٌ هِيَ حَتَّىٰ مَطْلَعِ الْفَجْرِ <span class="ayah-number">٥</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4> Worum geht es?</h4>
+                    <p>Die Nacht der Macht (Laylatul Qadr) ist besser als tausend Monate.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 98: AL-BAYYINAH -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">98</div>
+                    <div class="surah-arabic-title">البَيِّنَة</div>
+                    <div class="surah-name-de">Al-Bayyinah</div>
+                    <div class="surah-meaning-de">Der klare Beweis</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">8 Verse</span>
+                        <span class="meta-item">Madinah</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    لَمْ يَكُنِ الَّذِينَ كَفَرُوا مِنْ أَهْلِ الْكِتَابِ وَالْمُشْرِكِينَ مُنفَكِّينَ حَتَّىٰ تَأْتِيَهُمُ الْبَيِّنَةُ <span class="ayah-number">١</span>
+                    رَسُولٌ مِّنَ اللَّهِ يَتْلُو صُحُفًا مُّطَهَّرَةً <span class="ayah-number"></span>
+                    فِيهَا كُتُبٌ قَيِّمَةٌ <span class="ayah-number">٣</span>
+                    وَمَا تَفَرَّقَ الَّذِينَ أُوتُوا الْكِتَابَ إِلَّا مِن بَعْدِ مَا جَاءَتْهُمُ الْبَيِّنَةُ <span class="ayah-number">٤</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Über den klaren Beweis durch den Gesandten und die beste Religion.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 99: AZ-ZALZALAH -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">99</div>
+                    <div class="surah-arabic-title">الزَّلْزَلَة</div>
+                    <div class="surah-name-de">Az-Zalzalah</div>
+                    <div class="surah-meaning-de">Das Erdbeben</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">8 Verse</span>
+                        <span class="meta-item">Madinah</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    إِذَا زُلْزِلَتِ الْأَرْضُ زِلْزَالَهَا <span class="ayah-number">١</span>
+                    وَأَخْرَجَتِ الْأَرْضُ أَثْقَالَهَا <span class="ayah-number">٢</span>
+                    وَقَالَ الْإِنسَانُ مَا لَهَا <span class="ayah-number"></span>
+                    يَوْمَئِذٍ تُحَدِّثُ أَخْبَارَهَا <span class="ayah-number">٤</span>
+                    بِأَنَّ رَبَّكَ أَوْحَىٰ لَهَا <span class="ayah-number">٥</span>
+                    يَوْمَئِذٍ يَصْدُرُ النَّاسُ أَشْتَاتًا لِّيُرَوْا أَعْمَالَهُمْ <span class="ayah-number"></span>
+                    فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ <span class="ayah-number">٧</span>
+                    وَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ شَرًّا يَرَهُ <span class="ayah-number"></span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Wenn die Erde bebt und ihre Lasten hervorbringt. Jedes Atom Gutes wird belohnt.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 100: AL-'ADIYAT -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">100</div>
+                    <div class="surah-arabic-title">العَادِيَات</div>
+                    <div class="surah-name-de">Al-'Adiyat</div>
+                    <div class="surah-meaning-de">Die Rennenden</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">11 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    وَالْعَادِيَاتِ ضَبْحًا <span class="ayah-number">١</span>
+                    فَالْمُورِيَاتِ قَدْحًا <span class="ayah-number"></span>
+                    فَالْمُغِيرَاتِ صُبْحًا <span class="ayah-number">٣</span>
+                    فَأَثَرْنَ بِهِ نَقْعًا <span class="ayah-number">٤</span>
+                    فَوَسَطْنَ بِهِ جَمْعًا <span class="ayah-number">٥</span>
+                    إِنَّ الْإِنسَانَ لِرَبِّهِ لَكَنُودٌ <span class="ayah-number">٦</span>
+                    وَإِنَّهُ عَلَىٰ ذَٰلِكَ لَشَهِيدٌ <span class="ayah-number">٧</span>
+                    وَإِنَّهُ عَلَىٰ حُبِّ الْمَالِ لَشَدِيدٌ <span class="ayah-number">٨</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Schwört bei den galoppierenden Pferden und warnt vor Undankbarkeit.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 101: AL-QARI'AH -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">101</div>
+                    <div class="surah-arabic-title">القَارِعَة</div>
+                    <div class="surah-name-de">Al-Qari'ah</div>
+                    <div class="surah-meaning-de">Die Katastrophe</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">11 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    الْقَارِعَةُ <span class="ayah-number">١</span>
+                    مَا الْقَارِعَةُ <span class="ayah-number">٢</span>
+                    وَمَا أَدْرَاكَ مَا الْقَارِعَةُ <span class="ayah-number">٣</span>
+                    يَوْمَ يَكُونُ النَّاسُ كَالْفَرَاشِ الْمَبْثُوثِ <span class="ayah-number"></span>
+                    وَتَكُونُ الْجِبَالُ كَالْعِهْنِ الْمَنفُوشِ <span class="ayah-number">٥</span>
+                    فَأَمَّا مَن ثَقُلَتْ مَوَازِينُهُ <span class="ayah-number">٦</span>
+                    فَهُوَ فِي عِيشَةٍ رَّاضِيَةٍ <span class="ayah-number">٧</span>
+                    وَأَمَّا مَنْ خَفَّتْ مَوَازِينُهُ <span class="ayah-number">٨</span>
+                    فَأُمُّهُ هَاوِيَةٌ <span class="ayah-number">٩</span>
+                    وَمَا أَدْرَاكَ مَا هِيَهْ <span class="ayah-number">١٠</span>
+                    نَارٌ حَامِيَةٌ <span class="ayah-number">١١</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Die Katastrophe! Was ist die Katastrophe? Menschen wie verstreute Motten.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 102: AT-TAKATHUR -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">102</div>
+                    <div class="surah-arabic-title">التَّكَاثُر</div>
+                    <div class="surah-name-de">At-Takathur</div>
+                    <div class="surah-meaning-de">Die Vermehrung</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">8 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    أَلْهَاكُمُ التَّكَاثُرُ <span class="ayah-number"></span>
+                    حَتَّىٰ زُرْتُمُ الْمَقَابِرَ <span class="ayah-number">٢</span>
+                    كَلَّا سَوْفَ تَعْلَمُونَ <span class="ayah-number">٣</span>
+                    ثُمَّ كَلَّا سَوْفَ تَعْلَمُونَ <span class="ayah-number">٤</span>
+                    كَلَّا لَوْ تَعْلَمُونَ عِلْمَ الْيَقِينِ <span class="ayah-number"></span>
+                    لَتَرَوُنَّ الْجَحِيمَ <span class="ayah-number">٦</span>
+                    ثُمَّ لَتَرَوُنَّهَا عَيْنَ الْيَقِينِ <span class="ayah-number">٧</span>
+                    ثُمَّ لَتُسْأَلُنَّ يَوْمَئِذٍ عَنِ النَّعِيمِ <span class="ayah-number">٨</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Das Streben nach mehr und mehr lenkt euch ab, bis ihr die Gräber besucht.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 103: AL-'ASR -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">103</div>
+                    <div class="surah-arabic-title">العَصْر</div>
+                    <div class="surah-name-de">Al-'Asr</div>
+                    <div class="surah-meaning-de">Die Zeit</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">3 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    وَالْعَصْرِ <span class="ayah-number">١</span>
+                    إِنَّ الْإِنسَانَ لَفِي خُسْرٍ <span class="ayah-number"></span>
+                    إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ <span class="ayah-number">٣</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Eine der kürzesten und wichtigsten Suren. Nur Gläubige, die Gutes tun, gewinnen.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 104: AL-HUMAZAH -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">104</div>
+                    <div class="surah-arabic-title">الهُمَزَة</div>
+                    <div class="surah-name-de">Al-Humazah</div>
+                    <div class="surah-meaning-de">Der Stichler</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">9 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    وَيْلٌ لِّكُلِّ هُمَزَةٍ لُّمَزَةٍ <span class="ayah-number">١</span>
+                    الَّذِي جَمَعَ مَالًا وَعَدَّدَهُ <span class="ayah-number">٢</span>
+                    يَحْسَبُ أَنَّ مَالَهُ أَخْلَدَهُ <span class="ayah-number">٣</span>
+                    كَلَّا ۖ لَيُنبَذَنَّ فِي الْحُطَمَةِ <span class="ayah-number">٤</span>
+                    وَمَا أَدْرَاكَ مَا الْحُطَمَةُ <span class="ayah-number">٥</span>
+                    نَارُ اللَّهِ الْمُوقَدَةُ <span class="ayah-number">٦</span>
+                    الَّتِي تَطَّلِعُ عَلَى الْأَفْئِدَةِ <span class="ayah-number"></span>
+                    إِنَّهَا عَلَيْهِم مُّؤْصَدَةٌ <span class="ayah-number">٨</span>
+                    فِي عَمَدٍ مُّمَدَّدَةٍ <span class="ayah-number">٩</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4> Worum geht es?</h4>
+                    <p>Wehe jedem Spötter und Verleumder, der Reichtum anhäuft und denkt, er bleibt ewig.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 105: AL-FIL -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">105</div>
+                    <div class="surah-arabic-title">الفِيل</div>
+                    <div class="surah-name-de">Al-Fil</div>
+                    <div class="surah-meaning-de">Der Elefant</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">5 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ <span class="ayah-number"></span>
+                    أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ <span class="ayah-number">٢</span>
+                    وَأَرْسَلَ عَلَيْهِمْ طَيْرًا أَبَابِيلَ <span class="ayah-number">٣</span>
+                    تَرْمِيهِم بِحِجَارَةٍ مِّن سِجِّيلٍ <span class="ayah-number">٤</span>
+                    فَجَعَلَهُمْ كَعَصْفٍ مَّأْكُولٍ <span class="ayah-number">٥</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Die Geschichte vom Heer mit Elefanten, das die Kaaba zerstören wollte – und von Allah gestoppt wurde.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 106: QURAYSH -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">106</div>
+                    <div class="surah-arabic-title">قُرَيْش</div>
+                    <div class="surah-name-de">Quraysh</div>
+                    <div class="surah-meaning-de">Quraysh</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">4 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    لِإِيلَافِ قُرَيْشٍ <span class="ayah-number"></span>
+                    إِيلَافِهِمْ رِحْلَةَ الشِّتَاءِ وَالصَّيْفِ <span class="ayah-number">٢</span>
+                    فَلْيَعْبُدُوا رَبَّ هَٰذَا الْبَيْتِ <span class="ayah-number">٣</span>
+                    الَّذِي أَطْعَمَهُم مِّن جُوعٍ وَآمَنَهُم مِّنْ خَوْفٍ <span class="ayah-number">٤</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Erinnert den Stamm Quraysh an Allahs Gnade: sichere Handelsreisen im Sommer und Winter.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 107: AL-MA'UN -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">107</div>
+                    <div class="surah-arabic-title">المَاعُون</div>
+                    <div class="surah-name-de">Al-Ma'un</div>
+                    <div class="surah-meaning-de">Die Hilfeleistung</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">7 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    أَرَأَيْتَ الَّذِي يُكَذِّبُ بِالدِّينِ <span class="ayah-number">١</span>
+                    فَذَٰلِكَ الَّذِي يَدُعُّ الْيَتِيمَ <span class="ayah-number">٢</span>
+                    وَلَا يَحُضُّ عَلَىٰ طَعَامِ الْمِسْكِينِ <span class="ayah-number">٣</span>
+                    فَوَيْلٌ لِّلْمُصَلِّينَ <span class="ayah-number"></span>
+                    الَّذِينَ هُمْ عَن صَلَاتِهِمْ سَاهُونَ <span class="ayah-number">٥</span>
+                    الَّذِينَ هُمْ يُرَاءُونَ <span class="ayah-number">٦</span>
+                    وَيَمْنَعُونَ الْمَاعُونَ <span class="ayah-number">٧</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Wer die Waisen wegstößt und die Armen nicht speist – wehe den Betenden, die achtlos sind.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 108: AL-KAWTHAR -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">108</div>
+                    <div class="surah-arabic-title">الكَوْثَر</div>
+                    <div class="surah-name-de">Al-Kawthar</div>
+                    <div class="surah-meaning-de">Die Überfülle</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">3 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ <span class="ayah-number"></span>
+                    فَصَلِّ لِرَبِّكَ وَانْحَرْ <span class="ayah-number">٢</span>
+                    إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ <span class="ayah-number">٣</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Die kürzeste Sure im Quran! Allah hat dem Propheten  Überfluss gegeben.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 109: AL-KAFIRUN -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">109</div>
+                    <div class="surah-arabic-title">الكَافِرُون</div>
+                    <div class="surah-name-de">Al-Kafirun</div>
+                    <div class="surah-meaning-de">Die Ungläubigen</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">6 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    قُلْ يَا أَيُّهَا الْكَافِرُونَ <span class="ayah-number">١</span>
+                    لَا أَعْبُدُ مَا تَعْبُدُونَ <span class="ayah-number">٢</span>
+                    وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ <span class="ayah-number">٣</span>
+                    وَلَا أَنَا عَابِدٌ مَّا عَبَدتُّمْ <span class="ayah-number">٤</span>
+                    وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ <span class="ayah-number">٥</span>
+                    لَكُمْ دِينُكُمْ وَلِيَ دِينِ <span class="ayah-number"></span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>„Euch eure Religion und mir meine Religion." Klarheit über den eigenen Glauben.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 110: AN-NASR -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">110</div>
+                    <div class="surah-arabic-title">النَّصْر</div>
+                    <div class="surah-name-de">An-Nasr</div>
+                    <div class="surah-meaning-de">Die Hilfe</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">3 Verse</span>
+                        <span class="meta-item">Madinah</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ <span class="ayah-number">١</span>
+                    وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا <span class="ayah-number"></span>
+                    فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ ۚ إِنَّهُ كَانَ تَوَّابًا <span class="ayah-number">٣</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Wenn die Hilfe Allahs und der Sieg kommt und die Menschen in Scharen eintreten.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 111: AL-MASAD -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">111</div>
+                    <div class="surah-arabic-title">المَسَد</div>
+                    <div class="surah-name-de">Al-Masad</div>
+                    <div class="surah-meaning-de">Die Palmfasern</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">5 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ <span class="ayah-number"></span>
+                    مَا أَغْنَىٰ عَنْهُ مَالُهُ وَمَا كَسَبَ <span class="ayah-number"></span>
+                    سَيَصْلَىٰ نَارًا ذَاتَ لَهَبٍ <span class="ayah-number">٣</span>
+                    وَامْرَأَتُهُ حَمَّالَةَ الْحَطَبِ <span class="ayah-number">٤</span>
+                    فِي جِيدِهَا حَبْلٌ مِّن مَّسَدٍ <span class="ayah-number">٥</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p>Über Abu Lahab, den Onkel des Propheten, der den Islam bekämpfte.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 112: AL-IKHLAS -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">112</div>
+                    <div class="surah-arabic-title">الإِخْلَاص</div>
+                    <div class="surah-name-de">Al-Ikhlas</div>
+                    <div class="surah-meaning-de">Die Aufrichtigkeit</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">4 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    قُلْ هُوَ اللَّهُ أَحَدٌ <span class="ayah-number">١</span>
+                    اللَّهُ الصَّمَدُ <span class="ayah-number">٢</span>
+                    لَمْ يَلِدْ وَلَمْ يُولَدْ <span class="ayah-number"></span>
+                    وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ <span class="ayah-number">٤</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4> Worum geht es?</h4>
+                    <p><strong>Die wichtigste kurze Sure!</strong> Sie beschreibt Allahs Einzigartigkeit. Der Prophet(S) sagte: Sie ist wie ein Drittel des Quran!</p>
+                </div>
+            </div>
+
+            <!-- SURAH 113: AL-FALAQ -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">113</div>
+                    <div class="surah-arabic-title">الفَلَق</div>
+                    <div class="surah-name-de">Al-Falaq</div>
+                    <div class="surah-meaning-de">Die Morgendämmerung</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">5 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ <span class="ayah-number">١</span>
+                    مِن شَرِّ مَا خَلَقَ <span class="ayah-number">٢</span>
+                    وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ <span class="ayah-number">٣</span>
+                    وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ <span class="ayah-number">٤</span>
+                    وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ <span class="ayah-number">٥</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h4>
+                    <p><strong>Eine Schutz-Sure!</strong> Wir suchen Zuflucht bei Allah vor allem Schlechten. Lies sie morgens und abends.</p>
+                </div>
+            </div>
+
+            <!-- SURAH 114: AN-NAS -->
+            <div class="surah-card-full">
+                <div class="surah-header">
+                    <div class="surah-number-badge">114</div>
+                    <div class="surah-arabic-title">النَّاس</div>
+                    <div class="surah-name-de">An-Nas</div>
+                    <div class="surah-meaning-de">Die Menschen</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">6 Verse</span>
+                        <span class="meta-item">Makki</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">
+                    قُلْ أَعُوذُ بِرَبِّ النَّاسِ <span class="ayah-number">١</span>
+                    مَلِكِ النَّاسِ <span class="ayah-number">٢</span>
+                    إِلَٰهِ النَّاسِ <span class="ayah-number">٣</span>
+                    مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ <span class="ayah-number">٤</span>
+                    الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ <span class="ayah-number">٥</span>
+                    مِنَ الْجِنَّةِ وَالنَّاسِ <span class="ayah-number">٦</span>
+                </div>
+                <div class="surah-info-box">
+                    <h4> Worum geht es?</h4>
+                    <p><strong>Die letzte Sure im Quran!</strong> Zusammen mit Al-Falaq die Schutz-Suren. Wir suchen Zuflucht bei Allah vor dem Shaytan.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="teacher-tip">
+            <h4>💡 Tipp vom Lehrer</h4>
+            <ul>
+                <li><strong>Fange mit den kurzen Suren an:</strong> Al-Ikhlas, Al-Falaq, An-Nas, Al-Kawthar, Al-'Asr</li>
+                <li><strong>Lies jeden Tag 3-5 Suren</strong> – in 2 Wochen hast du alle gelernt!</li>
+                <li><strong>Höre dir die richtige Aussprache an</strong> (z.B. auf YouTube) und sprich nach.</li>
+                <li><strong>Al-Ikhlas, Al-Falaq und An-Nas</strong> solltest du auswendig lernen – sie werden in fast jedem Gebet gelesen!</li>
+                <li>Der Prophet sagte: Wer Al-Ikhlas liest, dem wird es angerechnet wie <strong>ein Drittel des Quran</strong>.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TAB 2: 5 DAILY PRAYERS -->
+    <div id="prayer-tab" class="tab-content">
+        <div class="prayer-intro">
+            <h2>🕌 Die 5 täglichen Gebete (Salah)</h2>
+            <p>Das Gebet (Salah) ist eine der fünf Säulen des Islam.</p>
+        </div>
+        <div class="prayer-grid">
+            <div class="prayer-card fajr">
+                <div class="prayer-icon">🌅</div>
+                <h3>Fajr</h3>
+                <div class="prayer-arabic">الفَجْر</div>
+                <div class="prayer-time">Morgendämmerung</div>
+                <table class="rakat-table">
+                    <tr><th>Art</th><th>Rakat</th></tr>
+                    <tr><td>Sunnah</td><td>2</td></tr>
+                    <tr><td>Fard</td><td>2</td></tr>
+                    <tr class="total"><td>Gesamt</td><td>4</td></tr>
+                </table>
+            </div>
+            <div class="prayer-card dhuhr">
+                <div class="prayer-icon">️</div>
+                <h3>Dhuhr</h3>
+                <div class="prayer-arabic">الظُّهْر</div>
+                <div class="prayer-time">Mittag</div>
+                <table class="rakat-table">
+                    <tr><th>Art</th><th>Rakat</th></tr>
+                    <tr><td>Sunnah</td><td>4+2</td></tr>
+                    <tr><td>Fard</td><td>4</td></tr>
+                    <tr><td>Nafl</td><td>2</td></tr>
+                    <tr class="total"><td>Gesamt</td><td>12</td></tr>
+                </table>
+            </div>
+            <div class="prayer-card asr">
+                <div class="prayer-icon">🌤️</div>
+                <h3>Asr</h3>
+                <div class="prayer-arabic">العَصْر</div>
+                <div class="prayer-time">Nachmittag</div>
+                <table class="rakat-table">
+                    <tr><th>Art</th><th>Rakat</th></tr>
+                    <tr><td>Sunnah</td><td>4</td></tr>
+                    <tr><td>Fard</td><td>4</td></tr>
+                    <tr class="total"><td>Gesamt</td><td>8</td></tr>
+                </table>
+            </div>
+            <div class="prayer-card maghrib">
+                <div class="prayer-icon">🌇</div>
+                <h3>Maghrib</h3>
+                <div class="prayer-arabic">المَغْرِب</div>
+                <div class="prayer-time">Sonnenuntergang</div>
+                <table class="rakat-table">
+                    <tr><th>Art</th><th>Rakat</th></tr>
+                    <tr><td>Fard</td><td>3</td></tr>
+                    <tr><td>Sunnah</td><td>2</td></tr>
+                    <tr class="total"><td>Gesamt</td><td>5</td></tr>
+                </table>
+            </div>
+            <div class="prayer-card isha">
+                <div class="prayer-icon">🌙</div>
+                <h3>Isha</h3>
+                <div class="prayer-arabic">العِشَاء</div>
+                <div class="prayer-time">Nacht</div>
+                <table class="rakat-table">
+                    <tr><th>Art</th><th>Rakat</th></tr>
+                    <tr><td>Sunnah</td><td>4+2</td></tr>
+                    <tr><td>Fard</td><td>4</td></tr>
+                    <tr><td>Witr</td><td>3</td></tr>
+                    <tr class="total"><td>Gesamt</td><td>13</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: EID PRAYER -->
+    <div id="eid-tab" class="tab-content">
+        <div class="special-prayer">
+            <h2>🌙 Das Eid-Gebet</h2>
+            <div class="arabic-title">صَلَاة العِيد</div>
+            <p>Das Eid-Gebet ist ein besonderes Festgebet zweimal im Jahr.</p>
+            <ol class="step-list">
+                <li><span class="step-num">1</span><strong>1. Takbir:</strong> Allahu Akbar (Hände heben)</li>
+                <li><span class="step-num">2</span><strong>3 weitere Takbirs:</strong> Bei jedem die Hände heben</li>
+                <li><span class="step-num">3</span><strong>Al-Fatiha + Sure:</strong> Imam liest vor</li>
+                <li><span class="step-num">4</span><strong>Ruku & Sujud:</strong> Wie normales Gebet</li>
+                <li><span class="step-num">5</span><strong>2. Rakat:</strong> Wieder 3 Takbirs</li>
+                <li><span class="step-num">6</span><strong>Salam:</strong> Nach rechts und links</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- TAB 4: JANAZA PRAYER -->
+    <div id="janaza-tab" class="tab-content">
+        <div class="special-prayer">
+            <h2>🤲 Das Janaza-Gebet</h2>
+            <div class="arabic-title">صَلَاة الجَنَازَة</div>
+            <p>Das Beerdigungsgebet für verstorbene Muslime.</p>
+            <ol class="step-list">
+                <li><span class="step-num">1</span><strong>1. Takbir:</strong> Al-Fatiha lesen</li>
+                <li><span class="step-num">2</span><strong>2. Takbir:</strong> Salawat (Durood) sprechen</li>
+                <li><span class="step-num">3</span><strong>3. Takbir:</strong> Dua für den Verstorbenen</li>
+                <li><span class="step-num">4</span><strong>4. Takbir:</strong> Dua für alle + Salam</li>
+            </ol>
+            <div class="highlight-box">
+                <p><strong>Besonderheit:</strong> Kein Ruku, kein Sujud – nur Stehen!</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>🕌 <strong>TomTom</strong>, Masha'Allah! Du lernst so viel über deinen Deen.</p>
+        <p style="margin-top: 9px;">Mama Tabassum & Papa Farhad ❤️</p>
+    </footer>
+</div>
+
+<script>
+    function openTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.target.classList.add('active');
+        window.scrollTo({ top: 200, behavior: 'smooth' });
+    }
+</script>
+</body>
+</html>

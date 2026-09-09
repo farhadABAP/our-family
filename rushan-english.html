@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Laddus English-Abenteuer 🇬🇧🌈</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", "Tahoma", "Arial", sans-serif;
+            min-height: 100vh;
+            color: #263238;
+
+            background:
+                radial-gradient(circle at 10% 10%, #fee2e2 0%, transparent 35%),
+                radial-gradient(circle at 90% 15%, #fef3c7 0%, transparent 35%),
+                radial-gradient(circle at 50% 90%, #dbeafe 0%, transparent 35%),
+                linear-gradient(135deg, #fff5f5, #fffbeb);
+
+            padding: 18px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        .top {
+            text-align: center;
+            padding: 28px 10px 22px;
+        }
+
+        .rocket {
+            font-size: 62px;
+            margin-bottom: 10px;
+        }
+
+        .top h1 {
+            color: #dc2626;
+            font-size: clamp(32px, 6vw, 52px);
+            font-weight: 900;
+        }
+
+        .top h2 {
+            margin-top: 8px;
+            color: #ea580c;
+            font-size: 23px;
+        }
+
+        .top p {
+            color: #687786;
+            margin-top: 11px;
+            line-height: 1.6;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 11px 18px;
+            border-radius: 25px;
+            background: white;
+            border: 2px solid #fee2e2;
+            color: #dc2626;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .back-home:hover {
+            background: #dc2626;
+            color: white;
+            border-color: #dc2626;
+        }
+
+        /* MAGIC AREA */
+        .magic-area {
+            background: linear-gradient(135deg, #dc2626, #ea580c, #f59e0b);
+            color: white;
+            border-radius: 27px;
+            padding: 32px;
+            margin: 18px 0 32px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(220,38,38,0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .magic-area::before {
+            content: "🌈";
+            position: absolute;
+            left: 8%;
+            top: 20px;
+            font-size: 32px;
+            opacity: 0.5;
+        }
+
+        .magic-area::after {
+            content: "🇬🇧";
+            position: absolute;
+            right: 8%;
+            bottom: 20px;
+            font-size: 30px;
+            opacity: 0.5;
+        }
+
+        .magic-area h2 {
+            color: #fef3c7;
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .magic-area p {
+            color: #fff7ed;
+            line-height: 1.65;
+            max-width: 720px;
+            margin: 0 auto 18px;
+        }
+
+        .brave-button {
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(135deg, #facc15, #fbbf24);
+            color: #7c2d12;
+            padding: 16px 32px;
+            border-radius: 16px;
+            font-size: 21px;
+            font-weight: 900;
+            box-shadow: 0 7px 0 #b45309, 0 12px 25px rgba(0,0,0,0.2);
+            transition: 0.15s;
+        }
+
+        .brave-button:hover { transform: translateY(-2px); }
+        .brave-button:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 #b45309, 0 5px 12px rgba(0,0,0,0.2);
+        }
+
+        #brave-message {
+            min-height: 28px;
+            margin-top: 18px;
+            color: #fef3c7;
+            font-weight: 800;
+            font-size: 17px;
+        }
+
+        /* SONG BOX */
+        .song-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 3px solid #f59e0b;
+            border-radius: 22px;
+            padding: 24px;
+            margin: 20px 0 30px;
+            text-align: center;
+        }
+
+        .song-box h3 {
+            color: #92400e;
+            margin-bottom: 12px;
+            font-size: 22px;
+        }
+
+        .song-box p {
+            color: #78350f;
+            line-height: 1.8;
+            font-size: 17px;
+            font-style: italic;
+        }
+
+        .song-emoji {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        /* SCORE */
+        .score-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 13px;
+            margin-bottom: 30px;
+        }
+
+        .score-card {
+            background: white;
+            border-radius: 17px;
+            padding: 15px 23px;
+            min-width: 150px;
+            text-align: center;
+            box-shadow: 0 7px 20px rgba(40,60,80,0.07);
+            border: 2px solid #fee2e2;
+        }
+
+        .score-card .number {
+            display: block;
+            color: #dc2626;
+            font-size: 27px;
+            font-weight: 900;
+        }
+
+        .score-card .label {
+            display: block;
+            color: #7b8794;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        /* CATEGORY SELECTOR */
+        .category-selector {
+            background: white;
+            border-radius: 22px;
+            padding: 24px;
+            margin-bottom: 26px;
+            box-shadow: 0 8px 22px rgba(40,60,80,0.07);
+        }
+
+        .category-selector h3 {
+            color: #dc2626;
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 22px;
+        }
+
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .cat-btn {
+            border: 3px solid;
+            background: white;
+            border-radius: 18px;
+            padding: 14px 20px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 16px;
+            transition: 0.2s;
+            min-width: 160px;
+        }
+
+        .cat-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+        }
+
+        .cat-btn.active {
+            color: white;
+        }
+
+        .cat-btn.colors { border-color: #ec4899; color: #be185d; }
+        .cat-btn.colors.active { background: #ec4899; }
+        .cat-btn.numbers { border-color: #3b82f6; color: #1e40af; }
+        .cat-btn.numbers.active { background: #3b82f6; }
+        .cat-btn.animals { border-color: #10b981; color: #065f46; }
+        .cat-btn.animals.active { background: #10b981; }
+        .cat-btn.family { border-color: #f59e0b; color: #92400e; }
+        .cat-btn.family.active { background: #f59e0b; }
+        .cat-btn.food { border-color: #8b5cf6; color: #5b21b6; }
+        .cat-btn.food.active { background: #8b5cf6; }
+        .cat-btn.songs { border-color: #dc2626; color: #991b1b; }
+        .cat-btn.songs.active { background: #dc2626; }
+
+        /* CATEGORY ROOMS */
+        .category-room {
+            display: none;
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 10px 30px rgba(40,60,80,0.08);
+        }
+
+        .category-room.active { display: block; }
+
+        .room-header {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .room-header .room-icon {
+            font-size: 52px;
+            margin-bottom: 8px;
+        }
+
+        .room-header h2 {
+            color: #dc2626;
+            font-size: 27px;
+            margin-bottom: 6px;
+        }
+
+        .room-header p {
+            color: #718096;
+            font-size: 15px;
+        }
+
+        /* WORD GRID */
+        .word-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .word-card {
+            border-radius: 18px;
+            padding: 20px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 3px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            color: white;
+            font-weight: 900;
+        }
+
+        .word-card:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .word-card .card-emoji {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .word-card .card-english {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .word-card .card-german {
+            font-size: 13px;
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        /* QUIZ BOX */
+        .quiz-box {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            border: 3px solid #fca5a5;
+            border-radius: 22px;
+            padding: 32px;
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        .quiz-box h3 {
+            color: #dc2626;
+            font-size: 22px;
+            margin-bottom: 14px;
+        }
+
+        .quiz-display {
+            font-size: 80px;
+            margin: 18px 0;
+        }
+
+        .quiz-question {
+            color: #718096;
+            font-size: 17px;
+            margin-bottom: 18px;
+            font-weight: 600;
+        }
+
+        .quiz-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .quiz-btn {
+            border: 3px solid #dc2626;
+            background: white;
+            color: #991b1b;
+            border-radius: 16px;
+            padding: 14px 22px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 17px;
+            transition: 0.2s;
+            min-width: 110px;
+        }
+
+        .quiz-btn:hover {
+            background: #dc2626;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        #quiz-feedback {
+            min-height: 34px;
+            margin-top: 20px;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .next-btn {
+            border: none;
+            background: #dc2626;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 13px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 14px;
+            transition: 0.2s;
+        }
+
+        .next-btn:hover {
+            background: #991b1b;
+            transform: translateY(-2px);
+        }
+
+        /* SONG ROOM */
+        .song-card {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            border: 3px solid #dc2626;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+
+        .song-card h4 {
+            color: #dc2626;
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .song-lyrics {
+            background: white;
+            border-radius: 14px;
+            padding: 18px;
+            font-size: 16px;
+            line-height: 1.9;
+            color: #374151;
+            font-style: italic;
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .song-lyrics .line {
+            margin-bottom: 8px;
+        }
+
+        .sing-button {
+            border: none;
+            background: #dc2626;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 14px;
+            transition: 0.2s;
+        }
+
+        .sing-button:hover {
+            background: #991b1b;
+            transform: translateY(-2px);
+        }
+
+        /* TEACHER TIP */
+        .teacher-tip {
+            background: #fff9db;
+            border-left: 5px solid #f59f00;
+            border-radius: 10px;
+            padding: 18px;
+            margin-top: 24px;
+            color: #6b5b20;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .teacher-tip h4 {
+            color: #b9770e;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .teacher-tip ul {
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+
+        .teacher-tip li {
+            margin-bottom: 8px;
+        }
+
+        /* ACHIEVEMENTS */
+        .achievements {
+            background: white;
+            border-radius: 22px;
+            padding: 26px;
+            margin-top: 28px;
+            box-shadow: 0 8px 22px rgba(40,60,80,0.07);
+        }
+
+        .achievements h3 {
+            color: #dc2626;
+            text-align: center;
+            margin-bottom: 18px;
+            font-size: 22px;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
+        }
+
+        .achievement {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 18px;
+            text-align: center;
+            border: 2px solid #e5edf5;
+            opacity: 0.5;
+            transition: 0.3s;
+        }
+
+        .achievement.unlocked {
+            opacity: 1;
+            border-color: #fbbf24;
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+        }
+
+        .achievement .badge-icon {
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .achievement h4 {
+            color: #dc2626;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .achievement p {
+            color: #718096;
+            font-size: 12px;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 42px 10px 22px;
+            color: #8795a1;
+            font-size: 14px;
+        }
+
+        footer strong { color: #dc2626; }
+
+        /* MOBILE */
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .magic-area { padding: 26px 18px; }
+            .category-room { padding: 22px 15px; }
+            .quiz-btn { min-width: 100px; padding: 12px 16px; font-size: 15px; }
+            .cat-btn { min-width: 130px; font-size: 14px; padding: 12px 14px; }
+            .word-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <header class="top">
+        <div class="rocket">🇬🇧🌈</div>
+        <h1>Laddus English-Abenteuer</h1>
+        <h2>Let's learn English together!</h2>
+        <p>
+            Farben · Zahlen · Tiere · Familie · Lieder<br>
+            Everything is more fun in English! ⭐
+        </p>
+        <a href="rushan.html" class="back-home">← Zurück zu Laddus Welt</a>
+    </header>
+
+    <!-- MAGIC BRAVE BUTTON -->
+    <section class="magic-area">
+        <h2>🦸‍♂️ Der mutige Prinz Laddu</h2>
+        <p>
+            Erinnerst du dich? Du bist so mutig!
+            Und jetzt lernst du auch noch Englisch!
+        </p>
+        <p><strong>Brave · Happy · Curious</strong></p>
+        <button class="brave-button" onclick="activateBrave()">🌟 I AM BRAVE!</button>
+        <div id="brave-message">Your brave heart is waiting ... ✨</div>
+    </section>
+
+    <!-- SONG BOX -->
+    <section class="song-box">
+        <div class="song-emoji">🎵🌈</div>
+        <h3>Laddus Lieblingslieder</h3>
+        <p>
+            🌸 „Ich kenne eine Blume ..." 🌸<br>
+            🌈 „Ich geb dir einen Regenbogen" 🌈
+        </p>
+    </section>
+
+    <!-- SCORE -->
+    <div class="score-row">
+        <div class="score-card">
+            <span class="number" id="total-stars">0 ⭐</span>
+            <span class="label">Deine Sterne</span>
+        </div>
+        <div class="score-card">
+            <span class="number" id="today-correct">0</span>
+            <span class="label">Heute richtig</span>
+        </div>
+        <div class="score-card">
+            <span class="number" id="streak">0 🔥</span>
+            <span class="label">Serie</span>
+        </div>
+    </div>
+
+    <!-- CATEGORY SELECTOR -->
+    <section class="category-selector">
+        <h3>🎯 What do you want to learn?</h3>
+        <div class="category-buttons">
+            <button class="cat-btn colors active" id="colors-btn" onclick="openCategory('colors-room')">🎨 Colors</button>
+            <button class="cat-btn numbers" id="numbers-btn" onclick="openCategory('numbers-room')">🔢 Numbers</button>
+            <button class="cat-btn animals" id="animals-btn" onclick="openCategory('animals-room')">🐾 Animals</button>
+            <button class="cat-btn family" id="family-btn" onclick="openCategory('family-room')">👨‍👩‍👦 Family</button>
+            <button class="cat-btn food" id="food-btn" onclick="openCategory('food-room')">🍎 Food</button>
+            <button class="cat-btn songs" id="songs-btn" onclick="openCategory('songs-room')">🎵 Songs</button>
+        </div>
+    </section>
+
+    <!-- COLORS ROOM -->
+    <section id="colors-room" class="category-room active">
+        <div class="room-header">
+            <div class="room-icon">🎨</div>
+            <h2>Colors (Farben)</h2>
+            <p>Click on a color and learn its name!</p>
+        </div>
+
+        <div class="word-grid">
+            <div class="word-card" style="background: #ef4444;" onclick="learnWord('Red', 'Rot', '❤️')">
+                <span class="card-emoji">❤️</span>
+                <span class="card-english">Red</span>
+                <span class="card-german">Rot</span>
+            </div>
+            <div class="word-card" style="background: #3b82f6;" onclick="learnWord('Blue', 'Blau', '💙')">
+                <span class="card-emoji">💙</span>
+                <span class="card-english">Blue</span>
+                <span class="card-german">Blau</span>
+            </div>
+            <div class="word-card" style="background: #fbbf24;" onclick="learnWord('Yellow', 'Gelb', '💛')">
+                <span class="card-emoji">💛</span>
+                <span class="card-english">Yellow</span>
+                <span class="card-german">Gelb</span>
+            </div>
+            <div class="word-card" style="background: #10b981;" onclick="learnWord('Green', 'Grün', '💚')">
+                <span class="card-emoji">💚</span>
+                <span class="card-english">Green</span>
+                <span class="card-german">Grün</span>
+            </div>
+            <div class="word-card" style="background: #ec4899;" onclick="learnWord('Pink', 'Pink', '💗')">
+                <span class="card-emoji">💗</span>
+                <span class="card-english">Pink</span>
+                <span class="card-german">Pink</span>
+            </div>
+            <div class="word-card" style="background: #8b5cf6;" onclick="learnWord('Purple', 'Lila', '💜')">
+                <span class="card-emoji">💜</span>
+                <span class="card-english">Purple</span>
+                <span class="card-german">Lila</span>
+            </div>
+            <div class="word-card" style="background: #f97316;" onclick="learnWord('Orange', 'Orange', '🧡')">
+                <span class="card-emoji">🧡</span>
+                <span class="card-english">Orange</span>
+                <span class="card-german">Orange</span>
+            </div>
+            <div class="word-card" style="background: #1f2937;" onclick="learnWord('Black', 'Schwarz', '🖤')">
+                <span class="card-emoji">🖤</span>
+                <span class="card-english">Black</span>
+                <span class="card-german">Schwarz</span>
+            </div>
+            <div class="word-card" style="background: white; color: #1f2937; border: 3px solid #d1d5db;" onclick="learnWord('White', 'Weiß', '🤍')">
+                <span class="card-emoji">🤍</span>
+                <span class="card-english">White</span>
+                <span class="card-german">Weiß</span>
+            </div>
+            <div class="word-card" style="background: #92400e;" onclick="learnWord('Brown', 'Braun', '🤎')">
+                <span class="card-emoji">🤎</span>
+                <span class="card-english">Brown</span>
+                <span class="card-german">Braun</span>
+            </div>
+        </div>
+
+        <div class="quiz-box">
+            <h3>🎯 Color Quiz</h3>
+            <div class="quiz-question">What color is this?</div>
+            <div class="quiz-display" id="color-display">❤️</div>
+            <div class="quiz-options" id="color-options"></div>
+            <div id="color-feedback"></div>
+            <button class="next-btn" onclick="generateColorQuiz()">Next color →</button>
+        </div>
+
+        <div class="teacher-tip">
+            <h4>💡 Tipp für Mama und Papa</h4>
+            <ul>
+                <li>Laddus Lieblingsfarbe ist <strong>Red ❤️</strong> – fang damit an!</li>
+                <li>Singt: „I can sing a <strong>rainbow</strong>, sing a rainbow ..." 🌈</li>
+                <li>Zeigt im Alltag auf Farben: „What color is this?"</li>
+                <li>Malt zusammen und sagt die Farbe auf Englisch.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- NUMBERS ROOM -->
+    <section id="numbers-room" class="category-room">
+        <div class="room-header">
+            <div class="room-icon">🔢</div>
+            <h2>Numbers (Zahlen)</h2>
+            <p>Let's count from 1 to 10!</p>
+        </div>
+
+        <div class="word-grid">
+            <div class="word-card" style="background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; border: 3px solid #3b82f6;" onclick="learnWord('One', 'Eins', '🍎')">
+                <span class="card-emoji">🍎</span>
+                <span class="card-english">One</span>
+                <span class="card-german">Eins</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; border: 3px solid #3b82f6;" onclick="learnWord('Two', 'Zwei', '🍎🍎')">
+                <span class="card-emoji">🍎🍎</span>
+                <span class="card-english">Two</span>
+                <span class="card-german">Zwei</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; border: 3px solid #3b82f6;" onclick="learnWord('Three', 'Drei', '🍎🍎🍎')">
+                <span class="card-emoji">🍎🍎🍎</span>
+                <span class="card-english">Three</span>
+                <span class="card-german">Drei</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; border: 3px solid #3b82f6;" onclick="learnWord('Four', 'Vier', '🍎🍎🍎🍎')">
+                <span class="card-emoji">🍎🍎🍎🍎</span>
+                <span class="card-english">Four</span>
+                <span class="card-german">Vier</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; border: 3px solid #3b82f6;" onclick="learnWord('Five', 'Fünf', '🖐️')">
+                <span class="card-emoji">🖐️</span>
+                <span class="card-english">Five</span>
+                <span class="card-german">Fünf</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; border: 3px solid #3b82f6;" onclick="learnWord('Six', 'Sechs', '🎲')">
+                <span class="card-emoji">🎲</span>
+                <span class="card-english">Six</span>
+                <span class="card-german">Sechs</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; border: 3px solid #3b82f6;" onclick="learnWord('Seven', 'Sieben', '🌈')">
+                <span class="card-emoji">🌈</span>
+                <span class="card-english">Seven</span>
+                <span class="card-german">Sieben</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; border: 3px solid #3b82f6;" onclick="learnWord('Eight', 'Acht', '🐙')">
+                <span class="card-emoji">🐙</span>
+                <span class="card-english">Eight</span>
+                <span class="card-german">Acht</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; border: 3px solid #3b82f6;" onclick="learnWord('Nine', 'Neun', '🎈')">
+                <span class="card-emoji">🎈</span>
+                <span class="card-english">Nine</span>
+                <span class="card-german">Neun</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; border: 3px solid #3b82f6;" onclick="learnWord('Ten', 'Zehn', '👐')">
+                <span class="card-emoji">👐</span>
+                <span class="card-english">Ten</span>
+                <span class="card-german">Zehn</span>
+            </div>
+        </div>
+
+        <div class="quiz-box">
+            <h3>🎯 Number Quiz</h3>
+            <div class="quiz-question">How many?</div>
+            <div class="quiz-display" id="number-display">🍎🍎🍎</div>
+            <div class="quiz-options" id="number-options"></div>
+            <div id="number-feedback"></div>
+            <button class="next-btn" onclick="generateNumberQuiz()">Next number →</button>
+        </div>
+
+        <div class="teacher-tip">
+            <h4>💡 Tipp für Mama und Papa</h4>
+            <ul>
+                <li>Singt: „<strong>One, two, three, four, five</strong> – once I caught a fish alive!" 🎵</li>
+                <li>Zählt Treppenstufen auf Englisch: „<strong>One, two, three ...</strong>"</li>
+                <li>Zeigt Finger und fragt: „<strong>How many fingers?</strong>"</li>
+                <li>Zählt Äpfel, Kekse oder Spielzeug gemeinsam.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ANIMALS ROOM -->
+    <section id="animals-room" class="category-room">
+        <div class="room-header">
+            <div class="room-icon">🐾</div>
+            <h2>Animals (Tiere)</h2>
+            <p>What does the animal say?</p>
+        </div>
+
+        <div class="word-grid">
+            <div class="word-card" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; border: 3px solid #10b981;" onclick="learnWord('Dog', 'Hund', '🐶')">
+                <span class="card-emoji">🐶</span>
+                <span class="card-english">Dog</span>
+                <span class="card-german">Hund</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; border: 3px solid #10b981;" onclick="learnWord('Cat', 'Katze', '🐱')">
+                <span class="card-emoji">🐱</span>
+                <span class="card-english">Cat</span>
+                <span class="card-german">Katze</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; border: 3px solid #10b981;" onclick="learnWord('Cow', 'Kuh', '🐮')">
+                <span class="card-emoji">🐮</span>
+                <span class="card-english">Cow</span>
+                <span class="card-german">Kuh</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; border: 3px solid #10b981;" onclick="learnWord('Pig', 'Schwein', '🐷')">
+                <span class="card-emoji">🐷</span>
+                <span class="card-english">Pig</span>
+                <span class="card-german">Schwein</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; border: 3px solid #10b981;" onclick="learnWord('Duck', 'Ente', '🦆')">
+                <span class="card-emoji">🦆</span>
+                <span class="card-english">Duck</span>
+                <span class="card-german">Ente</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; border: 3px solid #10b981;" onclick="learnWord('Chicken', 'Huhn', '🐔')">
+                <span class="card-emoji">🐔</span>
+                <span class="card-english">Chicken</span>
+                <span class="card-german">Huhn</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; border: 3px solid #10b981;" onclick="learnWord('Horse', 'Pferd', '🐴')">
+                <span class="card-emoji">🐴</span>
+                <span class="card-english">Horse</span>
+                <span class="card-german">Pferd</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; border: 3px solid #10b981;" onclick="learnWord('Sheep', 'Schaf', '🐑')">
+                <span class="card-emoji">🐑</span>
+                <span class="card-english">Sheep</span>
+                <span class="card-german">Schaf</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; border: 3px solid #10b981;" onclick="learnWord('Lion', 'Löwe', '🦁')">
+                <span class="card-emoji">🦁</span>
+                <span class="card-english">Lion</span>
+                <span class="card-german">Löwe</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; border: 3px solid #10b981;" onclick="learnWord('Elephant', 'Elefant', '🐘')">
+                <span class="card-emoji">🐘</span>
+                <span class="card-english">Elephant</span>
+                <span class="card-german">Elefant</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; border: 3px solid #10b981;" onclick="learnWord('Bird', 'Vogel', '🐦')">
+                <span class="card-emoji">🐦</span>
+                <span class="card-english">Bird</span>
+                <span class="card-german">Vogel</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; border: 3px solid #10b981;" onclick="learnWord('Fish', 'Fisch', '🐟')">
+                <span class="card-emoji">🐟</span>
+                <span class="card-english">Fish</span>
+                <span class="card-german">Fisch</span>
+            </div>
+        </div>
+
+        <div class="quiz-box">
+            <h3>🎯 Animal Quiz</h3>
+            <div class="quiz-question">What animal is this?</div>
+            <div class="quiz-display" id="animal-display">🐶</div>
+            <div class="quiz-options" id="animal-options"></div>
+            <div id="animal-feedback"></div>
+            <button class="next-btn" onclick="generateAnimalQuiz()">Next animal →</button>
+        </div>
+
+        <div class="teacher-tip">
+            <h4>💡 Tipp für Mama und Papa</h4>
+            <ul>
+                <li>Singt: „<strong>Old MacDonald had a farm</strong> - E-I-E-I-O!" 🎵</li>
+                <li>Macht Tiergeräusche zusammen: „The <strong>dog</strong> says woof woof!"</li>
+                <li>Schaut Tiere im Buch oder draußen: „What's that? A <strong>bird</strong>!"</li>
+                <li>„<strong>Three little ducks</strong> went out one day ..." 🦆🦆🦆</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- FAMILY ROOM -->
+    <section id="family-room" class="category-room">
+        <div class="room-header">
+            <div class="room-icon">👨‍👩‍👦</div>
+            <h2>Family (Familie)</h2>
+            <p>Who is in our family?</p>
+        </div>
+
+        <div class="word-grid">
+            <div class="word-card" style="background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; border: 3px solid #f59e0b;" onclick="learnWord('Mama', 'Mama', '👩')">
+                <span class="card-emoji">👩</span>
+                <span class="card-english">Mama</span>
+                <span class="card-german">Mama</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; border: 3px solid #f59e0b;" onclick="learnWord('Daddy', 'Papa', '👨')">
+                <span class="card-emoji">👨</span>
+                <span class="card-english">Daddy</span>
+                <span class="card-german">Papa</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; border: 3px solid #f59e0b;" onclick="learnWord('Brother', 'Bruder', '👦')">
+                <span class="card-emoji">👦</span>
+                <span class="card-english">Brother</span>
+                <span class="card-german">Bruder</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; border: 3px solid #f59e0b;" onclick="learnWord('Baby', 'Baby', '👶')">
+                <span class="card-emoji">👶</span>
+                <span class="card-english">Baby</span>
+                <span class="card-german">Baby</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; border: 3px solid #f59e0b;" onclick="learnWord('Grandma', 'Oma', '👵')">
+                <span class="card-emoji">👵</span>
+                <span class="card-english">Grandma</span>
+                <span class="card-german">Oma</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; border: 3px solid #f59e0b;" onclick="learnWord('Grandpa', 'Opa', '👴')">
+                <span class="card-emoji">👴</span>
+                <span class="card-english">Grandpa</span>
+                <span class="card-german">Opa</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; border: 3px solid #f59e0b;" onclick="learnWord('Friend', 'Freund', '🧑')">
+                <span class="card-emoji">🧑</span>
+                <span class="card-english">Friend</span>
+                <span class="card-german">Freund</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; border: 3px solid #f59e0b;" onclick="learnWord('Family', 'Familie', '👨‍👩‍👦‍👦')">
+                <span class="card-emoji">👨‍👩‍👦‍👦</span>
+                <span class="card-english">Family</span>
+                <span class="card-german">Familie</span>
+            </div>
+        </div>
+
+        <div class="quiz-box">
+            <h3>🎯 Family Quiz</h3>
+            <div class="quiz-question">Who is this?</div>
+            <div class="quiz-display" id="family-display">👨</div>
+            <div class="quiz-options" id="family-options"></div>
+            <div id="family-feedback"></div>
+            <button class="next-btn" onclick="generateFamilyQuiz()">Next person →</button>
+        </div>
+
+        <div class="teacher-tip">
+            <h4>💡 Tipp für Mama und Papa</h4>
+            <ul>
+                <li>Zeigt auf Familienmitglieder: „This is <strong>Mama</strong>. This is <strong>Daddy</strong>."</li>
+                <li>Sagt: „<strong>I love my family</strong>." ❤️</li>
+                <li>Schaut Fotos an: „Who is this? <strong>Grandma</strong>!"</li>
+                <li>„<strong>TomTom is my brother</strong>. Muffin is my baby brother."</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- FOOD ROOM -->
+    <section id="food-room" class="category-room">
+        <div class="room-header">
+            <div class="room-icon">🍎</div>
+            <h2>Food (Essen)</h2>
+            <p>Yummy yummy! What do you like?</p>
+        </div>
+
+        <div class="word-grid">
+            <div class="word-card" style="background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #5b21b6; border: 3px solid #8b5cf6;" onclick="learnWord('Apple', 'Apfel', '🍎')">
+                <span class="card-emoji">🍎</span>
+                <span class="card-english">Apple</span>
+                <span class="card-german">Apfel</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #5b21b6; border: 3px solid #8b5cf6;" onclick="learnWord('Banana', 'Banane', '🍌')">
+                <span class="card-emoji">🍌</span>
+                <span class="card-english">Banana</span>
+                <span class="card-german">Banane</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #5b21b6; border: 3px solid #8b5cf6;" onclick="learnWord('Bread', 'Brot', '🍞')">
+                <span class="card-emoji">🍞</span>
+                <span class="card-english">Bread</span>
+                <span class="card-german">Brot</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #5b21b6; border: 3px solid #8b5cf6;" onclick="learnWord('Milk', 'Milch', '🥛')">
+                <span class="card-emoji">🥛</span>
+                <span class="card-english">Milk</span>
+                <span class="card-german">Milch</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #5b21b6; border: 3px solid #8b5cf6;" onclick="learnWord('Water', 'Wasser', '💧')">
+                <span class="card-emoji">💧</span>
+                <span class="card-english">Water</span>
+                <span class="card-german">Wasser</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #5b21b6; border: 3px solid #8b5cf6;" onclick="learnWord('Juice', 'Saft', '🧃')">
+                <span class="card-emoji">🧃</span>
+                <span class="card-english">Juice</span>
+                <span class="card-german">Saft</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #5b21b6; border: 3px solid #8b5cf6;" onclick="learnWord('Cake', 'Kuchen', '🍰')">
+                <span class="card-emoji">🍰</span>
+                <span class="card-english">Cake</span>
+                <span class="card-german">Kuchen</span>
+            </div>
+            <div class="word-card" style="background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #5b21b6; border: 3px solid #8b5cf6;" onclick="learnWord('Rice', 'Reis', '🍚')">
+                <span class="card-emoji">🍚</span>
+                <span class="card-english">Rice</span>
+                <span class="card-german">Reis</span>
+            </div>
+        </div>
+
+        <div class="quiz-box">
+            <h3>🎯 Food Quiz</h3>
+            <div class="quiz-question">What food is this?</div>
+            <div class="quiz-display" id="food-display">🍎</div>
+            <div class="quiz-options" id="food-options"></div>
+            <div id="food-feedback"></div>
+            <button class="next-btn" onclick="generateFoodQuiz()">Next food →</button>
+        </div>
+
+        <div class="teacher-tip">
+            <h4>💡 Tipp für Mama und Papa</h4>
+            <ul>
+                <li>Beim Essen: „Do you want <strong>apple</strong> or <strong>banana</strong>?"</li>
+                <li>„<strong>I like ...</strong>" – Laddu sagt, was er mag!</li>
+                <li>„<strong>Yummy!</strong>" oder „<strong>Yucky!</strong>" – macht Spaß!</li>
+                <li>Zählt Früchte: „<strong>One apple, two apples, three apples!</strong>"</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SONGS ROOM -->
+    <section id="songs-room" class="category-room">
+        <div class="room-header">
+            <div class="room-icon">🎵</div>
+            <h2>English Songs</h2>
+            <p>Let's sing together!</p>
+        </div>
+
+        <div class="song-card">
+            <h4>⭐ Twinkle Twinkle Little Star</h4>
+            <div class="song-lyrics">
+                <div class="line">Twinkle, twinkle, little star,</div>
+                <div class="line">How I wonder what you are!</div>
+                <div class="line">Up above the world so high,</div>
+                <div class="line">Like a diamond in the sky.</div>
+                <div class="line">Twinkle, twinkle, little star,</div>
+                <div class="line">How I wonder what you are!</div>
+            </div>
+            <button class="sing-button" onclick="singSong('star')">🎤 Let's sing!</button>
+        </div>
+
+        <div class="song-card">
+            <h4>🐑 Baa Baa Black Sheep</h4>
+            <div class="song-lyrics">
+                <div class="line">Baa, baa, black sheep,</div>
+                <div class="line">Have you any wool?</div>
+                <div class="line">Yes, sir, yes, sir,</div>
+                <div class="line">Three bags full!</div>
+                <div class="line">One for my master,</div>
+                <div class="line">And one for my dame,</div>
+                <div class="line">And one for the little boy</div>
+                <div class="line">Who lives down the lane.</div>
+            </div>
+            <button class="sing-button" onclick="singSong('sheep')">🎤 Let's sing!</button>
+        </div>
+
+        <div class="song-card">
+            <h4>🕷️ Itsy Bitsy Spider</h4>
+            <div class="song-lyrics">
+                <div class="line">The itsy bitsy spider</div>
+                <div class="line">Climbed up the water spout.</div>
+                <div class="line">Down came the rain</div>
+                <div class="line">And washed the spider out.</div>
+                <div class="line">Out came the sun</div>
+                <div class="line">And dried up all the rain,</div>
+                <div class="line">And the itsy bitsy spider</div>
+                <div class="line">Climbed up the spout again.</div>
+            </div>
+            <button class="sing-button" onclick="singSong('spider')">🎤 Let's sing!</button>
+        </div>
+
+        <div class="song-card">
+            <h4>🌈 I Can Sing a Rainbow</h4>
+            <div class="song-lyrics">
+                <div class="line">Red and yellow and pink and green,</div>
+                <div class="line">Purple and orange and blue.</div>
+                <div class="line">I can sing a rainbow,</div>
+                <div class="line">Sing a rainbow,</div>
+                <div class="line">Sing a rainbow too.</div>
+            </div>
+            <button class="sing-button" onclick="singSong('rainbow')">🎤 Let's sing!</button>
+        </div>
+
+        <div class="teacher-tip">
+            <h4>💡 Tipp für Mama und Papa</h4>
+            <ul>
+                <li>Singt die Lieder <strong>jeden Tag</strong> – am besten morgens oder abends.</li>
+                <li>Macht <strong>Gesten</strong> zu den Liedern (Sterne zeigen, Spinne klettern).</li>
+                <li>Bei „<strong>I Can Sing a Rainbow</strong>" zeigt auf die Farben!</li>
+                <li>Singt <strong>laut und fröhlich</strong> – es geht nicht um Perfektion!</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section class="achievements">
+        <h3>🏆 Laddus English-Erfolge</h3>
+        <div class="achievement-grid">
+            <div class="achievement" id="first-star">
+                <div class="badge-icon">⭐</div>
+                <h4>First Word</h4>
+                <p>First English word learned!</p>
+            </div>
+            <div class="achievement" id="five-correct">
+                <div class="badge-icon">🎯</div>
+                <h4>5 Words</h4>
+                <p>5 words in quizzes right!</p>
+            </div>
+            <div class="achievement" id="ten-correct">
+                <div class="badge-icon">🚀</div>
+                <h4>10 Words</h4>
+                <p>10 words learned!</p>
+            </div>
+            <div class="achievement" id="all-rooms">
+                <div class="badge-icon">🌟</div>
+                <h4>Explorer</h4>
+                <p>All 6 categories visited!</p>
+            </div>
+            <div class="achievement" id="singer">
+                <div class="badge-icon">🎤</div>
+                <h4>Singer</h4>
+                <p>Sang a song!</p>
+            </div>
+            <div class="achievement" id="twenty-stars">
+                <div class="badge-icon">🏆</div>
+                <h4>20 Stars</h4>
+                <p>20 stars collected!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>🇬🇧 <strong>Laddu</strong>, you are our little English star! ❤️</p>
+        <p style="margin-top: 9px;">Mama Tabassum & Papa Farhad ❤️</p>
+    </footer>
+
+</div>
+
+<script>
+    /* ========================================================
+       GLOBAL DATA
+    ========================================================= */
+    let totalStars = 0;
+    let todayCorrect = 0;
+    let streak = 0;
+    let roomsVisited = new Set();
+
+    /* ========================================================
+       BRAVE BUTTON
+    ========================================================= */
+    function activateBrave() {
+        const message = document.getElementById("brave-message");
+        const messages = [
+            "🦸‍♂️ YOU ARE BRAVE! Like Prince Laddu!",
+            "🌈 Laddu, you can do anything!",
+            "💪 Brave means: I try anyway!",
+            "🚀 Our little hero is ready!",
+            "❤️ Daddy is proud of you!",
+            "🇬🇧 English is fun with you!"
+        ];
+        const random = messages[Math.floor(Math.random() * messages.length)];
+        message.innerText = random;
+        setTimeout(() => {
+            message.innerText = "✨ Brave, happy and curious – that's you!";
+        }, 3500);
+    }
+
+    /* ========================================================
+       CATEGORY SWITCHER
+    ========================================================= */
+    function openCategory(roomId) {
+        document.querySelectorAll(".category-room").forEach(room => room.classList.remove("active"));
+        document.querySelectorAll(".cat-btn").forEach(btn => btn.classList.remove("active"));
+        
+        document.getElementById(roomId).classList.add("active");
+        const btnId = roomId.replace("-room", "-btn");
+        document.getElementById(btnId).classList.add("active");
+        
+        roomsVisited.add(roomId);
+        if (roomsVisited.size >= 6) {
+            document.getElementById("all-rooms").classList.add("unlocked");
+        }
+        
+        document.getElementById(roomId).scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    /* ========================================================
+       LEARN WORD
+    ========================================================= */
+    function learnWord(english, german, emoji) {
+        totalStars++;
+        updateScore();
+        alert(emoji + " " + english + " = " + german + "! ⭐");
+        checkAchievements();
+    }
+
+    /* ========================================================
+       SING SONG
+    ========================================================= */
+    function singSong(song) {
+        totalStars++;
+        updateScore();
+        document.getElementById("singer").classList.add("unlocked");
+        const messages = {
+            'star': "⭐ Twinkle twinkle! Beautiful singing!",
+            'sheep': "🐑 Baa baa! Great job!",
+            'spider': "🕷️ Up, up, up! Wonderful!",
+            'rainbow': "🌈 Red, yellow, pink ... Amazing!"
+        };
+        alert(messages[song] + " 🎤 +1 Stern ⭐");
+        checkAchievements();
+    }
+
+    /* ========================================================
+       COLOR QUIZ
+    ========================================================= */
+    const colorsData = [
+        { name: "Red", emoji: "❤️", options: ["Red", "Blue", "Yellow"] },
+        { name: "Blue", emoji: "💙", options: ["Blue", "Green", "Pink"] },
+        { name: "Yellow", emoji: "💛", options: ["Yellow", "Orange", "Red"] },
+        { name: "Green", emoji: "💚", options: ["Green", "Blue", "Brown"] },
+        { name: "Pink", emoji: "💗", options: ["Pink", "Purple", "Red"] },
+        { name: "Purple", emoji: "💜", options: ["Purple", "Pink", "Blue"] },
+        { name: "Orange", emoji: "🧡", options: ["Orange", "Yellow", "Red"] },
+        { name: "Black", emoji: "🖤", options: ["Black", "Brown", "Blue"] },
+        { name: "White", emoji: "🤍", options: ["White", "Yellow", "Gray"] },
+        { name: "Brown", emoji: "🤎", options: ["Brown", "Orange", "Black"] }
+    ];
+
+    function generateColorQuiz() {
+        document.getElementById("color-feedback").innerText = "";
+        const item = colorsData[Math.floor(Math.random() * colorsData.length)];
+        
+        document.getElementById("color-display").innerText = item.emoji;
+        
+        const optionsContainer = document.getElementById("color-options");
+        optionsContainer.innerHTML = "";
+        
+        const shuffled = [...item.options].sort(() => Math.random() - 0.5);
+        
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "quiz-btn";
+            btn.innerText = opt;
+            btn.onclick = () => checkQuiz(opt, item.name, 'color-feedback', generateColorQuiz);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    /* ========================================================
+       NUMBER QUIZ
+    ========================================================= */
+    const numbersData = [
+        { count: "🍎", answer: "One", options: ["One", "Two", "Three"] },
+        { count: "🍎🍎", answer: "Two", options: ["One", "Two", "Three"] },
+        { count: "🍎🍎🍎", answer: "Three", options: ["Two", "Three", "Four"] },
+        { count: "🍎🍎🍎🍎", answer: "Four", options: ["Three", "Four", "Five"] },
+        { count: "🖐️", answer: "Five", options: ["Four", "Five", "Six"] },
+        { count: "🎲🎲🎲🎲🎲🎲", answer: "Six", options: ["Five", "Six", "Seven"] },
+        { count: "🌈🌈🌈🌈🌈🌈🌈", answer: "Seven", options: ["Six", "Seven", "Eight"] },
+        { count: "🐙🐙🐙🐙🐙🐙🐙🐙", answer: "Eight", options: ["Seven", "Eight", "Nine"] },
+        { count: "🎈🎈🎈🎈🎈🎈🎈🎈🎈", answer: "Nine", options: ["Eight", "Nine", "Ten"] },
+        { count: "👐", answer: "Ten", options: ["Nine", "Ten", "Eight"] }
+    ];
+
+    function generateNumberQuiz() {
+        document.getElementById("number-feedback").innerText = "";
+        const item = numbersData[Math.floor(Math.random() * numbersData.length)];
+        
+        document.getElementById("number-display").innerText = item.count;
+        
+        const optionsContainer = document.getElementById("number-options");
+        optionsContainer.innerHTML = "";
+        
+        const shuffled = [...item.options].sort(() => Math.random() - 0.5);
+        
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "quiz-btn";
+            btn.innerText = opt;
+            btn.onclick = () => checkQuiz(opt, item.answer, 'number-feedback', generateNumberQuiz);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    /* ========================================================
+       ANIMAL QUIZ
+    ========================================================= */
+    const animalsData = [
+        { emoji: "🐶", name: "Dog", options: ["Dog", "Cat", "Cow"] },
+        { emoji: "🐱", name: "Cat", options: ["Cat", "Dog", "Mouse"] },
+        { emoji: "🐮", name: "Cow", options: ["Cow", "Horse", "Sheep"] },
+        { emoji: "🐷", name: "Pig", options: ["Pig", "Cow", "Dog"] },
+        { emoji: "🦆", name: "Duck", options: ["Duck", "Chicken", "Bird"] },
+        { emoji: "🐔", name: "Chicken", options: ["Chicken", "Duck", "Bird"] },
+        { emoji: "🐴", name: "Horse", options: ["Horse", "Cow", "Dog"] },
+        { emoji: "🐑", name: "Sheep", options: ["Sheep", "Cow", "Goat"] },
+        { emoji: "🦁", name: "Lion", options: ["Lion", "Tiger", "Dog"] },
+        { emoji: "🐘", name: "Elephant", options: ["Elephant", "Horse", "Rhino"] }
+    ];
+
+    function generateAnimalQuiz() {
+        document.getElementById("animal-feedback").innerText = "";
+        const item = animalsData[Math.floor(Math.random() * animalsData.length)];
+        
+        document.getElementById("animal-display").innerText = item.emoji;
+        
+        const optionsContainer = document.getElementById("animal-options");
+        optionsContainer.innerHTML = "";
+        
+        const shuffled = [...item.options].sort(() => Math.random() - 0.5);
+        
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "quiz-btn";
+            btn.innerText = opt;
+            btn.onclick = () => checkQuiz(opt, item.name, 'animal-feedback', generateAnimalQuiz);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    /* ========================================================
+       FAMILY QUIZ
+    ========================================================= */
+    const familyData = [
+        { emoji: "👩", name: "Mama", options: ["Mama", "Daddy", "Brother"] },
+        { emoji: "👨", name: "Daddy", options: ["Daddy", "Mama", "Baby"] },
+        { emoji: "👦", name: "Brother", options: ["Brother", "Baby", "Friend"] },
+        { emoji: "👶", name: "Baby", options: ["Baby", "Brother", "Mama"] },
+        { emoji: "👵", name: "Grandma", options: ["Grandma", "Grandpa", "Mama"] },
+        { emoji: "👴", name: "Grandpa", options: ["Grandpa", "Daddy", "Grandma"] },
+        { emoji: "🧑", name: "Friend", options: ["Friend", "Brother", "Daddy"] }
+    ];
+
+    function generateFamilyQuiz() {
+        document.getElementById("family-feedback").innerText = "";
+        const item = familyData[Math.floor(Math.random() * familyData.length)];
+        
+        document.getElementById("family-display").innerText = item.emoji;
+        
+        const optionsContainer = document.getElementById("family-options");
+        optionsContainer.innerHTML = "";
+        
+        const shuffled = [...item.options].sort(() => Math.random() - 0.5);
+        
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "quiz-btn";
+            btn.innerText = opt;
+            btn.onclick = () => checkQuiz(opt, item.name, 'family-feedback', generateFamilyQuiz);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    /* ========================================================
+       FOOD QUIZ
+    ========================================================= */
+    const foodData = [
+        { emoji: "🍎", name: "Apple", options: ["Apple", "Banana", "Orange"] },
+        { emoji: "🍌", name: "Banana", options: ["Banana", "Apple", "Grape"] },
+        { emoji: "🍞", name: "Bread", options: ["Bread", "Cake", "Cheese"] },
+        { emoji: "🥛", name: "Milk", options: ["Milk", "Water", "Juice"] },
+        { emoji: "💧", name: "Water", options: ["Water", "Milk", "Tea"] },
+        { emoji: "🧃", name: "Juice", options: ["Juice", "Milk", "Water"] },
+        { emoji: "🍰", name: "Cake", options: ["Cake", "Bread", "Cookie"] },
+        { emoji: "🍚", name: "Rice", options: ["Rice", "Bread", "Pasta"] }
+    ];
+
+    function generateFoodQuiz() {
+        document.getElementById("food-feedback").innerText = "";
+        const item = foodData[Math.floor(Math.random() * foodData.length)];
+        
+        document.getElementById("food-display").innerText = item.emoji;
+        
+        const optionsContainer = document.getElementById("food-options");
+        optionsContainer.innerHTML = "";
+        
+        const shuffled = [...item.options].sort(() => Math.random() - 0.5);
+        
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "quiz-btn";
+            btn.innerText = opt;
+            btn.onclick = () => checkQuiz(opt, item.name, 'food-feedback', generateFoodQuiz);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    /* ========================================================
+       GENERIC QUIZ CHECKER
+    ========================================================= */
+    function checkQuiz(answer, correct, feedbackId, nextFunction) {
+        const feedback = document.getElementById(feedbackId);
+        if (answer === correct) {
+            totalStars++; todayCorrect++; streak++;
+            updateScore();
+            feedback.innerText = "🎉 Excellent! " + correct + "! +1 Stern ⭐";
+            feedback.style.color = "#16a34a";
+            checkAchievements();
+            setTimeout(nextFunction, 2000);
+        } else {
+            streak = 0; updateScore();
+            feedback.innerText = "💪 Almost! It was " + correct;
+            feedback.style.color = "#e74c3c";
+        }
+    }
+
+    /* ========================================================
+       SCORE & ACHIEVEMENTS
+    ========================================================= */
+    function updateScore() {
+        document.getElementById("total-stars").innerText = totalStars + " ⭐";
+        document.getElementById("today-correct").innerText = todayCorrect;
+        document.getElementById("streak").innerText = streak + " 🔥";
+    }
+
+    function checkAchievements() {
+        if (totalStars >= 1) document.getElementById("first-star").classList.add("unlocked");
+        if (todayCorrect >= 5) document.getElementById("five-correct").classList.add("unlocked");
+        if (todayCorrect >= 10) document.getElementById("ten-correct").classList.add("unlocked");
+        if (totalStars >= 20) document.getElementById("twenty-stars").classList.add("unlocked");
+    }
+
+    /* ========================================================
+       INIT
+    ========================================================= */
+    generateColorQuiz();
+    generateNumberQuiz();
+    generateAnimalQuiz();
+    generateFamilyQuiz();
+    generateFoodQuiz();
+    roomsVisited.add("colors-room");
+</script>
+
+</body>
+</html>

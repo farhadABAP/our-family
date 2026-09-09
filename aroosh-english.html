@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TomToms English-Abenteuer 🇬🇧🦁</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            min-height: 100vh;
+            color: #263238;
+
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    #f3e5f5 0%,
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 20%,
+                    #e8eaf6 0%,
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #faf5ff,
+                    #f5f4ff
+                );
+
+            padding: 18px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* =====================================================
+           HEADER
+        ====================================================== */
+
+        .top {
+            text-align: center;
+            padding: 28px 10px 22px;
+        }
+
+        .rocket {
+            font-size: 58px;
+            margin-bottom: 10px;
+        }
+
+        .top h1 {
+            color: #173f73;
+            font-size: clamp(32px, 6vw, 50px);
+            font-weight: 900;
+        }
+
+        .top h2 {
+            margin-top: 8px;
+            color: #8b5cf6;
+            font-size: 23px;
+        }
+
+        .top p {
+            color: #687786;
+            margin-top: 11px;
+            line-height: 1.6;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 11px 18px;
+            border-radius: 25px;
+            background: white;
+            border: 2px solid #dbeafe;
+            color: #173f73;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .back-home:hover {
+            background: #173f73;
+            color: white;
+        }
+
+        /* =====================================================
+           MAGIC REMOTE
+        ====================================================== */
+
+        .magic-area {
+            background:
+                linear-gradient(
+                    135deg,
+                    #172554,
+                    #312e81,
+                    #4c1d95
+                );
+
+            color: white;
+            border-radius: 27px;
+            padding: 32px;
+            margin: 18px 0 32px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(49,46,129,0.22);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .magic-area::before {
+            content: "✨";
+            position: absolute;
+            left: 10%;
+            top: 22px;
+            font-size: 32px;
+            opacity: 0.5;
+        }
+
+        .magic-area::after {
+            content: "🦁";
+            position: absolute;
+            right: 10%;
+            bottom: 22px;
+            font-size: 30px;
+            opacity: 0.5;
+        }
+
+        .magic-area h2 {
+            color: #fde68a;
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .magic-area p {
+            color: #ede9fe;
+            line-height: 1.65;
+            max-width: 720px;
+            margin: 0 auto 22px;
+        }
+
+        .focus-button {
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(135deg, #facc15, #f59e0b);
+            color: #422006;
+            padding: 16px 32px;
+            border-radius: 16px;
+            font-size: 21px;
+            font-weight: 900;
+            box-shadow: 0 7px 0 #b45309, 0 12px 25px rgba(0,0,0,0.2);
+            transition: 0.15s;
+        }
+
+        .focus-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .focus-button:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 #b45309, 0 5px 12px rgba(0,0,0,0.2);
+        }
+
+        #focus-message {
+            min-height: 28px;
+            margin-top: 18px;
+            color: #fde68a;
+            font-weight: 800;
+            font-size: 17px;
+        }
+
+        /* =====================================================
+           SCORE
+        ====================================================== */
+
+        .score-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 13px;
+            margin-bottom: 30px;
+        }
+
+        .score-card {
+            background: white;
+            border-radius: 17px;
+            padding: 15px 23px;
+            min-width: 150px;
+            text-align: center;
+            box-shadow: 0 7px 20px rgba(40,60,80,0.07);
+            border: 2px solid #e5edf5;
+        }
+
+        .score-card .number {
+            display: block;
+            color: #173f73;
+            font-size: 27px;
+            font-weight: 900;
+        }
+
+        .score-card .label {
+            display: block;
+            color: #7b8794;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        /* =====================================================
+           EXERCISE SELECTOR
+        ====================================================== */
+
+        .exercise-selector {
+            background: white;
+            border-radius: 22px;
+            padding: 24px;
+            margin-bottom: 26px;
+            box-shadow: 0 8px 22px rgba(40,60,80,0.07);
+        }
+
+        .exercise-selector h3 {
+            color: #173f73;
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 21px;
+        }
+
+        .exercise-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .ex-btn {
+            border: 3px solid #e0e7ff;
+            background: #f8fbff;
+            color: #173f73;
+            border-radius: 16px;
+            padding: 12px 18px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 15px;
+            transition: 0.2s;
+            min-width: 140px;
+        }
+
+        .ex-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(139,92,246,0.15);
+        }
+
+        .ex-btn.active {
+            background: #8b5cf6;
+            color: white;
+            border-color: #8b5cf6;
+        }
+
+        /* =====================================================
+           EXERCISE ROOMS
+        ====================================================== */
+
+        .exercise-room {
+            display: none;
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 10px 30px rgba(40,60,80,0.08);
+        }
+
+        .exercise-room.active {
+            display: block;
+        }
+
+        .room-header {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .room-header .room-icon {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+
+        .room-header h2 {
+            color: #173f73;
+            font-size: 27px;
+            margin-bottom: 6px;
+        }
+
+        .room-header p {
+            color: #718096;
+            font-size: 15px;
+        }
+
+        /* =====================================================
+           VOCABULARY QUIZ
+        ====================================================== */
+
+        .vocab-box {
+            background: linear-gradient(135deg, #f3e5f5, #ede9fe);
+            border: 3px solid #c4b5fd;
+            border-radius: 22px;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .vocab-emoji {
+            font-size: 72px;
+            margin: 18px 0;
+        }
+
+        .vocab-question {
+            color: #718096;
+            font-size: 16px;
+            margin-bottom: 18px;
+            font-weight: 600;
+        }
+
+        .vocab-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .vocab-btn {
+            border: 3px solid #8b5cf6;
+            background: white;
+            color: #5b21b6;
+            border-radius: 16px;
+            padding: 14px 24px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 18px;
+            transition: 0.2s;
+            min-width: 120px;
+        }
+
+        .vocab-btn:hover {
+            background: #8b5cf6;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        #vocab-feedback {
+            min-height: 34px;
+            margin-top: 22px;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .next-btn {
+            border: none;
+            background: #173f73;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 13px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 14px;
+            transition: 0.2s;
+        }
+
+        .next-btn:hover {
+            background: #0f2d52;
+            transform: translateY(-2px);
+        }
+
+        /* =====================================================
+           TRANSLATION MATCH
+        ====================================================== */
+
+        .translate-box {
+            background: linear-gradient(135deg, #eff8ff, #f8fbff);
+            border: 3px solid #bfdbfe;
+            border-radius: 22px;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .translate-word {
+            color: #173f73;
+            font-size: clamp(36px, 7vw, 55px);
+            font-weight: 900;
+            margin: 18px 0;
+        }
+
+        .translate-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .translate-btn {
+            border: 3px solid #3b82f6;
+            background: white;
+            color: #1e40af;
+            border-radius: 16px;
+            padding: 14px 24px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 18px;
+            transition: 0.2s;
+            min-width: 120px;
+        }
+
+        .translate-btn:hover {
+            background: #3b82f6;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        #translate-feedback {
+            min-height: 34px;
+            margin-top: 22px;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        /* =====================================================
+           SENTENCE BUILDER
+        ====================================================== */
+
+        .sentence-box {
+            background: linear-gradient(135deg, #fef3c7, #fffbeb);
+            border: 3px solid #fbbf24;
+            border-radius: 22px;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .sentence-hint {
+            color: #718096;
+            font-size: 15px;
+            margin-bottom: 14px;
+        }
+
+        .word-bank {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 18px 0;
+            min-height: 60px;
+            padding: 15px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 16px;
+        }
+
+        .word-chip {
+            background: white;
+            border: 2px solid #f59e0b;
+            color: #92400e;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .word-chip:hover {
+            background: #f59e0b;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .word-chip.used {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .sentence-build-area {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 18px 0;
+            min-height: 60px;
+            padding: 15px;
+            background: white;
+            border: 2px dashed #f59e0b;
+            border-radius: 16px;
+        }
+
+        .placed-word {
+            background: #f59e0b;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .placed-word:hover {
+            background: #d97706;
+        }
+
+        #sentence-feedback {
+            min-height: 34px;
+            margin-top: 18px;
+            font-weight: 800;
+            font-size: 17px;
+        }
+
+        /* =====================================================
+           TEACHER TIP
+        ====================================================== */
+
+        .teacher-tip {
+            background: #fff9db;
+            border-left: 5px solid #f59f00;
+            border-radius: 10px;
+            padding: 18px;
+            margin-top: 24px;
+            color: #6b5b20;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .teacher-tip h4 {
+            color: #b9770e;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .teacher-tip ul {
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+
+        .teacher-tip li {
+            margin-bottom: 6px;
+        }
+
+        /* =====================================================
+           ACHIEVEMENTS
+        ====================================================== */
+
+        .achievements {
+            background: white;
+            border-radius: 22px;
+            padding: 26px;
+            margin-top: 28px;
+            box-shadow: 0 8px 22px rgba(40,60,80,0.07);
+        }
+
+        .achievements h3 {
+            color: #173f73;
+            text-align: center;
+            margin-bottom: 18px;
+            font-size: 22px;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
+        }
+
+        .achievement {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 18px;
+            text-align: center;
+            border: 2px solid #e5edf5;
+            opacity: 0.5;
+            transition: 0.3s;
+        }
+
+        .achievement.unlocked {
+            opacity: 1;
+            border-color: #fbbf24;
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+        }
+
+        .achievement .badge-icon {
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .achievement h4 {
+            color: #173f73;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .achievement p {
+            color: #718096;
+            font-size: 12px;
+        }
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        footer {
+            text-align: center;
+            padding: 42px 10px 22px;
+            color: #8795a1;
+            font-size: 14px;
+        }
+
+        footer strong {
+            color: #173f73;
+        }
+
+        /* =====================================================
+           MOBILE
+        ====================================================== */
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .magic-area { padding: 26px 18px; }
+            .exercise-room { padding: 22px 15px; }
+            .vocab-btn, .translate-btn { min-width: 100px; padding: 12px 16px; font-size: 16px; }
+            .ex-btn { min-width: 120px; font-size: 13px; padding: 10px 14px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <header class="top">
+        <div class="rocket">🇬🇧🦁</div>
+        <h1>TomToms English-Abenteuer</h1>
+        <h2>Words · Sentences · Fun</h2>
+        <p>
+            Every new word is a superpower!<br>
+            Jedes neue Wort ist eine Superkraft! ⭐
+        </p>
+        <a href="aroosh.html" class="back-home">← Zurück zur Lernwelt</a>
+    </header>
+
+    <!-- MAGIC FOCUS REMOTE -->
+    <section class="magic-area">
+        <h2>🎮 The Magic Remote</h2>
+        <p>
+            Erinnerst du dich an Prinz Aroosh? Wenn der Schmetterling kommt, 
+            benutze deine magische Fernbedienung.
+        </p>
+        <p>Die echte Magie steckt in dir: <strong>Focus · Patience · Courage</strong></p>
+        <button class="focus-button" onclick="activateFocus()">⚡ ACTIVATE FOCUS</button>
+        <div id="focus-message">Deine magische Fernbedienung wartet ... ✨</div>
+    </section>
+
+    <!-- SCORE -->
+    <div class="score-row">
+        <div class="score-card">
+            <span class="number" id="total-stars">0 ⭐</span>
+            <span class="label">Deine Sterne</span>
+        </div>
+        <div class="score-card">
+            <span class="number" id="today-correct">0</span>
+            <span class="label">Heute richtig</span>
+        </div>
+        <div class="score-card">
+            <span class="number" id="streak">0 🔥</span>
+            <span class="label">Serie</span>
+        </div>
+    </div>
+
+    <!-- EXERCISE SELECTOR -->
+    <section class="exercise-selector">
+        <h3>🎯 What do you want to practice?</h3>
+        <div class="exercise-buttons">
+            <button class="ex-btn active" id="vocab-btn" onclick="openExercise('vocab-room')">🖼️ Vocabulary</button>
+            <button class="ex-btn" id="translate-btn" onclick="openExercise('translate-room')">🔄 Übersetzung</button>
+            <button class="ex-btn" id="sentence-btn" onclick="openExercise('sentence-room')">📝 Sätze bauen</button>
+        </div>
+    </section>
+
+    <!-- VOCABULARY ROOM -->
+    <section id="vocab-room" class="exercise-room active">
+        <div class="room-header">
+            <div class="room-icon">🖼️</div>
+            <h2>Vocabulary (Wortschatz)</h2>
+            <p>Welches englische Wort passt zum Bild?</p>
+        </div>
+        <div class="vocab-box">
+            <div class="vocab-question">What is this in English?</div>
+            <div class="vocab-emoji" id="vocab-emoji">❓</div>
+            <div class="vocab-options" id="vocab-options"></div>
+            <div id="vocab-feedback"></div>
+            <button class="next-btn" onclick="generateVocabQuestion()">Nächstes Wort →</button>
+        </div>
+        <div class="teacher-tip">
+            <h4>💡 Teacher's Tip</h4>
+            <ul>
+                <li>Sprich das Wort <strong>laut</strong> aus, wenn du es siehst.</li>
+                <li>Verbinde das englische Wort mit dem Bild in deinem Kopf.</li>
+                <li>Beispiel: Siehst du einen 🐶? Sage laut: "Dog!"</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- TRANSLATION ROOM -->
+    <section id="translate-room" class="exercise-room">
+        <div class="room-header">
+            <div class="room-icon">🔄</div>
+            <h2>Übersetzung</h2>
+            <p>Was bedeutet dieses deutsche Wort auf Englisch?</p>
+        </div>
+        <div class="translate-box">
+            <div class="vocab-question">How do you say this in English?</div>
+            <div class="translate-word" id="translate-word">...</div>
+            <div class="translate-options" id="translate-options"></div>
+            <div id="translate-feedback"></div>
+            <button class="next-btn" onclick="generateTranslateQuestion()">Nächstes Wort →</button>
+        </div>
+        <div class="teacher-tip">
+            <h4>💡 Teacher's Tip</h4>
+            <ul>
+                <li>Manche Wörter klingen ähnlich (z.B. "Haus" und "House").</li>
+                <li>Andere sind ganz anders (z.B. "Hund" und "Dog").</li>
+                <li>Versuche, das Wort wie ein Lied zu lernen!</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SENTENCE BUILDER ROOM -->
+    <section id="sentence-room" class="exercise-room">
+        <div class="room-header">
+            <div class="room-icon">📝</div>
+            <h2>Sentences (Sätze bauen)</h2>
+            <p>Klicke auf die Wörter in der richtigen Reihenfolge.</p>
+        </div>
+        <div class="sentence-box">
+            <div class="sentence-hint">Build a correct English sentence:</div>
+            <div class="word-bank" id="word-bank"></div>
+            <div class="sentence-build-area" id="sentence-build-area"></div>
+            <div id="sentence-feedback"></div>
+            <button class="next-btn" onclick="generateSentenceQuestion()">Nächster Satz →</button>
+        </div>
+        <div class="teacher-tip">
+            <h4>💡 Teacher's Tip</h4>
+            <ul>
+                <li>Im Englischen ist die Reihenfolge oft: <strong>Wer + Tutwas + Was</strong>.</li>
+                <li>Beispiel: "The cat" (Wer) + "is" (Tutwas) + "black" (Was).</li>
+                <li>Das erste Wort beginnt immer groß!</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section class="achievements">
+        <h3>🏆 Deine Erfolge</h3>
+        <div class="achievement-grid">
+            <div class="achievement" id="first-star">
+                <div class="badge-icon">⭐</div>
+                <h4>Erste Aufgabe</h4>
+                <p>Du hast deine erste Aufgabe gelöst!</p>
+            </div>
+            <div class="achievement" id="five-correct">
+                <div class="badge-icon">🎯</div>
+                <h4>5 Richtige</h4>
+                <p>5 Aufgaben heute geschafft!</p>
+            </div>
+            <div class="achievement" id="ten-correct">
+                <div class="badge-icon">🚀</div>
+                <h4>10 Richtige</h4>
+                <p>10 Aufgaben heute richtig!</p>
+            </div>
+            <div class="achievement" id="streak-five">
+                <div class="badge-icon">🔥</div>
+                <h4>5er-Serie</h4>
+                <p>5 richtige in Folge!</p>
+            </div>
+            <div class="achievement" id="all-rooms">
+                <div class="badge-icon">🌟</div>
+                <h4>Alles probiert</h4>
+                <p>Alle 3 Übungen ausprobiert!</p>
+            </div>
+            <div class="achievement" id="twenty-stars">
+                <div class="badge-icon">🏆</div>
+                <h4>20 Sterne</h4>
+                <p>20 Sterne gesammelt!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>🇬🇧 <strong>TomTom</strong>, today a little English, tomorrow a lot more!</p>
+        <p style="margin-top: 9px;">Mama Tabassum & Papa Farhad ❤️</p>
+    </footer>
+
+</div>
+
+<script>
+    /* ========================================================
+       GLOBAL DATA
+    ========================================================= */
+    let totalStars = 0;
+    let todayCorrect = 0;
+    let streak = 0;
+    let roomsVisited = new Set();
+
+    let currentVocabAnswer = "";
+    let currentTranslateAnswer = "";
+    let correctSentence = [];
+    let placedWords = [];
+
+    /* ========================================================
+       MAGIC FOCUS REMOTE
+    ========================================================= */
+    function activateFocus() {
+        const message = document.getElementById("focus-message");
+        const messages = [
+            "⚡ FOCUS ACTIVATED! The butterfly must wait!",
+            "🎮 Magic remote activated!",
+            "🇬🇧 TomTom is ready for English!",
+            "🧠 Your English brain is ready!",
+            "⭐ Focus on. We can do this!",
+            "🎯 Concentration switched on!"
+        ];
+        const random = messages[Math.floor(Math.random() * messages.length)];
+        message.innerText = random;
+        setTimeout(() => {
+            message.innerText = "✨ Stay focused, TomTom. You can do this!";
+        }, 3500);
+    }
+
+    /* ========================================================
+       ROOM SWITCHER
+    ========================================================= */
+    function openExercise(roomId) {
+        document.querySelectorAll(".exercise-room").forEach(room => room.classList.remove("active"));
+        document.querySelectorAll(".ex-btn").forEach(btn => btn.classList.remove("active"));
+        
+        document.getElementById(roomId).classList.add("active");
+        const btnId = roomId.replace("-room", "-btn");
+        document.getElementById(btnId).classList.add("active");
+        
+        roomsVisited.add(roomId);
+        if (roomsVisited.size >= 3) {
+            document.getElementById("all-rooms").classList.add("unlocked");
+        }
+        
+        document.getElementById(roomId).scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    /* ========================================================
+       VOCABULARY QUIZ
+    ========================================================= */
+    const vocabData = [
+        { emoji: "🐶", word: "Dog", options: ["Dog", "Cat", "Bird"] },
+        { emoji: "🐱", word: "Cat", options: ["Mouse", "Cat", "Fish"] },
+        { emoji: "🍎", word: "Apple", options: ["Banana", "Apple", "Orange"] },
+        { emoji: "🚗", word: "Car", options: ["Bus", "Car", "Bike"] },
+        { emoji: "🏠", word: "House", options: ["House", "School", "Tree"] },
+        { emoji: "🌞", word: "Sun", options: ["Moon", "Star", "Sun"] },
+        { emoji: "👦", word: "Boy", options: ["Girl", "Boy", "Man"] },
+        { emoji: "👧", word: "Girl", options: ["Girl", "Boy", "Woman"] },
+        { emoji: "📚", word: "Book", options: ["Pen", "Book", "Table"] },
+        { emoji: "🎈", word: "Balloon", options: ["Ball", "Balloon", "Kite"] },
+        { emoji: "🐘", word: "Elephant", options: ["Lion", "Elephant", "Bear"] },
+        { emoji: "🍌", word: "Banana", options: ["Apple", "Banana", "Grape"] }
+    ];
+
+    function generateVocabQuestion() {
+        document.getElementById("vocab-feedback").innerText = "";
+        const item = vocabData[Math.floor(Math.random() * vocabData.length)];
+        currentVocabAnswer = item.word;
+        
+        document.getElementById("vocab-emoji").innerText = item.emoji;
+        
+        const optionsContainer = document.getElementById("vocab-options");
+        optionsContainer.innerHTML = "";
+        
+        // Shuffle options
+        const shuffled = [...item.options].sort(() => Math.random() - 0.5);
+        
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "vocab-btn";
+            btn.innerText = opt;
+            btn.onclick = () => checkVocab(opt);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    function checkVocab(answer) {
+        const feedback = document.getElementById("vocab-feedback");
+        if (answer === currentVocabAnswer) {
+            totalStars++; todayCorrect++; streak++;
+            updateScore();
+            feedback.innerText = "🎉 Excellent! " + currentVocabAnswer + "! +1 Stern ⭐";
+            feedback.style.color = "#16a34a";
+            checkAchievements();
+            setTimeout(generateVocabQuestion, 2000);
+        } else {
+            streak = 0; updateScore();
+            feedback.innerText = "💪 Try again! The correct word is: " + currentVocabAnswer;
+            feedback.style.color = "#e74c3c";
+        }
+    }
+
+    /* ========================================================
+       TRANSLATION QUIZ
+    ========================================================= */
+    const translateData = [
+        { de: "Hund", en: "Dog", options: ["Dog", "Cat", "Bird"] },
+        { de: "Katze", en: "Cat", options: ["Mouse", "Cat", "Fish"] },
+        { de: "Apfel", en: "Apple", options: ["Banana", "Apple", "Orange"] },
+        { de: "Auto", en: "Car", options: ["Bus", "Car", "Bike"] },
+        { de: "Haus", en: "House", options: ["House", "School", "Tree"] },
+        { de: "Sonne", en: "Sun", options: ["Moon", "Star", "Sun"] },
+        { de: "Junge", en: "Boy", options: ["Girl", "Boy", "Man"] },
+        { de: "Mädchen", en: "Girl", options: ["Girl", "Boy", "Woman"] },
+        { de: "Buch", en: "Book", options: ["Pen", "Book", "Table"] },
+        { de: "Wasser", en: "Water", options: ["Milk", "Water", "Juice"] },
+        { de: "Mama", en: "Mother", options: ["Father", "Mother", "Sister"] },
+        { de: "Papa", en: "Father", options: ["Father", "Brother", "Uncle"] }
+    ];
+
+    function generateTranslateQuestion() {
+        document.getElementById("translate-feedback").innerText = "";
+        const item = translateData[Math.floor(Math.random() * translateData.length)];
+        currentTranslateAnswer = item.en;
+        
+        document.getElementById("translate-word").innerText = item.de;
+        
+        const optionsContainer = document.getElementById("translate-options");
+        optionsContainer.innerHTML = "";
+        
+        const shuffled = [...item.options].sort(() => Math.random() - 0.5);
+        
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "translate-btn";
+            btn.innerText = opt;
+            btn.onclick = () => checkTranslate(opt);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    function checkTranslate(answer) {
+        const feedback = document.getElementById("translate-feedback");
+        if (answer === currentTranslateAnswer) {
+            totalStars++; todayCorrect++; streak++;
+            updateScore();
+            feedback.innerText = "🎉 Perfect! " + currentTranslateAnswer + "! +1 Stern ⭐";
+            feedback.style.color = "#16a34a";
+            checkAchievements();
+            setTimeout(generateTranslateQuestion, 2000);
+        } else {
+            streak = 0; updateScore();
+            feedback.innerText = "💪 Almost! The correct word is: " + currentTranslateAnswer;
+            feedback.style.color = "#e74c3c";
+        }
+    }
+
+    /* ========================================================
+       SENTENCE BUILDER
+    ========================================================= */
+    const sentences = [
+        ["The", "cat", "is", "black"],
+        ["I", "like", "apples"],
+        ["The", "dog", "is", "big"],
+        ["My", "name", "is", "TomTom"],
+        ["The", "sun", "is", "yellow"],
+        ["I", "have", "a", "book"],
+        ["The", "car", "is", "red"],
+        ["She", "is", "my", "sister"],
+        ["He", "is", "my", "brother"],
+        ["We", "are", "happy"]
+    ];
+
+    function generateSentenceQuestion() {
+        document.getElementById("sentence-feedback").innerText = "";
+        placedWords = [];
+        
+        const randomIndex = Math.floor(Math.random() * sentences.length);
+        correctSentence = [...sentences[randomIndex]];
+        
+        const shuffled = [...correctSentence].sort(() => Math.random() - 0.5);
+        
+        const bank = document.getElementById("word-bank");
+        bank.innerHTML = "";
+        
+        shuffled.forEach(word => {
+            const chip = document.createElement("span");
+            chip.className = "word-chip";
+            chip.innerText = word;
+            chip.onclick = () => placeWord(chip, word);
+            bank.appendChild(chip);
+        });
+        
+        document.getElementById("sentence-build-area").innerHTML = "";
+    }
+
+    function placeWord(chip, word) {
+        if (chip.classList.contains("used")) return;
+        
+        chip.classList.add("used");
+        placedWords.push(word);
+        
+        const buildArea = document.getElementById("sentence-build-area");
+        const placed = document.createElement("span");
+        placed.className = "placed-word";
+        placed.innerText = word;
+        placed.onclick = () => removeWord(placed, chip, word);
+        
+        buildArea.appendChild(placed);
+        checkSentence();
+    }
+
+    function removeWord(placed, chip, word) {
+        placed.remove();
+        placedWords = placedWords.filter(w => w !== word);
+        chip.classList.remove("used");
+        checkSentence();
+    }
+
+    function checkSentence() {
+        const feedback = document.getElementById("sentence-feedback");
+        
+        if (placedWords.length !== correctSentence.length) {
+            feedback.innerText = "";
+            return;
+        }
+        
+        const isCorrect = placedWords.every((word, index) => word === correctSentence[index]);
+        
+        if (isCorrect) {
+            totalStars++; todayCorrect++; streak++;
+            updateScore();
+            feedback.innerText = "🎉 Awesome! Perfect sentence! +1 Stern ⭐";
+            feedback.style.color = "#16a34a";
+            checkAchievements();
+            setTimeout(generateSentenceQuestion, 2500);
+        } else {
+            streak = 0; updateScore();
+            feedback.innerText = "💪 Not quite right. Try again! (Tipp: Wer + Tutwas + Was)";
+            feedback.style.color = "#e74c3c";
+        }
+    }
+
+    /* ========================================================
+       SCORE & ACHIEVEMENTS
+    ========================================================= */
+    function updateScore() {
+        document.getElementById("total-stars").innerText = totalStars + " ⭐";
+        document.getElementById("today-correct").innerText = todayCorrect;
+        document.getElementById("streak").innerText = streak + " 🔥";
+    }
+
+    function checkAchievements() {
+        if (totalStars >= 1) document.getElementById("first-star").classList.add("unlocked");
+        if (todayCorrect >= 5) document.getElementById("five-correct").classList.add("unlocked");
+        if (todayCorrect >= 10) document.getElementById("ten-correct").classList.add("unlocked");
+        if (streak >= 5) document.getElementById("streak-five").classList.add("unlocked");
+        if (totalStars >= 20) document.getElementById("twenty-stars").classList.add("unlocked");
+    }
+
+    /* ========================================================
+       INIT
+    ========================================================= */
+    generateVocabQuestion();
+    generateTranslateQuestion();
+    generateSentenceQuestion();
+    roomsVisited.add("vocab-room");
+</script>
+
+</body>
+</html>

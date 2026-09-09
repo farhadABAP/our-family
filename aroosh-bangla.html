@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TomToms Bangla-Abenteuer 🇧🇩📚</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", "Tahoma", "Arial", sans-serif;
+            min-height: 100vh;
+            color: #263238;
+
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    #fee2e2 0%,
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 20%,
+                    #fef3c7 0%,
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #fef2f2,
+                    #fffbeb
+                );
+
+            padding: 18px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* =====================================================
+           HEADER
+        ====================================================== */
+
+        .top {
+            text-align: center;
+            padding: 28px 10px 22px;
+        }
+
+        .rocket {
+            font-size: 58px;
+            margin-bottom: 10px;
+        }
+
+        .top h1 {
+            color: #173f73;
+            font-size: clamp(32px, 6vw, 50px);
+            font-weight: 900;
+        }
+
+        .top h2 {
+            margin-top: 8px;
+            color: #ef4444;
+            font-size: 23px;
+        }
+
+        .top p {
+            color: #687786;
+            margin-top: 11px;
+            line-height: 1.6;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 11px 18px;
+            border-radius: 25px;
+            background: white;
+            border: 2px solid #fee2e2;
+            color: #173f73;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .back-home:hover {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        /* =====================================================
+           MAGIC REMOTE
+        ====================================================== */
+
+        .magic-area {
+            background:
+                linear-gradient(
+                    135deg,
+                    #172554,
+                    #312e81,
+                    #4c1d95
+                );
+
+            color: white;
+            border-radius: 27px;
+            padding: 32px;
+            margin: 18px 0 32px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(49,46,129,0.22);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .magic-area::before {
+            content: "✨";
+            position: absolute;
+            left: 10%;
+            top: 22px;
+            font-size: 32px;
+            opacity: 0.5;
+        }
+
+        .magic-area::after {
+            content: "🇧🇩";
+            position: absolute;
+            right: 10%;
+            bottom: 22px;
+            font-size: 30px;
+            opacity: 0.5;
+        }
+
+        .magic-area h2 {
+            color: #fde68a;
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .magic-area p {
+            color: #ede9fe;
+            line-height: 1.65;
+            max-width: 720px;
+            margin: 0 auto 22px;
+        }
+
+        .focus-button {
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(135deg, #facc15, #f59e0b);
+            color: #422006;
+            padding: 16px 32px;
+            border-radius: 16px;
+            font-size: 21px;
+            font-weight: 900;
+            box-shadow: 0 7px 0 #b45309, 0 12px 25px rgba(0,0,0,0.2);
+            transition: 0.15s;
+        }
+
+        .focus-button:hover { transform: translateY(-2px); }
+        .focus-button:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 #b45309, 0 5px 12px rgba(0,0,0,0.2);
+        }
+
+        #focus-message {
+            min-height: 28px;
+            margin-top: 18px;
+            color: #fde68a;
+            font-weight: 800;
+            font-size: 17px;
+        }
+
+        /* =====================================================
+           SCORE
+        ====================================================== */
+
+        .score-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 13px;
+            margin-bottom: 30px;
+        }
+
+        .score-card {
+            background: white;
+            border-radius: 17px;
+            padding: 15px 23px;
+            min-width: 150px;
+            text-align: center;
+            box-shadow: 0 7px 20px rgba(40,60,80,0.07);
+            border: 2px solid #fee2e2;
+        }
+
+        .score-card .number {
+            display: block;
+            color: #173f73;
+            font-size: 27px;
+            font-weight: 900;
+        }
+
+        .score-card .label {
+            display: block;
+            color: #7b8794;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        /* =====================================================
+           EXERCISE SELECTOR
+        ====================================================== */
+
+        .exercise-selector {
+            background: white;
+            border-radius: 22px;
+            padding: 24px;
+            margin-bottom: 26px;
+            box-shadow: 0 8px 22px rgba(40,60,80,0.07);
+        }
+
+        .exercise-selector h3 {
+            color: #173f73;
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 21px;
+        }
+
+        .exercise-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .ex-btn {
+            border: 3px solid #fee2e2;
+            background: #fef2f2;
+            color: #991b1b;
+            border-radius: 16px;
+            padding: 12px 18px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 15px;
+            transition: 0.2s;
+            min-width: 150px;
+        }
+
+        .ex-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(239,68,68,0.15);
+        }
+
+        .ex-btn.active {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        /* =====================================================
+           EXERCISE ROOMS
+        ====================================================== */
+
+        .exercise-room {
+            display: none;
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 10px 30px rgba(40,60,80,0.08);
+        }
+
+        .exercise-room.active { display: block; }
+
+        .room-header {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .room-header .room-icon {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+
+        .room-header h2 {
+            color: #173f73;
+            font-size: 27px;
+            margin-bottom: 6px;
+        }
+
+        .room-header p {
+            color: #718096;
+            font-size: 15px;
+        }
+
+        /* =====================================================
+           ALPHABET DISPLAY
+        ====================================================== */
+
+        .alphabet-box {
+            background: linear-gradient(135deg, #fef2f2, #fffbeb);
+            border: 3px solid #fca5a5;
+            border-radius: 22px;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .bangla-display {
+            font-family: "Noto Sans Bengali", "Kalpurush", "Arial", sans-serif;
+            font-size: clamp(64px, 12vw, 100px);
+            color: #991b1b;
+            margin: 18px 0;
+            line-height: 1.2;
+        }
+
+        .pronunciation {
+            color: #718096;
+            font-size: 20px;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+
+        .quiz-question {
+            color: #718096;
+            font-size: 16px;
+            margin-bottom: 18px;
+            font-weight: 600;
+        }
+
+        .quiz-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .quiz-btn {
+            border: 3px solid #ef4444;
+            background: white;
+            color: #991b1b;
+            border-radius: 16px;
+            padding: 14px 24px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 18px;
+            transition: 0.2s;
+            min-width: 120px;
+        }
+
+        .quiz-btn:hover {
+            background: #ef4444;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        #letter-feedback, #word-feedback, #match-feedback {
+            min-height: 34px;
+            margin-top: 22px;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .next-btn {
+            border: none;
+            background: #173f73;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 13px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 14px;
+            transition: 0.2s;
+        }
+
+        .next-btn:hover {
+            background: #0f2d52;
+            transform: translateY(-2px);
+        }
+
+        /* =====================================================
+           WORD MATCHING
+        ====================================================== */
+
+        .word-box {
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border: 3px solid #fcd34d;
+            border-radius: 22px;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .word-bangla {
+            font-family: "Noto Sans Bengali", "Kalpurush", "Arial", sans-serif;
+            font-size: clamp(40px, 8vw, 60px);
+            color: #92400e;
+            margin: 18px 0;
+        }
+
+        .word-emoji {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+
+        /* =====================================================
+           TEACHER TIP
+        ====================================================== */
+
+        .teacher-tip {
+            background: #fff9db;
+            border-left: 5px solid #f59f00;
+            border-radius: 10px;
+            padding: 18px;
+            margin-top: 24px;
+            color: #6b5b20;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .teacher-tip h4 {
+            color: #b9770e;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .teacher-tip ul {
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+
+        .teacher-tip li {
+            margin-bottom: 8px;
+        }
+
+        /* =====================================================
+           ACHIEVEMENTS
+        ====================================================== */
+
+        .achievements {
+            background: white;
+            border-radius: 22px;
+            padding: 26px;
+            margin-top: 28px;
+            box-shadow: 0 8px 22px rgba(40,60,80,0.07);
+        }
+
+        .achievements h3 {
+            color: #173f73;
+            text-align: center;
+            margin-bottom: 18px;
+            font-size: 22px;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
+        }
+
+        .achievement {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 18px;
+            text-align: center;
+            border: 2px solid #e5edf5;
+            opacity: 0.5;
+            transition: 0.3s;
+        }
+
+        .achievement.unlocked {
+            opacity: 1;
+            border-color: #fbbf24;
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+        }
+
+        .achievement .badge-icon {
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .achievement h4 {
+            color: #173f73;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .achievement p {
+            color: #718096;
+            font-size: 12px;
+        }
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        footer {
+            text-align: center;
+            padding: 42px 10px 22px;
+            color: #8795a1;
+            font-size: 14px;
+        }
+
+        footer strong { color: #173f73; }
+
+        /* =====================================================
+           MOBILE
+        ====================================================== */
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .magic-area { padding: 26px 18px; }
+            .exercise-room { padding: 22px 15px; }
+            .quiz-btn { min-width: 100px; padding: 12px 16px; font-size: 16px; }
+            .ex-btn { min-width: 120px; font-size: 13px; padding: 10px 14px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <header class="top">
+        <div class="rocket">🇧🇩📚</div>
+        <h1>TomToms Bangla-Abenteuer</h1>
+        <h2>অক্ষর · শব্দ · পড়া</h2>
+        <p>
+            Jeder bengalische Buchstabe ist wie ein kleines Kunstwerk.<br>
+            Wir lernen sie Schritt für Schritt! ⭐
+        </p>
+        <a href="aroosh.html" class="back-home">← Zurück zur Lernwelt</a>
+    </header>
+
+    <!-- MAGIC FOCUS REMOTE -->
+    <section class="magic-area">
+        <h2>🎮 Die magische Fernbedienung</h2>
+        <p>
+            Erinnerst du dich an Prinz Aroosh? Wenn der Schmetterling kommt, 
+            benutze deine unsichtbare Fernbedienung.
+        </p>
+        <p>Die echte Magie steckt in dir: <strong>Fokus · Geduld · Mut</strong></p>
+        <button class="focus-button" onclick="activateFocus()">⚡ FOKUS AKTIVIEREN</button>
+        <div id="focus-message">Deine magische Fernbedienung wartet ... ✨</div>
+    </section>
+
+    <!-- SCORE -->
+    <div class="score-row">
+        <div class="score-card">
+            <span class="number" id="total-stars">0 ⭐</span>
+            <span class="label">Deine Sterne</span>
+        </div>
+        <div class="score-card">
+            <span class="number" id="today-correct">0</span>
+            <span class="label">Heute richtig</span>
+        </div>
+        <div class="score-card">
+            <span class="number" id="streak">0 🔥</span>
+            <span class="label">Serie</span>
+        </div>
+    </div>
+
+    <!-- EXERCISE SELECTOR -->
+    <section class="exercise-selector">
+        <h3>🎯 Was möchtest du heute üben?</h3>
+        <div class="exercise-buttons">
+            <button class="ex-btn active" id="letters-btn" onclick="openExercise('letters-room')">🅰️ Buchstaben</button>
+            <button class="ex-btn" id="words-btn" onclick="openExercise('words-room')">📖 Wörter</button>
+            <button class="ex-btn" id="match-btn" onclick="openExercise('match-room')">🎯 Zuordnen</button>
+        </div>
+    </section>
+
+    <!-- LETTERS ROOM -->
+    <section id="letters-room" class="exercise-room active">
+        <div class="room-header">
+            <div class="room-icon">🅰️</div>
+            <h2>Die bengalischen Buchstaben</h2>
+            <p>Wie heißt dieser Buchstabe?</p>
+        </div>
+        <div class="alphabet-box">
+            <div class="quiz-question">Welcher Buchstabe ist das?</div>
+            <div class="bangla-display" id="letter-display" lang="bn">ক</div>
+            <div class="pronunciation" id="letter-pronunciation">ko</div>
+            <div class="quiz-options" id="letter-options"></div>
+            <div id="letter-feedback"></div>
+            <button class="next-btn" onclick="generateLetterQuestion()">Nächster Buchstabe →</button>
+        </div>
+        <div class="teacher-tip">
+            <h4>💡 Tipp vom Lehrer</h4>
+            <ul>
+                <li>Bengalisch hat <strong>11 Vokale</strong> (স্বরবর্ণ) und <strong>39 Konsonanten</strong> (ব্যঞ্জনবর্ণ).</li>
+                <li>Jeder Buchstabe hat einen eigenen Klang. Sprich ihn laut aus!</li>
+                <li>Beispiel: <strong lang="bn">ক</strong> heißt "ko" und klingt wie ein kurzes "ko".</li>
+                <li>Fange mit den <strong>Konsonanten</strong> an - sie sind am wichtigsten!</li>
+                <li>Übe jeden Tag 5-10 Buchstaben. In einer Woche kennst du viele!</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- WORDS ROOM -->
+    <section id="words-room" class="exercise-room">
+        <div class="room-header">
+            <div class="room-icon">📖</div>
+            <h2>Einfache bengalische Wörter</h2>
+            <p>Was bedeutet dieses bengalische Wort?</p>
+        </div>
+        <div class="word-box">
+            <div class="word-emoji" id="word-emoji">📚</div>
+            <div class="word-bangla" id="word-display" lang="bn">বই</div>
+            <div class="quiz-question">Was bedeutet das?</div>
+            <div class="quiz-options" id="word-options"></div>
+            <div id="word-feedback"></div>
+            <button class="next-btn" onclick="generateWordQuestion()">Nächstes Wort →</button>
+        </div>
+        <div class="teacher-tip">
+            <h4>💡 Tipp vom Lehrer</h4>
+            <ul>
+                <li>Viele bengalische Wörter sind <strong>kurz und einfach</strong>.</li>
+                <li>Verbinde das Wort mit dem <strong>Bild</strong> in deinem Kopf.</li>
+                <li>Sprich das Wort <strong>laut</strong> aus, bevor du die Antwort wählst.</li>
+                <li>Beispiel: <strong lang="bn">বই</strong> (boi) = Buch 📚</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- MATCH ROOM -->
+    <section id="match-room" class="exercise-room">
+        <div class="room-header">
+            <div class="room-icon">🎯</div>
+            <h2>Wörter zuordnen</h2>
+            <p>Finde das richtige bengalische Wort für das deutsche Wort.</p>
+        </div>
+        <div class="alphabet-box">
+            <div class="quiz-question" id="match-german-word">Wie schreibt man "Wasser"?</div>
+            <div class="quiz-options" id="match-options"></div>
+            <div id="match-feedback"></div>
+            <button class="next-btn" onclick="generateMatchQuestion()">Nächste Frage →</button>
+        </div>
+        <div class="teacher-tip">
+            <h4>💡 Tipp vom Lehrer</h4>
+            <ul>
+                <li>Schau dir die <strong>Form der Buchstaben</strong> genau an.</li>
+                <li>Manche Buchstaben sehen ähnlich aus, haben aber <strong>unterschiedliche Linien</strong>.</li>
+                <li>Die Linien und Kreise sind wie kleine Geheimzeichen!</li>
+                <li>Übe mit <strong>einfachen Wörtern</strong> wie Mama, Papa, Wasser, Buch.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section class="achievements">
+        <h3>🏆 Deine Erfolge</h3>
+        <div class="achievement-grid">
+            <div class="achievement" id="first-star">
+                <div class="badge-icon">⭐</div>
+                <h4>Erste Aufgabe</h4>
+                <p>Du hast deine erste Aufgabe gelöst!</p>
+            </div>
+            <div class="achievement" id="five-correct">
+                <div class="badge-icon">🎯</div>
+                <h4>5 Richtige</h4>
+                <p>5 Aufgaben heute geschafft!</p>
+            </div>
+            <div class="achievement" id="ten-correct">
+                <div class="badge-icon">🚀</div>
+                <h4>10 Richtige</h4>
+                <p>10 Aufgaben heute richtig!</p>
+            </div>
+            <div class="achievement" id="streak-five">
+                <div class="badge-icon">🔥</div>
+                <h4>5er-Serie</h4>
+                <p>5 richtige in Folge!</p>
+            </div>
+            <div class="achievement" id="all-rooms">
+                <div class="badge-icon">🌟</div>
+                <h4>Alles probiert</h4>
+                <p>Alle 3 Übungen ausprobiert!</p>
+            </div>
+            <div class="achievement" id="twenty-stars">
+                <div class="badge-icon">🏆</div>
+                <h4>20 Sterne</h4>
+                <p>20 Sterne gesammelt!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>🇧🇩 <strong>TomTom</strong>, Chomotkar! (Wunderbar!) Jeder Buchstabe bringt dich weiter.</p>
+        <p style="margin-top: 9px;">Mama Tabassum & Papa Farhad ❤️</p>
+    </footer>
+
+</div>
+
+<script>
+    /* ========================================================
+       GLOBAL DATA
+    ========================================================= */
+    let totalStars = 0;
+    let todayCorrect = 0;
+    let streak = 0;
+    let roomsVisited = new Set();
+
+    let currentLetterAnswer = "";
+    let currentWordAnswer = "";
+    let currentMatchAnswer = "";
+
+    /* ========================================================
+       MAGIC FOCUS REMOTE
+    ========================================================= */
+    function activateFocus() {
+        const message = document.getElementById("focus-message");
+        const messages = [
+            "⚡ FOKUS AKTIV! Der Schmetterling muss warten!",
+            "🎮 Magische Fernbedienung aktiviert!",
+            "🇧🇩 TomTom ist bereit für Bangla!",
+            "🧠 Dein Gehirn ist bereit für neue Buchstaben!",
+            "⭐ Fokus an. Wir schaffen das!",
+            "🌟 Chomotkar! Du machst das großartig!"
+        ];
+        const random = messages[Math.floor(Math.random() * messages.length)];
+        message.innerText = random;
+        setTimeout(() => {
+            message.innerText = "✨ Konzentriert bleiben, TomTom. Du kannst das!";
+        }, 3500);
+    }
+
+    /* ========================================================
+       ROOM SWITCHER
+    ========================================================= */
+    function openExercise(roomId) {
+        document.querySelectorAll(".exercise-room").forEach(room => room.classList.remove("active"));
+        document.querySelectorAll(".ex-btn").forEach(btn => btn.classList.remove("active"));
+        
+        document.getElementById(roomId).classList.add("active");
+        const btnId = roomId.replace("-room", "-btn");
+        document.getElementById(btnId).classList.add("active");
+        
+        roomsVisited.add(roomId);
+        if (roomsVisited.size >= 3) {
+            document.getElementById("all-rooms").classList.add("unlocked");
+        }
+        
+        document.getElementById(roomId).scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    /* ========================================================
+       LETTERS QUIZ
+    ========================================================= */
+    const lettersData = [
+        { letter: "ক", name: "ko", options: ["ko", "kho", "go"] },
+        { letter: "খ", name: "kho", options: ["ko", "kho", "go"] },
+        { letter: "গ", name: "go", options: ["ko", "go", "gho"] },
+        { letter: "ঘ", name: "gho", options: ["go", "gho", "ngo"] },
+        { letter: "ঙ", name: "ngo", options: ["ngo", "co", "cho"] },
+        { letter: "চ", name: "co", options: ["co", "cho", "jo"] },
+        { letter: "ছ", name: "cho", options: ["co", "cho", "jo"] },
+        { letter: "জ", name: "jo", options: ["jo", "jho", "nyo"] },
+        { letter: "ঝ", name: "jho", options: ["jo", "jho", "to"] },
+        { letter: "ঞ", name: "nyo", options: ["nyo", "to", "tho"] },
+        { letter: "ট", name: "to", options: ["to", "tho", "do"] },
+        { letter: "ঠ", name: "tho", options: ["to", "tho", "do"] },
+        { letter: "ড", name: "do", options: ["do", "dho", "no"] },
+        { letter: "ঢ", name: "dho", options: ["do", "dho", "no"] },
+        { letter: "ণ", name: "no", options: ["no", "to", "tho"] },
+        { letter: "ত", name: "to", options: ["to", "tho", "do"] },
+        { letter: "থ", name: "tho", options: ["to", "tho", "do"] },
+        { letter: "দ", name: "do", options: ["do", "dho", "no"] },
+        { letter: "ধ", name: "dho", options: ["do", "dho", "no"] },
+        { letter: "ন", name: "no", options: ["no", "po", "pho"] },
+        { letter: "প", name: "po", options: ["po", "pho", "bo"] },
+        { letter: "ফ", name: "pho", options: ["po", "pho", "bo"] },
+        { letter: "ব", name: "bo", options: ["bo", "bho", "mo"] },
+        { letter: "ভ", name: "bho", options: ["bo", "bho", "mo"] },
+        { letter: "ম", name: "mo", options: ["mo", "jo", "ro"] },
+        { letter: "য", name: "jo", options: ["jo", "ro", "lo"] },
+        { letter: "র", name: "ro", options: ["ro", "lo", "sho"] },
+        { letter: "ল", name: "lo", options: ["lo", "sho", "sho"] },
+        { letter: "শ", name: "sho", options: ["sho", "sho", "so"] },
+        { letter: "ষ", name: "sho", options: ["sho", "sho", "so"] },
+        { letter: "স", name: "so", options: ["so", "ho", "khyo"] },
+        { letter: "হ", name: "ho", options: ["ho", "ro", "lo"] }
+    ];
+
+    function generateLetterQuestion() {
+        document.getElementById("letter-feedback").innerText = "";
+        const item = lettersData[Math.floor(Math.random() * lettersData.length)];
+        currentLetterAnswer = item.name;
+        
+        document.getElementById("letter-display").innerText = item.letter;
+        document.getElementById("letter-pronunciation").innerText = "Aussprache: " + item.name;
+        
+        const optionsContainer = document.getElementById("letter-options");
+        optionsContainer.innerHTML = "";
+        
+        const shuffled = [...item.options].sort(() => Math.random() - 0.5);
+        
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "quiz-btn";
+            btn.innerText = opt;
+            btn.onclick = () => checkLetter(opt);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    function checkLetter(answer) {
+        const feedback = document.getElementById("letter-feedback");
+        if (answer === currentLetterAnswer) {
+            totalStars++; todayCorrect++; streak++;
+            updateScore();
+            feedback.innerText = "🎉 Chomotkar! Richtig: " + currentLetterAnswer + "! +1 Stern ⭐";
+            feedback.style.color = "#16a34a";
+            checkAchievements();
+            setTimeout(generateLetterQuestion, 2000);
+        } else {
+            streak = 0; updateScore();
+            feedback.innerText = "💪 Fast! Das war: " + currentLetterAnswer;
+            feedback.style.color = "#e74c3c";
+        }
+    }
+
+    /* ========================================================
+       WORDS QUIZ
+    ========================================================= */
+    const wordsData = [
+        { bangla: "বই", german: "Buch", emoji: "📚", options: ["Buch", "Stift", "Tisch"] },
+        { bangla: "কলম", german: "Stift", emoji: "✏️", options: ["Buch", "Stift", "Radiergummi"] },
+        { bangla: "পানি", german: "Wasser", emoji: "💧", options: ["Milch", "Wasser", "Saft"] },
+        { bangla: "মা", german: "Mama", emoji: "👩", options: ["Mama", "Papa", "Bruder"] },
+        { bangla: "বাবা", german: "Papa", emoji: "👨", options: ["Mama", "Papa", "Schwester"] },
+        { bangla: "ভাই", german: "Bruder", emoji: "👦", options: ["Bruder", "Schwester", "Freund"] },
+        { bangla: "বোন", german: "Schwester", emoji: "👧", options: ["Bruder", "Schwester", "Mama"] },
+        { bangla: "ঘর", german: "Haus", emoji: "🏠", options: ["Schule", "Haus", "Baum"] },
+        { bangla: "গাড়ি", german: "Auto", emoji: "🚗", options: ["Bus", "Auto", "Fahrrad"] },
+        { bangla: "ফুল", german: "Blume", emoji: "🌸", options: ["Blume", "Baum", "Gras"] },
+        { bangla: "গাছ", german: "Baum", emoji: "🌳", options: ["Blume", "Baum", "Gras"] },
+        { bangla: "রোদ", german: "Sonne", emoji: "🌞", options: ["Mond", "Sonne", "Stern"] },
+        { bangla: "চাঁদ", german: "Mond", emoji: "🌙", options: ["Mond", "Sonne", "Wolke"] },
+        { bangla: "তারা", german: "Stern", emoji: "⭐", options: ["Mond", "Sonne", "Stern"] },
+        { bangla: "খাবার", german: "Essen", emoji: "🍽️", options: ["Essen", "Trinken", "Schlafen"] }
+    ];
+
+    function generateWordQuestion() {
+        document.getElementById("word-feedback").innerText = "";
+        const item = wordsData[Math.floor(Math.random() * wordsData.length)];
+        currentWordAnswer = item.german;
+        
+        document.getElementById("word-emoji").innerText = item.emoji;
+        document.getElementById("word-display").innerText = item.bangla;
+        
+        const optionsContainer = document.getElementById("word-options");
+        optionsContainer.innerHTML = "";
+        
+        const shuffled = [...item.options].sort(() => Math.random() - 0.5);
+        
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "quiz-btn";
+            btn.innerText = opt;
+            btn.onclick = () => checkWord(opt);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    function checkWord(answer) {
+        const feedback = document.getElementById("word-feedback");
+        if (answer === currentWordAnswer) {
+            totalStars++; todayCorrect++; streak++;
+            updateScore();
+            feedback.innerText = "🎉 Fantastisch! " + currentWordAnswer + "! +1 Stern ⭐";
+            feedback.style.color = "#16a34a";
+            checkAchievements();
+            setTimeout(generateWordQuestion, 2000);
+        } else {
+            streak = 0; updateScore();
+            feedback.innerText = "💪 Nicht ganz. Das bedeutet: " + currentWordAnswer;
+            feedback.style.color = "#e74c3c";
+        }
+    }
+
+    /* ========================================================
+       MATCH QUIZ
+    ========================================================= */
+    const matchData = [
+        { german: "Wasser", bangla: "পানি", options: ["পানি", "দুধ", "রস"] },
+        { german: "Mama", bangla: "মা", options: ["মা", "বাবা", "ভাই"] },
+        { german: "Papa", bangla: "বাবা", options: ["মা", "বাবা", "বোন"] },
+        { german: "Buch", bangla: "বই", options: ["কলম", "বই", "খাতা"] },
+        { german: "Haus", bangla: "ঘর", options: ["বিদ্যালয়", "ঘর", "গাছ"] },
+        { german: "Sonne", bangla: "রোদ", options: ["চাঁদ", "রোদ", "তারা"] },
+        { german: "Mond", bangla: "চাঁদ", options: ["চাঁদ", "রোদ", "মেঘ"] },
+        { german: "Blume", bangla: "ফুল", options: ["ফুল", "গাছ", "ঘাস"] },
+        { german: "Auto", bangla: "গাড়ি", options: ["বাস", "গাড়ি", "সাইকেল"] },
+        { german: "Bruder", bangla: "ভাই", options: ["ভাই", "বোন", "বন্ধু"] }
+    ];
+
+    function generateMatchQuestion() {
+        document.getElementById("match-feedback").innerText = "";
+        const item = matchData[Math.floor(Math.random() * matchData.length)];
+        currentMatchAnswer = item.bangla;
+        
+        document.getElementById("match-german-word").innerText = "Wie schreibt man \"" + item.german + "\"?";
+        
+        const optionsContainer = document.getElementById("match-options");
+        optionsContainer.innerHTML = "";
+        
+        const shuffled = [...item.options].sort(() => Math.random() - 0.5);
+        
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "quiz-btn";
+            btn.innerText = opt;
+            btn.style.fontFamily = "'Noto Sans Bengali', 'Kalpurush', 'Arial', sans-serif";
+            btn.style.fontSize = "28px";
+            btn.onclick = () => checkMatch(opt);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    function checkMatch(answer) {
+        const feedback = document.getElementById("match-feedback");
+        if (answer === currentMatchAnswer) {
+            totalStars++; todayCorrect++; streak++;
+            updateScore();
+            feedback.innerText = "🎉 Chomotkar! Perfekt erkannt! +1 Stern ⭐";
+            feedback.style.color = "#16a34a";
+            checkAchievements();
+            setTimeout(generateMatchQuestion, 2000);
+        } else {
+            streak = 0; updateScore();
+            feedback.innerText = "💪 Schau dir die Buchstaben genau an. Richtig wäre: " + currentMatchAnswer;
+            feedback.style.color = "#e74c3c";
+        }
+    }
+
+    /* ========================================================
+       SCORE & ACHIEVEMENTS
+    ========================================================= */
+    function updateScore() {
+        document.getElementById("total-stars").innerText = totalStars + " ⭐";
+        document.getElementById("today-correct").innerText = todayCorrect;
+        document.getElementById("streak").innerText = streak + " 🔥";
+    }
+
+    function checkAchievements() {
+        if (totalStars >= 1) document.getElementById("first-star").classList.add("unlocked");
+        if (todayCorrect >= 5) document.getElementById("five-correct").classList.add("unlocked");
+        if (todayCorrect >= 10) document.getElementById("ten-correct").classList.add("unlocked");
+        if (streak >= 5) document.getElementById("streak-five").classList.add("unlocked");
+        if (totalStars >= 20) document.getElementById("twenty-stars").classList.add("unlocked");
+    }
+
+    /* ========================================================
+       INIT
+    ========================================================= */
+    generateLetterQuestion();
+    generateWordQuestion();
+    generateMatchQuestion();
+    roomsVisited.add("letters-room");
+</script>
+
+</body>
+</html>

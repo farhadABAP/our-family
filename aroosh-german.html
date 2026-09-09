@@ -1,0 +1,2698 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TomToms Deutsch-Abenteuer 📚✏️</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            min-height: 100vh;
+            color: #263238;
+
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    #fff3e0 0%,
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 20%,
+                    #e8eaf6 0%,
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #fffaf4,
+                    #f5f4ff
+                );
+
+            padding: 18px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* =====================================================
+           HEADER
+        ====================================================== */
+
+        .top {
+            text-align: center;
+            padding: 28px 10px 22px;
+        }
+
+        .rocket {
+            font-size: 58px;
+            margin-bottom: 10px;
+        }
+
+        .top h1 {
+            color: #173f73;
+            font-size: clamp(32px, 6vw, 50px);
+            font-weight: 900;
+        }
+
+        .top h2 {
+            margin-top: 8px;
+            color: #f59e0b;
+            font-size: 23px;
+        }
+
+        .top p {
+            color: #687786;
+            margin-top: 11px;
+            line-height: 1.6;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 11px 18px;
+            border-radius: 25px;
+            background: white;
+            border: 2px solid #dbeafe;
+            color: #173f73;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .back-home:hover {
+            background: #173f73;
+            color: white;
+        }
+
+        /* =====================================================
+           MAGIC REMOTE
+        ====================================================== */
+
+        .magic-area {
+            background:
+                linear-gradient(
+                    135deg,
+                    #172554,
+                    #312e81,
+                    #4c1d95
+                );
+
+            color: white;
+            border-radius: 27px;
+            padding: 32px;
+            margin: 18px 0 32px;
+
+            text-align: center;
+
+            box-shadow:
+                0 15px 35px rgba(49,46,129,0.22);
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .magic-area::before {
+            content: "✨";
+            position: absolute;
+            left: 10%;
+            top: 22px;
+            font-size: 32px;
+            opacity: 0.5;
+        }
+
+        .magic-area::after {
+            content: "📖";
+            position: absolute;
+            right: 10%;
+            bottom: 22px;
+            font-size: 30px;
+            opacity: 0.5;
+        }
+
+        .magic-area h2 {
+            color: #fde68a;
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .magic-area p {
+            color: #ede9fe;
+            line-height: 1.65;
+            max-width: 720px;
+            margin: 0 auto 22px;
+        }
+
+        .focus-button {
+            border: none;
+            cursor: pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #facc15,
+                    #f59e0b
+                );
+
+            color: #422006;
+
+            padding: 16px 32px;
+            border-radius: 16px;
+
+            font-size: 21px;
+            font-weight: 900;
+
+            box-shadow:
+                0 7px 0 #b45309,
+                0 12px 25px rgba(0,0,0,0.2);
+
+            transition: 0.15s;
+        }
+
+        .focus-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .focus-button:active {
+            transform: translateY(5px);
+            box-shadow:
+                0 2px 0 #b45309,
+                0 5px 12px rgba(0,0,0,0.2);
+        }
+
+        #focus-message {
+            min-height: 28px;
+            margin-top: 18px;
+            color: #fde68a;
+            font-weight: 800;
+            font-size: 17px;
+        }
+
+        /* =====================================================
+           SCORE
+        ====================================================== */
+
+        .score-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 13px;
+            margin-bottom: 30px;
+        }
+
+        .score-card {
+            background: white;
+            border-radius: 17px;
+            padding: 15px 23px;
+            min-width: 150px;
+            text-align: center;
+            box-shadow: 0 7px 20px rgba(40,60,80,0.07);
+            border: 2px solid #e5edf5;
+        }
+
+        .score-card .number {
+            display: block;
+            color: #173f73;
+            font-size: 27px;
+            font-weight: 900;
+        }
+
+        .score-card .label {
+            display: block;
+            color: #7b8794;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        /* =====================================================
+           EXERCISE SELECTOR
+        ====================================================== */
+
+        .exercise-selector {
+            background: white;
+            border-radius: 22px;
+            padding: 24px;
+            margin-bottom: 26px;
+            box-shadow: 0 8px 22px rgba(40,60,80,0.07);
+        }
+
+        .exercise-selector h3 {
+            color: #173f73;
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 21px;
+        }
+
+        .exercise-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .ex-btn {
+            border: 3px solid #dbeafe;
+            background: #f8fbff;
+            color: #173f73;
+            border-radius: 16px;
+            padding: 12px 18px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 15px;
+            transition: 0.2s;
+            min-width: 140px;
+        }
+
+        .ex-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(245,158,11,0.15);
+        }
+
+        .ex-btn.active {
+            background: #f59e0b;
+            color: white;
+            border-color: #f59e0b;
+        }
+
+        /* =====================================================
+           EXERCISE ROOMS
+        ====================================================== */
+
+        .exercise-room {
+            display: none;
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 26px;
+            box-shadow: 0 10px 30px rgba(40,60,80,0.08);
+        }
+
+        .exercise-room.active {
+            display: block;
+        }
+
+        .room-header {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .room-header .room-icon {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+
+        .room-header h2 {
+            color: #173f73;
+            font-size: 27px;
+            margin-bottom: 6px;
+        }
+
+        .room-header p {
+            color: #718096;
+            font-size: 15px;
+        }
+
+        /* =====================================================
+           ARTICLE QUIZ (der/die/das)
+        ====================================================== */
+
+        .article-box {
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff8e8,
+                    #fffdf8
+                );
+
+            border: 3px solid #fde68a;
+            border-radius: 22px;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .article-label {
+            color: #718096;
+            font-size: 15px;
+            margin-bottom: 14px;
+            font-weight: 600;
+        }
+
+        #article-word {
+            color: #173f73;
+            font-size: clamp(36px, 7vw, 60px);
+            font-weight: 900;
+            margin: 18px 0;
+        }
+
+        .article-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .article-btn {
+            border: 3px solid;
+            background: white;
+            border-radius: 16px;
+            padding: 15px 28px;
+            cursor: pointer;
+            font-weight: 900;
+            font-size: 20px;
+            transition: 0.2s;
+            min-width: 110px;
+        }
+
+        .article-btn.der {
+            color: #3b82f6;
+            border-color: #3b82f6;
+        }
+
+        .article-btn.die {
+            color: #ec4899;
+            border-color: #ec4899;
+        }
+
+        .article-btn.das {
+            color: #10b981;
+            border-color: #10b981;
+        }
+
+        .article-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+        }
+
+        .article-btn.der:hover {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .article-btn.die:hover {
+            background: #ec4899;
+            color: white;
+        }
+
+        .article-btn.das:hover {
+            background: #10b981;
+            color: white;
+        }
+
+        #article-feedback {
+            min-height: 34px;
+            margin-top: 22px;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .next-btn {
+            border: none;
+            background: #173f73;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 13px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 14px;
+            transition: 0.2s;
+        }
+
+        .next-btn:hover {
+            background: #0f2d52;
+            transform: translateY(-2px);
+        }
+
+        /* =====================================================
+           SYLLABLE EXERCISE
+        ====================================================== */
+
+        .syllable-box {
+            background:
+                linear-gradient(
+                    135deg,
+                    #eff8ff,
+                    #f8fbff
+                );
+
+            border: 3px solid #bfdbfe;
+            border-radius: 22px;
+            padding: 32px;
+            text-align: center;
+        }
+
+        #syllable-word {
+            color: #173f73;
+            font-size: clamp(34px, 7vw, 55px);
+            font-weight: 900;
+            margin: 18px 0;
+            letter-spacing: 2px;
+        }
+
+        .syllable-instruction {
+            color: #718096;
+            font-size: 15px;
+            margin-bottom: 18px;
+        }
+
+        .syllable-input-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        #syllable-answer {
+            width: 240px;
+            padding: 14px;
+            border: 3px solid #f59e0b;
+            border-radius: 14px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            outline: none;
+        }
+
+        #syllable-answer:focus {
+            box-shadow:
+                0 0 0 4px rgba(245,158,11,0.15);
+        }
+
+        .check-btn {
+            border: none;
+            background: #2ed573;
+            color: white;
+            padding: 14px 23px;
+            border-radius: 13px;
+            font-size: 17px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .check-btn:hover {
+            background: #26af5f;
+            transform: translateY(-2px);
+        }
+
+        #syllable-feedback {
+            min-height: 34px;
+            margin-top: 18px;
+            font-weight: 800;
+            font-size: 17px;
+        }
+
+        /* =====================================================
+           SPELLING EXERCISE
+        ====================================================== */
+
+        .spelling-box {
+            background:
+                linear-gradient(
+                    135deg,
+                    #fef3c7,
+                    #fffbeb
+                );
+
+            border: 3px solid #fbbf24;
+            border-radius: 22px;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .spelling-hint {
+            color: #718096;
+            font-size: 15px;
+            margin-bottom: 14px;
+        }
+
+        #spelling-sentence {
+            color: #173f73;
+            font-size: clamp(22px, 4vw, 30px);
+            font-weight: 700;
+            margin: 18px 0;
+            line-height: 1.5;
+        }
+
+        .spelling-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .spelling-option {
+            border: 3px solid #f59e0b;
+            background: white;
+            color: #173f73;
+            border-radius: 14px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 18px;
+            transition: 0.2s;
+        }
+
+        .spelling-option:hover {
+            background: #f59e0b;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        #spelling-feedback {
+            min-height: 34px;
+            margin-top: 20px;
+            font-weight: 800;
+            font-size: 17px;
+        }
+
+        /* =====================================================
+           SENTENCE BUILDER
+        ====================================================== */
+
+        .sentence-box {
+            background:
+                linear-gradient(
+                    135deg,
+                    #f3e5f5,
+                    #ede9fe
+                );
+
+            border: 3px solid #c4b5fd;
+            border-radius: 22px;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .sentence-hint {
+            color: #718096;
+            font-size: 15px;
+            margin-bottom: 14px;
+        }
+
+        .word-bank {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 18px 0;
+            min-height: 60px;
+            padding: 15px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 16px;
+        }
+
+        .word-chip {
+            background: white;
+            border: 2px solid #8b5cf6;
+            color: #5b21b6;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .word-chip:hover {
+            background: #8b5cf6;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .word-chip.used {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .sentence-build-area {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 18px 0;
+            min-height: 60px;
+            padding: 15px;
+            background: white;
+            border: 2px dashed #8b5cf6;
+            border-radius: 16px;
+        }
+
+        .placed-word {
+            background: #8b5cf6;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .placed-word:hover {
+            background: #7c3aed;
+        }
+
+        #sentence-feedback {
+            min-height: 34px;
+            margin-top: 18px;
+            font-weight: 800;
+            font-size: 17px;
+        }
+
+        /* =====================================================
+           READING COMPREHENSION
+        ====================================================== */
+
+        .reading-box {
+            background:
+                linear-gradient(
+                    135deg,
+                    #e0f2fe,
+                    #f0f9ff
+                );
+
+            border: 3px solid #7dd3fc;
+            border-radius: 22px;
+            padding: 30px;
+        }
+
+        .reading-text {
+            background: white;
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 22px;
+            font-size: 18px;
+            line-height: 1.8;
+            color: #263238;
+            border-left: 5px solid #0ea5e9;
+        }
+
+        .reading-question {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 14px;
+        }
+
+        .reading-question h4 {
+            color: #173f73;
+            font-size: 17px;
+            margin-bottom: 12px;
+        }
+
+        .reading-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .reading-option {
+            border: 2px solid #cbd5e1;
+            background: #f8fafc;
+            color: #263238;
+            padding: 11px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            text-align: left;
+            transition: 0.2s;
+        }
+
+        .reading-option:hover {
+            border-color: #0ea5e9;
+            background: #e0f2fe;
+        }
+
+        .reading-option.correct {
+            background: #d1fae5;
+            border-color: #10b981;
+            color: #065f46;
+        }
+
+        .reading-option.wrong {
+            background: #fee2e2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        #reading-feedback {
+            min-height: 34px;
+            margin-top: 18px;
+            font-weight: 800;
+            font-size: 17px;
+            text-align: center;
+        }
+
+        /* =====================================================
+           TEACHER TIP
+        ====================================================== */
+
+        .teacher-tip {
+            background: #fff9db;
+            border-left: 5px solid #f59f00;
+            border-radius: 10px;
+            padding: 18px;
+            margin-top: 24px;
+            color: #6b5b20;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .teacher-tip h4 {
+            color: #b9770e;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .teacher-tip ul {
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+
+        .teacher-tip li {
+            margin-bottom: 6px;
+        }
+
+        /* =====================================================
+           ACHIEVEMENTS
+        ====================================================== */
+
+        .achievements {
+            background: white;
+            border-radius: 22px;
+            padding: 26px;
+            margin-top: 28px;
+            box-shadow: 0 8px 22px rgba(40,60,80,0.07);
+        }
+
+        .achievements h3 {
+            color: #173f73;
+            text-align: center;
+            margin-bottom: 18px;
+            font-size: 22px;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(160px, 1fr)
+            );
+            gap: 14px;
+        }
+
+        .achievement {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 18px;
+            text-align: center;
+            border: 2px solid #e5edf5;
+            opacity: 0.5;
+            transition: 0.3s;
+        }
+
+        .achievement.unlocked {
+            opacity: 1;
+            border-color: #fbbf24;
+            background: linear-gradient(
+                135deg,
+                #fffbeb,
+                #fef3c7
+            );
+        }
+
+        .achievement .badge-icon {
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .achievement h4 {
+            color: #173f73;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .achievement p {
+            color: #718096;
+            font-size: 12px;
+        }
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        footer {
+            text-align: center;
+            padding: 42px 10px 22px;
+            color: #8795a1;
+            font-size: 14px;
+        }
+
+        footer strong {
+            color: #173f73;
+        }
+
+        /* =====================================================
+           MOBILE
+        ====================================================== */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 10px;
+            }
+
+            .magic-area {
+                padding: 26px 18px;
+            }
+
+            .exercise-room {
+                padding: 22px 15px;
+            }
+
+            .article-btn {
+                min-width: 90px;
+                padding: 12px 18px;
+                font-size: 17px;
+            }
+
+            .ex-btn {
+                min-width: 120px;
+                font-size: 13px;
+                padding: 10px 14px;
+            }
+
+            #syllable-answer {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="top">
+
+        <div class="rocket">
+            📚✏️
+        </div>
+
+        <h1>
+            TomToms Deutsch-Abenteuer
+        </h1>
+
+        <h2>
+            Lesen · Schreiben · Wörter entdecken
+        </h2>
+
+        <p>
+            Jedes Wort ist ein kleines Abenteuer.
+            Und jeder richtige Satz ist ein Grund zum Feiern! ⭐
+        </p>
+
+        <a
+            href="aroosh.html"
+            class="back-home"
+        >
+            ← Zurück zur Lernwelt
+        </a>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAGIC FOCUS REMOTE
+    ====================================================== -->
+
+    <section class="magic-area">
+
+        <h2>
+            🎮 Die magische Fernbedienung
+        </h2>
+
+        <p>
+            Erinnerst du dich an Prinz Aroosh?
+            Wenn der Schmetterling kommt und deine Gedanken
+            ablenken möchte, kannst du deine unsichtbare
+            Fernbedienung benutzen.
+        </p>
+
+        <p>
+            Die echte Magie steckt in dir:
+            <strong>Fokus · Geduld · Mut</strong>
+        </p>
+
+        <button
+            class="focus-button"
+            onclick="activateFocus()"
+        >
+            ⚡ FOKUS AKTIVIEREN
+        </button>
+
+        <div id="focus-message">
+            Deine magische Fernbedienung wartet ... ✨
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SCORE
+    ====================================================== -->
+
+    <div class="score-row">
+
+        <div class="score-card">
+
+            <span
+                class="number"
+                id="total-stars"
+            >
+                0 ⭐
+            </span>
+
+            <span class="label">
+                Deine Sterne
+            </span>
+
+        </div>
+
+
+        <div class="score-card">
+
+            <span
+                class="number"
+                id="today-correct"
+            >
+                0
+            </span>
+
+            <span class="label">
+                Heute richtig
+            </span>
+
+        </div>
+
+
+        <div class="score-card">
+
+            <span
+                class="number"
+                id="streak"
+            >
+                0 🔥
+            </span>
+
+            <span class="label">
+                Serie
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         EXERCISE SELECTOR
+    ====================================================== -->
+
+    <section class="exercise-selector">
+
+        <h3>
+            🎯 Was möchtest du heute üben?
+        </h3>
+
+        <div class="exercise-buttons">
+
+            <button
+                class="ex-btn active"
+                id="article-btn"
+                onclick="openExercise('article-room')"
+            >
+                🏷️ der/die/das
+            </button>
+
+            <button
+                class="ex-btn"
+                id="syllable-btn"
+                onclick="openExercise('syllable-room')"
+            >
+                🔤 Silben
+            </button>
+
+            <button
+                class="ex-btn"
+                id="spelling-btn"
+                onclick="openExercise('spelling-room')"
+            >
+                ✏️ Rechtschreibung
+            </button>
+
+            <button
+                class="ex-btn"
+                id="sentence-btn"
+                onclick="openExercise('sentence-room')"
+            >
+                📝 Sätze bauen
+            </button>
+
+            <button
+                class="ex-btn"
+                id="reading-btn"
+                onclick="openExercise('reading-room')"
+            >
+                📖 Leseverstehen
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         ARTICLE ROOM (der/die/das)
+    ====================================================== -->
+
+    <section
+        id="article-room"
+        class="exercise-room active"
+    >
+
+        <div class="room-header">
+
+            <div class="room-icon">
+                🏷️
+            </div>
+
+            <h2>
+                der · die · das
+            </h2>
+
+            <p>
+                Welcher Artikel passt zu dem Wort?
+            </p>
+
+        </div>
+
+
+        <div class="article-box">
+
+            <div class="article-label">
+                Welcher Artikel gehört hier hin?
+            </div>
+
+            <div id="article-word">
+                ...
+            </div>
+
+            <div class="article-buttons">
+
+                <button
+                    class="article-btn der"
+                    onclick="checkArticle('der')"
+                >
+                    der
+                </button>
+
+                <button
+                    class="article-btn die"
+                    onclick="checkArticle('die')"
+                >
+                    die
+                </button>
+
+                <button
+                    class="article-btn das"
+                    onclick="checkArticle('das')"
+                >
+                    das
+                </button>
+
+            </div>
+
+            <div id="article-feedback"></div>
+
+            <button
+                class="next-btn"
+                onclick="generateArticleQuestion()"
+            >
+                Nächstes Wort →
+            </button>
+
+        </div>
+
+
+        <div class="teacher-tip">
+
+            <h4>
+                💡 Tipp vom Lehrer
+            </h4>
+
+            <ul>
+
+                <li>
+                    <strong>der</strong> = männlich (der Mann, der Hund)
+                </li>
+
+                <li>
+                    <strong>die</strong> = weiblich (die Frau, die Katze)
+                </li>
+
+                <li>
+                    <strong>das</strong> = sächlich (das Kind, das Haus)
+                </li>
+
+                <li>
+                    <strong>Mehrzahl</strong> ist immer: <strong>die</strong>
+                    (die Kinder, die Häuser)
+                </li>
+
+            </ul>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SYLLABLE ROOM
+    ====================================================== -->
+
+    <section
+        id="syllable-room"
+        class="exercise-room"
+    >
+
+        <div class="room-header">
+
+            <div class="room-icon">
+                🔤
+            </div>
+
+            <h2>
+                Silben zählen
+            </h2>
+
+            <p>
+                Wie viele Silben hat das Wort?
+            </p>
+
+        </div>
+
+
+        <div class="syllable-box">
+
+            <div class="syllable-instruction">
+                Wie viele Silben hat dieses Wort?
+            </div>
+
+            <div id="syllable-word">
+                ...
+            </div>
+
+            <div class="syllable-input-row">
+
+                <input
+                    id="syllable-answer"
+                    type="number"
+                    inputmode="numeric"
+                    min="1"
+                    max="10"
+                    autocomplete="off"
+                    aria-label="Anzahl der Silben"
+                    onkeydown="handleSyllableKey(event)"
+                >
+
+                <button
+                    class="check-btn"
+                    onclick="checkSyllable()"
+                >
+                    Prüfen ✓
+                </button>
+
+            </div>
+
+            <div id="syllable-feedback"></div>
+
+            <button
+                class="next-btn"
+                onclick="generateSyllableQuestion()"
+            >
+                Nächstes Wort →
+            </button>
+
+        </div>
+
+
+        <div class="teacher-tip">
+
+            <h4>
+                💡 So findest du die Silben
+            </h4>
+
+            <ul>
+
+                <li>
+                    Sprich das Wort laut vor.
+                </li>
+
+                <li>
+                    Klatsche zu jeder Silbe in die Hände. 👏
+                </li>
+
+                <li>
+                    Jede Silbe hat einen Vokal (a, e, i, o, u, ä, ö, ü).
+                </li>
+
+                <li>
+                    Beispiel: <strong>Haus-au-fga-be</strong> = 4 Silben
+                </li>
+
+            </ul>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SPELLING ROOM
+    ====================================================== -->
+
+    <section
+        id="spelling-room"
+        class="exercise-room"
+    >
+
+        <div class="room-header">
+
+            <div class="room-icon">
+                ✏️
+            </div>
+
+            <h2>
+                Rechtschreibung
+            </h2>
+
+            <p>
+                Welches Wort gehört in die Lücke?
+            </p>
+
+        </div>
+
+
+        <div class="spelling-box">
+
+            <div class="spelling-hint">
+                Wähle das richtige Wort aus:
+            </div>
+
+            <div id="spelling-sentence">
+                ...
+            </div>
+
+            <div
+                class="spelling-options"
+                id="spelling-options"
+            >
+            </div>
+
+            <div id="spelling-feedback"></div>
+
+            <button
+                class="next-btn"
+                onclick="generateSpellingQuestion()"
+            >
+                Nächste Aufgabe →
+            </button>
+
+        </div>
+
+
+        <div class="teacher-tip">
+
+            <h4>
+                💡 Wichtige Rechtschreib-Regeln
+            </h4>
+
+            <ul>
+
+                <li>
+                    <strong>langes i</strong> schreibt man oft: <strong>ie</strong>
+                    (wie in <em>Tier, Liebe, Biene</em>)
+                </li>
+
+                <li>
+                    <strong>Doppelkonsonanten</strong> nach kurzem Vokal:
+                    <em>Mann, Kamm, Tasse</em>
+                </li>
+
+                <li>
+                    <strong>ß</strong> nach langem Vokal:
+                    <em>Fuß, Straße, groß</em>
+                </li>
+
+                <li>
+                    <strong>ss</strong> nach kurzem Vokal:
+                    <em>Fluss, Kuss, muss</em>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SENTENCE BUILDER ROOM
+    ====================================================== -->
+
+    <section
+        id="sentence-room"
+        class="exercise-room"
+    >
+
+        <div class="room-header">
+
+            <div class="room-icon">
+                📝
+            </div>
+
+            <h2>
+                Sätze bauen
+            </h2>
+
+            <p>
+                Klicke auf die Wörter in der richtigen Reihenfolge,
+                um einen Satz zu bauen.
+            </p>
+
+        </div>
+
+
+        <div class="sentence-box">
+
+            <div class="sentence-hint">
+                Baue einen richtigen Satz:
+            </div>
+
+            <div
+                class="word-bank"
+                id="word-bank"
+            >
+            </div>
+
+            <div
+                class="sentence-build-area"
+                id="sentence-build-area"
+            >
+            </div>
+
+            <div id="sentence-feedback"></div>
+
+            <button
+                class="next-btn"
+                onclick="generateSentenceQuestion()"
+            >
+                Nächster Satz →
+            </button>
+
+        </div>
+
+
+        <div class="teacher-tip">
+
+            <h4>
+                💡 So baust du einen Satz
+            </h4>
+
+            <ul>
+
+                <li>
+                    Ein Satz beginnt immer <strong>groß</strong>.
+                </li>
+
+                <li>
+                    Das <strong>Verb</strong> (Tuwort) steht oft an zweiter Stelle.
+                </li>
+
+                <li>
+                    Am Ende kommt ein <strong>Punkt .</strong>
+                </li>
+
+                <li>
+                    Beispiel: <strong>TomTom liest ein Buch.</strong>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         READING ROOM
+    ====================================================== -->
+
+    <section
+        id="reading-room"
+        class="exercise-room"
+    >
+
+        <div class="room-header">
+
+            <div class="room-icon">
+                📖
+            </div>
+
+            <h2>
+                Leseverstehen
+            </h2>
+
+            <p>
+                Lies den Text und beantworte die Fragen.
+            </p>
+
+        </div>
+
+
+        <div class="reading-box">
+
+            <div
+                class="reading-text"
+                id="reading-text"
+            >
+            </div>
+
+            <div id="reading-questions"></div>
+
+            <div id="reading-feedback"></div>
+
+            <button
+                class="next-btn"
+                onclick="generateReadingQuestion()"
+            >
+                Neue Geschichte →
+            </button>
+
+        </div>
+
+
+        <div class="teacher-tip">
+
+            <h4>
+                💡 So verstehst du einen Text
+            </h4>
+
+            <ul>
+
+                <li>
+                    Lies den Text <strong>in Ruhe</strong> – am besten zweimal.
+                </li>
+
+                <li>
+                    Unterstreiche wichtige Wörter.
+                </li>
+
+                <li>
+                    Frage dich: <strong>Wer? Was? Wo? Wann?</strong>
+                </li>
+
+                <li>
+                    Wenn du ein Wort nicht kennst – kein Problem!
+                    Lies einfach weiter.
+                </li>
+
+            </ul>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         ACHIEVEMENTS
+    ====================================================== -->
+
+    <section class="achievements">
+
+        <h3>
+            🏆 Deine Erfolge
+        </h3>
+
+        <div class="achievement-grid">
+
+            <div
+                class="achievement"
+                id="first-star"
+            >
+
+                <div class="badge-icon">
+                    ⭐
+                </div>
+
+                <h4>
+                    Erste Aufgabe
+                </h4>
+
+                <p>
+                    Du hast deine erste
+                    Aufgabe gelöst!
+                </p>
+
+            </div>
+
+
+            <div
+                class="achievement"
+                id="five-correct"
+            >
+
+                <div class="badge-icon">
+                    🎯
+                </div>
+
+                <h4>
+                    5 Richtige
+                </h4>
+
+                <p>
+                    5 Aufgaben heute
+                    geschafft!
+                </p>
+
+            </div>
+
+
+            <div
+                class="achievement"
+                id="ten-correct"
+            >
+
+                <div class="badge-icon">
+                    🚀
+                </div>
+
+                <h4>
+                    10 Richtige
+                </h4>
+
+                <p>
+                    10 Aufgaben heute
+                    richtig!
+                </p>
+
+            </div>
+
+
+            <div
+                class="achievement"
+                id="streak-five"
+            >
+
+                <div class="badge-icon">
+                    🔥
+                </div>
+
+                <h4>
+                    5er-Serie
+                </h4>
+
+                <p>
+                    5 richtige in Folge!
+                </p>
+
+            </div>
+
+
+            <div
+                class="achievement"
+                id="all-rooms"
+            >
+
+                <div class="badge-icon">
+                    🌟
+                </div>
+
+                <h4>
+                    Alles probiert
+                </h4>
+
+                <p>
+                    Alle 5 Übungen
+                    ausprobiert!
+                </p>
+
+            </div>
+
+
+            <div
+                class="achievement"
+                id="twenty-stars"
+            >
+
+                <div class="badge-icon">
+                    🏆
+                </div>
+
+                <h4>
+                    20 Sterne
+                </h4>
+
+                <p>
+                    20 Sterne gesammelt!
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        <p>
+            📚 <strong>TomTom</strong>,
+            heute ein bisschen lesen,
+            morgen ein bisschen schlauer!
+        </p>
+
+        <p style="margin-top: 9px;">
+            Mama Tabassum & Papa Farhad ❤️
+        </p>
+
+    </footer>
+
+
+</div>
+
+
+<script>
+
+    /* ========================================================
+       GLOBAL DATA
+    ========================================================= */
+
+    let totalStars = 0;
+    let todayCorrect = 0;
+    let streak = 0;
+
+    let currentArticle = "";
+    let currentWord = "";
+    let correctSyllables = 0;
+    let correctSpelling = "";
+    let correctSentence = [];
+    let placedWords = [];
+    let roomsVisited = new Set();
+
+
+    /* ========================================================
+       MAGIC FOCUS REMOTE
+    ========================================================= */
+
+    function activateFocus() {
+
+        const message =
+            document.getElementById("focus-message");
+
+        const messages = [
+            "⚡ FOKUS AKTIV! Der Schmetterling muss warten!",
+            "🎮 Magische Fernbedienung aktiviert!",
+            "📚 TomTom ist bereit zum Lesen!",
+            "🧠 Dein Deutsch-Gehirn ist bereit!",
+            "⭐ Fokus an. Wir schaffen das!",
+            "🎯 Konzentration eingeschaltet!"
+        ];
+
+        const random =
+            messages[
+                Math.floor(
+                    Math.random() * messages.length
+                )
+            ];
+
+        message.innerText = random;
+
+        setTimeout(() => {
+
+            message.innerText =
+                "✨ Konzentriert bleiben, TomTom. Du kannst das!";
+
+        }, 3500);
+
+    }
+
+
+    /* ========================================================
+       ROOM SWITCHER
+    ========================================================= */
+
+    function openExercise(roomId) {
+
+        document
+            .querySelectorAll(".exercise-room")
+            .forEach(room => {
+                room.classList.remove("active");
+            });
+
+        document
+            .querySelectorAll(".ex-btn")
+            .forEach(btn => {
+                btn.classList.remove("active");
+            });
+
+        document
+            .getElementById(roomId)
+            .classList.add("active");
+
+        const btnId = roomId.replace("-room", "-btn");
+        document
+            .getElementById(btnId)
+            .classList.add("active");
+
+        roomsVisited.add(roomId);
+
+        if (roomsVisited.size >= 5) {
+
+            document
+                .getElementById("all-rooms")
+                .classList.add("unlocked");
+
+        }
+
+        document
+            .getElementById(roomId)
+            .scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+    }
+
+
+    /* ========================================================
+       ARTICLE QUIZ (der/die/das)
+    ========================================================= */
+
+    const articleWords = [
+        { word: "Hund", article: "der" },
+        { word: "Katze", article: "die" },
+        { word: "Haus", article: "das" },
+        { word: "Auto", article: "das" },
+        { word: "Baum", article: "der" },
+        { word: "Blume", article: "die" },
+        { word: "Buch", article: "das" },
+        { word: "Schule", article: "die" },
+        { word: "Tisch", article: "der" },
+        { word: "Stuhl", article: "der" },
+        { word: "Kind", article: "das" },
+        { word: "Mann", article: "der" },
+        { word: "Frau", article: "die" },
+        { word: "Apfel", article: "der" },
+        { word: "Banane", article: "die" },
+        { word: "Sonne", article: "die" },
+        { word: "Mond", article: "der" },
+        { word: "Stern", article: "der" },
+        { word: "Wasser", article: "das" },
+        { word: "Milch", article: "die" },
+        { word: "Bruder", article: "der" },
+        { word: "Schwester", article: "die" },
+        { word: "Mädchen", article: "das" },
+        { word: "Junge", article: "der" },
+        { word: "Feder", article: "die" },
+        { word: "Heft", article: "das" },
+        { word: "Bleistift", article: "der" },
+        { word: "Tafel", article: "die" },
+        { word: "Fenster", article: "das" },
+        { word: "Tür", article: "die" },
+        { word: "Vogel", article: "der" },
+        { word: "Maus", article: "die" },
+        { word: "Pferd", article: "das" },
+        { word: "Fisch", article: "der" },
+        { word: "Ente", article: "die" },
+        { word: "Kaninchen", article: "das" },
+        { word: "Schmetterling", article: "der" },
+        { word: "Biene", article: "die" },
+        { word: "Ei", article: "das" },
+        { word: "Brot", article: "das" }
+    ];
+
+    function generateArticleQuestion() {
+
+        const feedback =
+            document.getElementById("article-feedback");
+
+        feedback.innerText = "";
+
+        const randomIndex =
+            Math.floor(
+                Math.random() * articleWords.length
+            );
+
+        const item = articleWords[randomIndex];
+
+        currentWord = item.word;
+        currentArticle = item.article;
+
+        document
+            .getElementById("article-word")
+            .innerText = currentWord;
+
+    }
+
+    function checkArticle(answer) {
+
+        const feedback =
+            document.getElementById("article-feedback");
+
+        if (answer === currentArticle) {
+
+            totalStars++;
+            todayCorrect++;
+            streak++;
+
+            updateScore();
+
+            feedback.innerText =
+                "🎉 Richtig! " +
+                currentArticle.toUpperCase() +
+                " " + currentWord + "! +1 Stern ⭐";
+
+            feedback.style.color = "#16a34a";
+
+            checkAchievements();
+
+            setTimeout(() => {
+
+                generateArticleQuestion();
+
+            }, 2000);
+
+        } else {
+
+            streak = 0;
+
+            updateScore();
+
+            feedback.innerText =
+                "💪 Fast! Richtig wäre: " +
+                currentArticle.toUpperCase() +
+                " " + currentWord;
+
+            feedback.style.color = "#e74c3c";
+
+        }
+
+    }
+
+
+    /* ========================================================
+       SYLLABLE EXERCISE
+    ========================================================= */
+
+    const syllableWords = [
+        { word: "Haus", syllables: 1 },
+        { word: "Blume", syllables: 2 },
+        { word: "Schule", syllables: 2 },
+        { word: "Fenster", syllables: 2 },
+        { word: "Katze", syllables: 2 },
+        { word: "Vogel", syllables: 2 },
+        { word: "Schmetterling", syllables: 3 },
+        { word: "Geburtstag", syllables: 3 },
+        { word: "Schokolade", syllables: 4 },
+        { word: "Handtuch", syllables: 2 },
+        { word: "Zahnbürste", syllables: 3 },
+        { word: "Regenbogen", syllables: 3 },
+        { word: "Hausaufgabe", syllables: 4 },
+        { word: "Freundschaft", syllables: 2 },
+        { word: "Kindergarten", syllables: 4 },
+        { word: "Schulranzen", syllables: 3 },
+        { word: "Turnschuhe", syllables: 3 },
+        { word: "Wasserflasche", syllables: 4 },
+        { word: "Eiscreme", syllables: 3 },
+        { word: "Apfelbaum", syllables: 3 },
+        { word: "Sonnenschein", syllables: 3 },
+        { word: "Mondlicht", syllables: 2 },
+        { word: "Sternschnuppe", syllables: 3 },
+        { word: "Federball", syllables: 3 },
+        { word: "Gummistiefel", syllables: 4 }
+    ];
+
+    function generateSyllableQuestion() {
+
+        const feedback =
+            document.getElementById("syllable-feedback");
+
+        feedback.innerText = "";
+
+        document
+            .getElementById("syllable-answer")
+            .value = "";
+
+        const randomIndex =
+            Math.floor(
+                Math.random() * syllableWords.length
+            );
+
+        const item = syllableWords[randomIndex];
+
+        currentWord = item.word;
+        correctSyllables = item.syllables;
+
+        document
+            .getElementById("syllable-word")
+            .innerText = currentWord;
+
+        document
+            .getElementById("syllable-answer")
+            .focus();
+
+    }
+
+    function checkSyllable() {
+
+        const input =
+            document.getElementById("syllable-answer");
+
+        const feedback =
+            document.getElementById("syllable-feedback");
+
+        const userAnswer =
+            Number(input.value);
+
+        if (input.value.trim() === "") {
+
+            feedback.innerText =
+                "✏️ Schreib zuerst deine Antwort hinein!";
+
+            feedback.style.color = "#f59e0b";
+
+            return;
+
+        }
+
+        if (userAnswer === correctSyllables) {
+
+            totalStars++;
+            todayCorrect++;
+            streak++;
+
+            updateScore();
+
+            feedback.innerText =
+                "🎉 Super! " + currentWord + " hat " +
+                correctSyllables + " Silbe(n)! +1 Stern ⭐";
+
+            feedback.style.color = "#16a34a";
+
+            checkAchievements();
+
+            setTimeout(() => {
+
+                generateSyllableQuestion();
+
+            }, 2200);
+
+        } else {
+
+            streak = 0;
+
+            updateScore();
+
+            feedback.innerText =
+                "💪 Fast! " + currentWord + " hat " +
+                correctSyllables + " Silbe(n).";
+
+            feedback.style.color = "#e74c3c";
+
+        }
+
+    }
+
+    function handleSyllableKey(event) {
+
+        if (event.key === "Enter") {
+
+            checkSyllable();
+
+        }
+
+    }
+
+
+    /* ========================================================
+       SPELLING EXERCISE
+    ========================================================= */
+
+    const spellingQuestions = [
+        {
+            sentence: "Der Hund fr_ßt Knochen.",
+            options: ["i", "ie"],
+            correct: "ie",
+            display: "Der Hund fr<strong>_</strong>t Knochen."
+        },
+        {
+            sentence: "Die Katze ist sehr schö_.",
+            options: ["n", "nn"],
+            correct: "n",
+            display: "Die Katze ist sehr schö<strong>_</strong>."
+        },
+        {
+            sentence: "TomTom liest ein intere_santes Buch.",
+            options: ["s", "ss"],
+            correct: "s",
+            display: "TomTom liest ein intere<strong>_</strong>antes Buch."
+        },
+        {
+            sentence: "Der Mann trägt einen Hu_.",
+            options: ["t", "tt"],
+            correct: "t",
+            display: "Der Mann trägt einen Hu<strong>_</strong>."
+        },
+        {
+            sentence: "Wir gehen über die Stra_e.",
+            options: ["ß", "ss"],
+            correct: "ß",
+            display: "Wir gehen über die Stra<strong>_</strong>e."
+        },
+        {
+            sentence: "Die Biene fliegt zur Bl_me.",
+            options: ["ü", "üh"],
+            correct: "ü",
+            display: "Die Biene fliegt zur Bl<strong>_</strong>me."
+        },
+        {
+            sentence: "Das Kind malt mit _arben.",
+            options: ["F", "V"],
+            correct: "F",
+            display: "Das Kind malt mit <strong>_</strong>arben."
+        },
+        {
+            sentence: "Der _ogel singt im Baum.",
+            options: ["V", "F"],
+            correct: "V",
+            display: "Der <strong>_</strong>ogel singt im Baum."
+        },
+        {
+            sentence: "Laddu trinkt ein Glas Mi_ch.",
+            options: ["l", "ll"],
+            correct: "l",
+            display: "Laddu trinkt ein Glas Mi<strong>_</strong>ch."
+        },
+        {
+            sentence: "Die Schwester hat lange H_re.",
+            options: ["a", "aa"],
+            correct: "a",
+            display: "Die Schwester hat lange H<strong>_</strong>re."
+        },
+        {
+            sentence: "Wir es_en heute Pizza.",
+            options: ["s", "ss"],
+            correct: "s",
+            display: "Wir es<strong>_</strong>en heute Pizza."
+        },
+        {
+            sentence: "Der Fu_ball ist rund.",
+            options: ["ß", "ss"],
+            correct: "ß",
+            display: "Der Fu<strong>_</strong>ball ist rund."
+        }
+    ];
+
+    function generateSpellingQuestion() {
+
+        const feedback =
+            document.getElementById("spelling-feedback");
+
+        feedback.innerText = "";
+
+        const randomIndex =
+            Math.floor(
+                Math.random() * spellingQuestions.length
+            );
+
+        const item = spellingQuestions[randomIndex];
+
+        correctSpelling = item.correct;
+
+        document
+            .getElementById("spelling-sentence")
+            .innerHTML = item.display;
+
+        const optionsContainer =
+            document.getElementById("spelling-options");
+
+        optionsContainer.innerHTML = "";
+
+        item.options.forEach(option => {
+
+            const button =
+                document.createElement("button");
+
+            button.className = "spelling-option";
+            button.innerText = option;
+            button.onclick = () => checkSpelling(option);
+
+            optionsContainer.appendChild(button);
+
+        });
+
+    }
+
+    function checkSpelling(answer) {
+
+        const feedback =
+            document.getElementById("spelling-feedback");
+
+        if (answer === correctSpelling) {
+
+            totalStars++;
+            todayCorrect++;
+            streak++;
+
+            updateScore();
+
+            feedback.innerText =
+                "🎉 Richtig! Toll geschrieben! +1 Stern ⭐";
+
+            feedback.style.color = "#16a34a";
+
+            checkAchievements();
+
+            setTimeout(() => {
+
+                generateSpellingQuestion();
+
+            }, 2200);
+
+        } else {
+
+            streak = 0;
+
+            updateScore();
+
+            feedback.innerText =
+                "💪 Fast! Richtig wäre: " + correctSpelling;
+
+            feedback.style.color = "#e74c3c";
+
+        }
+
+    }
+
+
+    /* ========================================================
+       SENTENCE BUILDER
+    ========================================================= */
+
+    const sentences = [
+        ["TomTom", "liest", "ein", "Buch"],
+        ["Laddu", "spielt", "mit", "dem", "Ball"],
+        ["Mama", "kocht", "eine", "suppe"],
+        ["Papa", "liest", "die", "Zeitung"],
+        ["Die", "Sonne", "scheint", "heute"],
+        ["Der", "Hund", "läuft", "schnell"],
+        ["Wir", "gehen", "in", "den", "Park"],
+        ["Muffin", "schläft", "im", "Bett"],
+        ["Die", "Katze", "trinkt", "Milch"],
+        ["TomTom", "malt", "ein", "Bild"],
+        ["Laddu", "singt", "ein", "Lied"],
+        ["Der", "Vogel", "fliegt", "hoch"],
+        ["Wir", "essen", "heute", "Pizza"],
+        ["Die", "Blume", "ist", "schön"],
+        ["Mama", "liest", "eine", "Geschichte"]
+    ];
+
+    function generateSentenceQuestion() {
+
+        const feedback =
+            document.getElementById("sentence-feedback");
+
+        feedback.innerText = "";
+
+        placedWords = [];
+
+        const randomIndex =
+            Math.floor(
+                Math.random() * sentences.length
+            );
+
+        correctSentence = [...sentences[randomIndex]];
+
+        const shuffled = [...correctSentence].sort(() => {
+
+            return Math.random() - 0.5;
+
+        });
+
+        const bank =
+            document.getElementById("word-bank");
+
+        bank.innerHTML = "";
+
+        shuffled.forEach(word => {
+
+            const chip =
+                document.createElement("span");
+
+            chip.className = "word-chip";
+            chip.innerText = word;
+            chip.onclick = () => placeWord(chip, word);
+
+            bank.appendChild(chip);
+
+        });
+
+        const buildArea =
+            document.getElementById("sentence-build-area");
+
+        buildArea.innerHTML = "";
+
+    }
+
+    function placeWord(chip, word) {
+
+        if (chip.classList.contains("used")) return;
+
+        chip.classList.add("used");
+
+        placedWords.push(word);
+
+        const buildArea =
+            document.getElementById("sentence-build-area");
+
+        const placed =
+            document.createElement("span");
+
+        placed.className = "placed-word";
+        placed.innerText = word;
+        placed.onclick = () => removeWord(placed, chip, word);
+
+        buildArea.appendChild(placed);
+
+        checkSentence();
+
+    }
+
+    function removeWord(placed, chip, word) {
+
+        placed.remove();
+
+        placedWords =
+            placedWords.filter(w => w !== word);
+
+        chip.classList.remove("used");
+
+        checkSentence();
+
+    }
+
+    function checkSentence() {
+
+        const feedback =
+            document.getElementById("sentence-feedback");
+
+        if (placedWords.length !== correctSentence.length) {
+
+            feedback.innerText = "";
+            return;
+
+        }
+
+        const isCorrect =
+            placedWords.every(
+                (word, index) => word === correctSentence[index]
+            );
+
+        if (isCorrect) {
+
+            totalStars++;
+            todayCorrect++;
+            streak++;
+
+            updateScore();
+
+            feedback.innerText =
+                "🎉 Super! Das ist ein perfekter Satz! +1 Stern ⭐";
+
+            feedback.style.color = "#16a34a";
+
+            checkAchievements();
+
+            setTimeout(() => {
+
+                generateSentenceQuestion();
+
+            }, 2500);
+
+        } else {
+
+            streak = 0;
+
+            updateScore();
+
+            feedback.innerText =
+                "💪 Nicht ganz richtig. Versuch es noch einmal!";
+
+            feedback.style.color = "#e74c3c";
+
+        }
+
+    }
+
+
+    /* ========================================================
+       READING COMPREHENSION
+    ========================================================= */
+
+    const readingTexts = [
+        {
+            text: "TomTom ist sieben Jahre alt. Er geht in die zweite Klasse. Seine Lieblingsfarbe ist Blau. Am Wochenende spielt er gerne Fußball.",
+            questions: [
+                {
+                    q: "Wie alt ist TomTom?",
+                    options: ["5 Jahre", "6 Jahre", "7 Jahre", "8 Jahre"],
+                    correct: 2
+                },
+                {
+                    q: "Welche Farbe mag TomTom am liebsten?",
+                    options: ["Rot", "Blau", "Grün", "Gelb"],
+                    correct: 1
+                }
+            ]
+        },
+        {
+            text: "Laddu ist vier Jahre alt. Er geht in den Kindergarten. Er singt gerne Lieder. Seine Lieblingsfarbe ist Rot.",
+            questions: [
+                {
+                    q: "Wie alt ist Laddu?",
+                    options: ["3 Jahre", "4 Jahre", "5 Jahre", "6 Jahre"],
+                    correct: 1
+                },
+                {
+                    q: "Was macht Laddu gerne?",
+                    options: ["Lesen", "Rechnen", "Singen", "Schlafen"],
+                    correct: 2
+                }
+            ]
+        },
+        {
+            text: "Die Familie fährt nach Binz. Binz liegt auf der Insel Rügen. Dort gibt es einen schönen Strand. Die Kinder bauen eine Sandburg.",
+            questions: [
+                {
+                    q: "Wohin fährt die Familie?",
+                    options: ["Berlin", "Binz", "München", "Hamburg"],
+                    correct: 1
+                },
+                {
+                    q: "Was bauen die Kinder?",
+                    options: ["Ein Haus", "Eine Burg", "Eine Sandburg", "Ein Zelt"],
+                    correct: 2
+                }
+            ]
+        },
+        {
+            text: "Mama Tabassum kocht gerne. Papa Farhad liest gerne Bücher. TomTom malt gerne Bilder. Laddu spielt gerne mit Bällen.",
+            questions: [
+                {
+                    q: "Was macht Papa gerne?",
+                    options: ["Kochen", "Bücher lesen", "Malen", "Spielen"],
+                    correct: 1
+                },
+                {
+                    q: "Was macht TomTom gerne?",
+                    options: ["Kochen", "Lesen", "Bilder malen", "Schlafen"],
+                    correct: 2
+                }
+            ]
+        },
+        {
+            text: "Der Schmetterling ist klein und bunt. Er fliegt von Blume zu Blume. Er trinkt Nektar. Im Winter schläft er.",
+            questions: [
+                {
+                    q: "Wie ist der Schmetterling?",
+                    options: ["Groß und grau", "Klein und bunt", "Dick und braun", "Lang und grün"],
+                    correct: 1
+                },
+                {
+                    q: "Was macht der Schmetterling im Winter?",
+                    options: ["Er fliegt", "Er singt", "Er schläft", "Er isst"],
+                    correct: 2
+                }
+            ]
+        }
+    ];
+
+    let currentReading = null;
+    let answeredQuestions = 0;
+    let correctReadingAnswers = 0;
+
+    function generateReadingQuestion() {
+
+        const feedback =
+            document.getElementById("reading-feedback");
+
+        feedback.innerText = "";
+
+        answeredQuestions = 0;
+        correctReadingAnswers = 0;
+
+        const randomIndex =
+            Math.floor(
+                Math.random() * readingTexts.length
+            );
+
+        currentReading = readingTexts[randomIndex];
+
+        document
+            .getElementById("reading-text")
+            .innerText = currentReading.text;
+
+        const questionsContainer =
+            document.getElementById("reading-questions");
+
+        questionsContainer.innerHTML = "";
+
+        currentReading.questions.forEach((question, qIndex) => {
+
+            const qBox =
+                document.createElement("div");
+
+            qBox.className = "reading-question";
+
+            const h4 =
+                document.createElement("h4");
+
+            h4.innerText = question.q;
+            qBox.appendChild(h4);
+
+            const optionsDiv =
+                document.createElement("div");
+
+            optionsDiv.className = "reading-options";
+
+            question.options.forEach((option, oIndex) => {
+
+                const button =
+                    document.createElement("button");
+
+                button.className = "reading-option";
+                button.innerText = option;
+                button.onclick = () => checkReadingAnswer(
+                    button, qIndex, oIndex, optionsDiv
+                );
+
+                optionsDiv.appendChild(button);
+
+            });
+
+            qBox.appendChild(optionsDiv);
+            questionsContainer.appendChild(qBox);
+
+        });
+
+    }
+
+    function checkReadingAnswer(button, qIndex, oIndex, container) {
+
+        const question = currentReading.questions[qIndex];
+
+        if (container.dataset.answered === "true") return;
+
+        container.dataset.answered = "true";
+
+        const allButtons =
+            container.querySelectorAll(".reading-option");
+
+        allButtons.forEach(btn => {
+
+            btn.style.pointerEvents = "none";
+
+        });
+
+        if (oIndex === question.correct) {
+
+            button.classList.add("correct");
+
+            totalStars++;
+            todayCorrect++;
+            streak++;
+            correctReadingAnswers++;
+
+            updateScore();
+
+        } else {
+
+            button.classList.add("wrong");
+
+            allButtons[question.correct].classList.add("correct");
+
+            streak = 0;
+
+            updateScore();
+
+        }
+
+        answeredQuestions++;
+
+        if (answeredQuestions === currentReading.questions.length) {
+
+            const feedback =
+                document.getElementById("reading-feedback");
+
+            if (correctReadingAnswers === currentReading.questions.length) {
+
+                feedback.innerText =
+                    "🎉 Super gelesen! Alle Fragen richtig! +Bonus ⭐";
+
+                feedback.style.color = "#16a34a";
+
+            } else {
+
+                feedback.innerText =
+                    "💪 " + correctReadingAnswers + " von " +
+                    currentReading.questions.length + " richtig. Gut gemacht!";
+
+                feedback.style.color = "#f59e0b";
+
+            }
+
+            checkAchievements();
+
+        }
+
+    }
+
+
+    /* ========================================================
+       SCORE & ACHIEVEMENTS
+    ========================================================= */
+
+    function updateScore() {
+
+        document
+            .getElementById("total-stars")
+            .innerText = totalStars + " ⭐";
+
+        document
+            .getElementById("today-correct")
+            .innerText = todayCorrect;
+
+        document
+            .getElementById("streak")
+            .innerText = streak + " 🔥";
+
+    }
+
+    function checkAchievements() {
+
+        if (totalStars >= 1) {
+
+            document
+                .getElementById("first-star")
+                .classList.add("unlocked");
+
+        }
+
+        if (todayCorrect >= 5) {
+
+            document
+                .getElementById("five-correct")
+                .classList.add("unlocked");
+
+        }
+
+        if (todayCorrect >= 10) {
+
+            document
+                .getElementById("ten-correct")
+                .classList.add("unlocked");
+
+        }
+
+        if (streak >= 5) {
+
+            document
+                .getElementById("streak-five")
+                .classList.add("unlocked");
+
+        }
+
+        if (totalStars >= 20) {
+
+            document
+                .getElementById("twenty-stars")
+                .classList.add("unlocked");
+
+        }
+
+    }
+
+
+    /* ========================================================
+       INIT
+    ========================================================= */
+
+    generateArticleQuestion();
+    generateSyllableQuestion();
+    generateSpellingQuestion();
+    generateSentenceQuestion();
+    generateReadingQuestion();
+
+    roomsVisited.add("article-room");
+
+</script>
+
+</body>
+</html>

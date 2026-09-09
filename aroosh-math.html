@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TomToms Mathe-Abenteuer 🚀➕</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            min-height: 100vh;
+            color: #263238;
+
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    #e3f2fd 0%,
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 20%,
+                    #fff3e0 0%,
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #f5fbff,
+                    #fffaf4
+                );
+
+            padding: 18px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* =====================================================
+           HEADER
+        ====================================================== */
+
+        .top {
+            text-align: center;
+            padding: 28px 10px 22px;
+        }
+
+        .rocket {
+            font-size: 58px;
+            margin-bottom: 10px;
+        }
+
+        .top h1 {
+            color: #173f73;
+            font-size: clamp(32px, 6vw, 50px);
+            font-weight: 900;
+        }
+
+        .top h2 {
+            margin-top: 8px;
+            color: #3498db;
+            font-size: 23px;
+        }
+
+        .top p {
+            color: #687786;
+            margin-top: 11px;
+            line-height: 1.6;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 11px 18px;
+            border-radius: 25px;
+            background: white;
+            border: 2px solid #dbeafe;
+            color: #173f73;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .back-home:hover {
+            background: #173f73;
+            color: white;
+        }
+
+        /* =====================================================
+           MAGIC REMOTE
+        ====================================================== */
+
+        .magic-area {
+            background:
+                linear-gradient(
+                    135deg,
+                    #172554,
+                    #312e81,
+                    #4c1d95
+                );
+
+            color: white;
+            border-radius: 27px;
+            padding: 32px;
+            margin: 18px 0 32px;
+
+            text-align: center;
+
+            box-shadow:
+                0 15px 35px rgba(49,46,129,0.22);
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .magic-area::before {
+            content: "✨";
+            position: absolute;
+            left: 10%;
+            top: 22px;
+            font-size: 32px;
+            opacity: 0.5;
+        }
+
+        .magic-area::after {
+            content: "⭐";
+            position: absolute;
+            right: 10%;
+            bottom: 22px;
+            font-size: 30px;
+            opacity: 0.5;
+        }
+
+        .magic-area h2 {
+            color: #fde68a;
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .magic-area p {
+            color: #ede9fe;
+            line-height: 1.65;
+            max-width: 720px;
+            margin: 0 auto 22px;
+        }
+
+        .focus-button {
+            border: none;
+            cursor: pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #facc15,
+                    #f59e0b
+                );
+
+            color: #422006;
+
+            padding: 16px 32px;
+            border-radius: 16px;
+
+            font-size: 21px;
+            font-weight: 900;
+
+            box-shadow:
+                0 7px 0 #b45309,
+                0 12px 25px rgba(0,0,0,0.2);
+
+            transition: 0.15s;
+        }
+
+        .focus-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .focus-button:active {
+            transform: translateY(5px);
+            box-shadow:
+                0 2px 0 #b45309,
+                0 5px 12px rgba(0,0,0,0.2);
+        }
+
+        #focus-message {
+            min-height: 28px;
+            margin-top: 18px;
+            color: #fde68a;
+            font-weight: 800;
+            font-size: 17px;
+        }
+
+        /* =====================================================
+           SCORE
+        ====================================================== */
+
+        .score-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 13px;
+            margin-bottom: 30px;
+        }
+
+        .score-card {
+            background: white;
+            border-radius: 17px;
+            padding: 15px 23px;
+            min-width: 150px;
+            text-align: center;
+            box-shadow: 0 7px 20px rgba(40,60,80,0.07);
+            border: 2px solid #e5edf5;
+        }
+
+        .score-card .number {
+            display: block;
+            color: #173f73;
+            font-size: 27px;
+            font-weight: 900;
+        }
+
+        .score-card .label {
+            display: block;
+            color: #7b8794;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        /* =====================================================
+           OPERATION SELECTOR
+        ====================================================== */
+
+        .operation-selector {
+            background: white;
+            border-radius: 22px;
+            padding: 24px;
+            margin-bottom: 26px;
+            box-shadow: 0 8px 22px rgba(40,60,80,0.07);
+        }
+
+        .operation-selector h3 {
+            color: #173f73;
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 21px;
+        }
+
+        .operation-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .op-btn {
+            border: 3px solid #dbeafe;
+            background: #f8fbff;
+            color: #173f73;
+            border-radius: 16px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 16px;
+            transition: 0.2s;
+            min-width: 130px;
+        }
+
+        .op-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52,152,219,0.15);
+        }
+
+        .op-btn.active {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+
+        /* =====================================================
+           DIFFICULTY
+        ====================================================== */
+
+        .difficulty-selector {
+            background: white;
+            border-radius: 22px;
+            padding: 24px;
+            margin-bottom: 26px;
+            box-shadow: 0 8px 22px rgba(40,60,80,0.07);
+        }
+
+        .difficulty-selector h3 {
+            color: #173f73;
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 21px;
+        }
+
+        .difficulty-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .diff-btn {
+            border: 3px solid #dbeafe;
+            background: #f8fbff;
+            color: #173f73;
+            border-radius: 16px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 16px;
+            transition: 0.2s;
+            min-width: 130px;
+        }
+
+        .diff-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52,152,219,0.15);
+        }
+
+        .diff-btn.active {
+            background: #f59e0b;
+            color: white;
+            border-color: #f59e0b;
+        }
+
+        /* =====================================================
+           MATH QUESTION
+        ====================================================== */
+
+        .math-question-box {
+            background:
+                linear-gradient(
+                    135deg,
+                    #eff8ff,
+                    #f8fbff
+                );
+
+            border: 3px solid #bfdbfe;
+            border-radius: 24px;
+            padding: 32px;
+            text-align: center;
+            margin-bottom: 26px;
+        }
+
+        .question-label {
+            color: #718096;
+            font-size: 15px;
+            margin-bottom: 14px;
+            font-weight: 600;
+        }
+
+        #math-question {
+            color: #173f73;
+            font-size: clamp(34px, 7vw, 58px);
+            font-weight: 900;
+            min-height: 80px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .answer-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 13px;
+            margin-top: 22px;
+        }
+
+        #math-answer {
+            width: 170px;
+            padding: 14px;
+            border: 3px solid #3498db;
+            border-radius: 14px;
+            text-align: center;
+            font-size: 29px;
+            font-weight: 800;
+            outline: none;
+        }
+
+        #math-answer:focus {
+            box-shadow:
+                0 0 0 4px rgba(52,152,219,0.15);
+        }
+
+        .check-button {
+            border: none;
+            background: #2ed573;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 14px;
+            font-size: 19px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .check-button:hover {
+            background: #26af5f;
+            transform: translateY(-2px);
+        }
+
+        .next-button {
+            border: none;
+            background: #173f73;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 13px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 14px;
+            transition: 0.2s;
+        }
+
+        .next-button:hover {
+            background: #0f2d52;
+            transform: translateY(-2px);
+        }
+
+        #math-feedback {
+            min-height: 34px;
+            margin-top: 20px;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        /* =====================================================
+           HINT BOX
+        ====================================================== */
+
+        .hint-box {
+            background: #fff9db;
+            border-left: 5px solid #f59f00;
+            border-radius: 10px;
+            padding: 18px;
+            margin-top: 24px;
+            color: #6b5b20;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .hint-box h4 {
+            color: #b9770e;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .hint-box ul {
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+
+        .hint-box li {
+            margin-bottom: 6px;
+        }
+
+        /* =====================================================
+           ACHIEVEMENTS
+        ====================================================== */
+
+        .achievements {
+            background: white;
+            border-radius: 22px;
+            padding: 26px;
+            margin-top: 28px;
+            box-shadow: 0 8px 22px rgba(40,60,80,0.07);
+        }
+
+        .achievements h3 {
+            color: #173f73;
+            text-align: center;
+            margin-bottom: 18px;
+            font-size: 22px;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(160px, 1fr)
+            );
+            gap: 14px;
+        }
+
+        .achievement {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 18px;
+            text-align: center;
+            border: 2px solid #e5edf5;
+            opacity: 0.5;
+            transition: 0.3s;
+        }
+
+        .achievement.unlocked {
+            opacity: 1;
+            border-color: #fbbf24;
+            background: linear-gradient(
+                135deg,
+                #fffbeb,
+                #fef3c7
+            );
+        }
+
+        .achievement .badge-icon {
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .achievement h4 {
+            color: #173f73;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .achievement p {
+            color: #718096;
+            font-size: 12px;
+        }
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        footer {
+            text-align: center;
+            padding: 42px 10px 22px;
+            color: #8795a1;
+            font-size: 14px;
+        }
+
+        footer strong {
+            color: #173f73;
+        }
+
+        /* =====================================================
+           MOBILE
+        ====================================================== */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 10px;
+            }
+
+            .magic-area {
+                padding: 26px 18px;
+            }
+
+            .answer-row {
+                flex-direction: column;
+            }
+
+            #math-answer {
+                width: 190px;
+            }
+
+            .op-btn,
+            .diff-btn {
+                min-width: 110px;
+                font-size: 14px;
+                padding: 10px 16px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="top">
+
+        <div class="rocket">
+            🚀➕
+        </div>
+
+        <h1>
+            TomToms Mathe-Abenteuer
+        </h1>
+
+        <h2>
+            Rechnen · Denken · Knobeln
+        </h2>
+
+        <p>
+            Jede Aufgabe ist ein kleines Abenteuer.
+            Und jeder Fehler zeigt dir, was du als Nächstes lernen kannst! ⭐
+        </p>
+
+        <a
+            href="aroosh.html"
+            class="back-home"
+        >
+            ← Zurück zur Lernwelt
+        </a>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAGIC FOCUS REMOTE
+    ====================================================== -->
+
+    <section class="magic-area">
+
+        <h2>
+            🎮 Die magische Fernbedienung
+        </h2>
+
+        <p>
+            Erinnerst du dich an Prinz Aroosh?
+            Wenn der Schmetterling kommt und deine Gedanken
+            ablenken möchte, kannst du deine unsichtbare
+            Fernbedienung benutzen.
+        </p>
+
+        <p>
+            Die echte Magie steckt in dir:
+            <strong>Fokus · Geduld · Mut</strong>
+        </p>
+
+        <button
+            class="focus-button"
+            onclick="activateFocus()"
+        >
+            ⚡ FOKUS AKTIVIEREN
+        </button>
+
+        <div id="focus-message">
+            Deine magische Fernbedienung wartet ... ✨
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SCORE
+    ====================================================== -->
+
+    <div class="score-row">
+
+        <div class="score-card">
+
+            <span
+                class="number"
+                id="total-stars"
+            >
+                0 ⭐
+            </span>
+
+            <span class="label">
+                Deine Sterne
+            </span>
+
+        </div>
+
+
+        <div class="score-card">
+
+            <span
+                class="number"
+                id="today-correct"
+            >
+                0
+            </span>
+
+            <span class="label">
+                Heute richtig
+            </span>
+
+        </div>
+
+
+        <div class="score-card">
+
+            <span
+                class="number"
+                id="streak"
+            >
+                0 🔥
+            </span>
+
+            <span class="label">
+                Serie
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         OPERATION SELECTOR
+    ====================================================== -->
+
+    <section class="operation-selector">
+
+        <h3>
+            🎯 Was möchtest du üben?
+        </h3>
+
+        <div class="operation-buttons">
+
+            <button
+                class="op-btn active"
+                id="addition-btn"
+                onclick="setOperation('addition')"
+            >
+                ➕ Addition
+            </button>
+
+            <button
+                class="op-btn"
+                id="subtraction-btn"
+                onclick="setOperation('subtraction')"
+            >
+                ➖ Subtraktion
+            </button>
+
+            <button
+                class="op-btn"
+                id="mixed-btn"
+                onclick="setOperation('mixed')"
+            >
+                🎲 Gemischt
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         DIFFICULTY SELECTOR
+    ====================================================== -->
+
+    <section class="difficulty-selector">
+
+        <h3>
+            🎚️ Wie schwierig soll es sein?
+        </h3>
+
+        <div class="difficulty-buttons">
+
+            <button
+                class="diff-btn active"
+                id="easy-btn"
+                onclick="setDifficulty('easy')"
+            >
+                🌱 Einfach
+            </button>
+
+            <button
+                class="diff-btn"
+                id="medium-btn"
+                onclick="setDifficulty('medium')"
+            >
+                🚀 Mittel
+            </button>
+
+            <button
+                class="diff-btn"
+                id="hard-btn"
+                onclick="setDifficulty('hard')"
+            >
+                🧠 Knifflig
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MATH QUESTION
+    ====================================================== -->
+
+    <section class="math-question-box">
+
+        <div class="question-label">
+            Deine Aufgabe
+        </div>
+
+        <div id="math-question">
+            ...
+        </div>
+
+
+        <div class="answer-row">
+
+            <input
+                id="math-answer"
+                type="number"
+                inputmode="numeric"
+                autocomplete="off"
+                aria-label="Antwort"
+                onkeydown="handleMathKey(event)"
+            >
+
+            <button
+                class="check-button"
+                onclick="checkMathAnswer()"
+            >
+                Antwort prüfen ⭐
+            </button>
+
+        </div>
+
+
+        <div id="math-feedback"></div>
+
+
+        <button
+            class="next-button"
+            onclick="generateMathProblem()"
+        >
+            Nächste Aufgabe →
+        </button>
+
+
+        <div class="hint-box">
+
+            <h4>
+                💡 TomToms Rechen-Tipps
+            </h4>
+
+            <ul>
+
+                <li>
+                    <strong>Lies die Aufgabe in Ruhe.</strong>
+                    Übereile dich nicht.
+                </li>
+
+                <li>
+                    <strong>Bei Addition:</strong>
+                    Du kannst die Zahlen zerlegen.
+                    Zum Beispiel: 27 + 15 = 27 + 10 + 5
+                </li>
+
+                <li>
+                    <strong>Bei Subtraktion:</strong>
+                    Du kannst auch rückwärts zählen
+                    oder in Schritten rechnen.
+                </li>
+
+                <li>
+                    <strong>Fehler sind okay!</strong>
+                    Sie zeigen dir, was du als Nächstes lernen kannst.
+                </li>
+
+                <li>
+                    <strong>Benutze deine magische Fernbedienung,</strong>
+                    wenn der Schmetterling kommt! 🎮✨
+                </li>
+
+            </ul>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         ACHIEVEMENTS
+    ====================================================== -->
+
+    <section class="achievements">
+
+        <h3>
+            🏆 Deine Erfolge
+        </h3>
+
+        <div class="achievement-grid">
+
+            <div
+                class="achievement"
+                id="first-star"
+            >
+
+                <div class="badge-icon">
+                    ⭐
+                </div>
+
+                <h4>
+                    Erste Aufgabe
+                </h4>
+
+                <p>
+                    Du hast deine erste
+                    Aufgabe gelöst!
+                </p>
+
+            </div>
+
+
+            <div
+                class="achievement"
+                id="five-correct"
+            >
+
+                <div class="badge-icon">
+                    🎯
+                </div>
+
+                <h4>
+                    5 Richtige
+                </h4>
+
+                <p>
+                    5 Aufgaben hintereinander
+                    richtig!
+                </p>
+
+            </div>
+
+
+            <div
+                class="achievement"
+                id="ten-correct"
+            >
+
+                <div class="badge-icon">
+                    🚀
+                </div>
+
+                <h4>
+                    10 Richtige
+                </h4>
+
+                <p>
+                    10 Aufgaben heute
+                    geschafft!
+                </p>
+
+            </div>
+
+
+            <div
+                class="achievement"
+                id="streak-five"
+            >
+
+                <div class="badge-icon">
+                    🔥
+                </div>
+
+                <h4>
+                    5er-Serie
+                </h4>
+
+                <p>
+                    5 richtige in Folge!
+                </p>
+
+            </div>
+
+
+            <div
+                class="achievement"
+                id="streak-ten"
+            >
+
+                <div class="badge-icon">
+                    💎
+                </div>
+
+                <h4>
+                    10er-Serie
+                </h4>
+
+                <p>
+                    10 richtige in Folge!
+                </p>
+
+            </div>
+
+
+            <div
+                class="achievement"
+                id="twenty-stars"
+            >
+
+                <div class="badge-icon">
+                    🏆
+                </div>
+
+                <h4>
+                    20 Sterne
+                </h4>
+
+                <p>
+                    20 Sterne gesammelt!
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        <p>
+            🚀 <strong>TomTom</strong>,
+            heute ein bisschen rechnen,
+            morgen ein bisschen schlauer!
+        </p>
+
+        <p style="margin-top: 9px;">
+            Mama Tabassum & Papa Farhad ❤️
+        </p>
+
+    </footer>
+
+
+</div>
+
+
+<script>
+
+    /* ========================================================
+       GLOBAL DATA
+    ========================================================= */
+
+    let totalStars = 0;
+    let todayCorrect = 0;
+    let streak = 0;
+
+    let currentOperation = "addition";
+    let currentDifficulty = "easy";
+
+    let num1 = 0;
+    let num2 = 0;
+    let correctAnswer = 0;
+    let operationSymbol = "+";
+
+
+    /* ========================================================
+       MAGIC FOCUS REMOTE
+    ========================================================= */
+
+    function activateFocus() {
+
+        const message =
+            document.getElementById("focus-message");
+
+        const messages = [
+            "⚡ FOKUS AKTIV! Der Schmetterling muss warten!",
+            "🎮 Magische Fernbedienung aktiviert!",
+            "🚀 TomTom ist bereit zum Rechnen!",
+            "🧠 Dein Mathe-Gehirn ist bereit!",
+            "⭐ Fokus an. Wir schaffen das!",
+            "🎯 Konzentration eingeschaltet!"
+        ];
+
+        const random =
+            messages[
+                Math.floor(
+                    Math.random() * messages.length
+                )
+            ];
+
+        message.innerText = random;
+
+        setTimeout(() => {
+
+            message.innerText =
+                "✨ Konzentriert bleiben, TomTom. Du kannst das!";
+
+        }, 3500);
+
+    }
+
+
+    /* ========================================================
+       OPERATION SELECTOR
+    ========================================================= */
+
+    function setOperation(operation) {
+
+        currentOperation = operation;
+
+        document
+            .querySelectorAll(".op-btn")
+            .forEach(button => {
+                button.classList.remove("active");
+            });
+
+        document
+            .getElementById(operation + "-btn")
+            .classList.add("active");
+
+        generateMathProblem();
+
+    }
+
+
+    /* ========================================================
+       DIFFICULTY SELECTOR
+    ========================================================= */
+
+    function setDifficulty(level) {
+
+        currentDifficulty = level;
+
+        document
+            .querySelectorAll(".diff-btn")
+            .forEach(button => {
+                button.classList.remove("active");
+            });
+
+        document
+            .getElementById(level + "-btn")
+            .classList.add("active");
+
+        generateMathProblem();
+
+    }
+
+
+    /* ========================================================
+       RANDOM NUMBER
+    ========================================================= */
+
+    function randomNumber(min, max) {
+
+        return Math.floor(
+            Math.random() * (max - min + 1)
+        ) + min;
+
+    }
+
+
+    /* ========================================================
+       GENERATE MATH PROBLEM
+    ========================================================= */
+
+    function generateMathProblem() {
+
+        const feedback =
+            document.getElementById("math-feedback");
+
+        feedback.innerText = "";
+
+        document
+            .getElementById("math-answer")
+            .value = "";
+
+
+        /*
+         DETERMINE OPERATION
+        */
+
+        if (currentOperation === "addition") {
+
+            operationSymbol = "+";
+
+        } else if (currentOperation === "subtraction") {
+
+            operationSymbol = "-";
+
+        } else {
+
+            operationSymbol = Math.random() < 0.5
+                ? "+"
+                : "-";
+
+        }
+
+
+        /*
+         EASY
+        */
+
+        if (currentDifficulty === "easy") {
+
+            if (operationSymbol === "+") {
+
+                num1 = randomNumber(0, 20);
+                num2 = randomNumber(0, 20);
+
+                correctAnswer = num1 + num2;
+
+            } else {
+
+                num1 = randomNumber(5, 20);
+                num2 = randomNumber(0, num1);
+
+                correctAnswer = num1 - num2;
+
+            }
+
+        }
+
+
+        /*
+         MEDIUM
+        */
+
+        else if (currentDifficulty === "medium") {
+
+            if (operationSymbol === "+") {
+
+                num1 = randomNumber(20, 99);
+                num2 = randomNumber(10, 59);
+
+                correctAnswer = num1 + num2;
+
+            } else {
+
+                num1 = randomNumber(30, 99);
+                num2 = randomNumber(10, num1);
+
+                correctAnswer = num1 - num2;
+
+            }
+
+        }
+
+
+        /*
+         HARD
+        */
+
+        else if (currentDifficulty === "hard") {
+
+            if (operationSymbol === "+") {
+
+                num1 = randomNumber(100, 999);
+                num2 = randomNumber(20, 399);
+
+                correctAnswer = num1 + num2;
+
+            } else {
+
+                num1 = randomNumber(200, 999);
+                num2 = randomNumber(20, num1);
+
+                correctAnswer = num1 - num2;
+
+            }
+
+        }
+
+
+        document
+            .getElementById("math-question")
+            .innerText =
+            `${num1} ${operationSymbol} ${num2} = ?`;
+
+        document
+            .getElementById("math-answer")
+            .focus();
+
+    }
+
+
+    /* ========================================================
+       CHECK ANSWER
+    ========================================================= */
+
+    function checkMathAnswer() {
+
+        const input =
+            document.getElementById("math-answer");
+
+        const feedback =
+            document.getElementById("math-feedback");
+
+        const userAnswer =
+            Number(input.value);
+
+
+        if (input.value.trim() === "") {
+
+            feedback.innerText =
+                "✏️ Schreib zuerst deine Antwort hinein!";
+
+            feedback.style.color =
+                "#f59e0b";
+
+            return;
+        }
+
+
+        if (userAnswer === correctAnswer) {
+
+            totalStars++;
+            todayCorrect++;
+            streak++;
+
+            document
+                .getElementById("total-stars")
+                .innerText =
+                totalStars + " ⭐";
+
+            document
+                .getElementById("today-correct")
+                .innerText =
+                todayCorrect;
+
+            document
+                .getElementById("streak")
+                .innerText =
+                streak + " 🔥";
+
+
+            const praise = [
+
+                "🎉 Super, TomTom! Richtig!",
+
+                "⭐ Fantastisch! Genau richtig!",
+
+                "🚀 Stark gerechnet!",
+
+                "🧠 Dein Mathe-Gehirn arbeitet super!",
+
+                "👏 Klasse! Weiter so!",
+
+                "💙 TomTom kann das!",
+
+                "🎯 Perfekt getroffen!",
+
+                "✨ Du bist ein Mathe-Star!"
+
+            ];
+
+
+            feedback.innerText =
+                praise[
+                    Math.floor(
+                        Math.random() * praise.length
+                    )
+                ] +
+                " +1 Stern! ⭐";
+
+            feedback.style.color =
+                "#16a34a";
+
+
+            checkAchievements();
+
+
+            setTimeout(() => {
+
+                generateMathProblem();
+
+            }, 2000);
+
+
+        } else {
+
+            streak = 0;
+
+            document
+                .getElementById("streak")
+                .innerText =
+                "0 🔥";
+
+
+            feedback.innerText =
+                "💪 Fast! Denk noch einmal in Ruhe nach. Du schaffst das!";
+
+            feedback.style.color =
+                "#e74c3c";
+
+        }
+
+    }
+
+
+    /* ========================================================
+       ACHIEVEMENTS
+    ========================================================= */
+
+    function checkAchievements() {
+
+        if (totalStars >= 1) {
+
+            document
+                .getElementById("first-star")
+                .classList.add("unlocked");
+
+        }
+
+        if (todayCorrect >= 5) {
+
+            document
+                .getElementById("five-correct")
+                .classList.add("unlocked");
+
+        }
+
+        if (todayCorrect >= 10) {
+
+            document
+                .getElementById("ten-correct")
+                .classList.add("unlocked");
+
+        }
+
+        if (streak >= 5) {
+
+            document
+                .getElementById("streak-five")
+                .classList.add("unlocked");
+
+        }
+
+        if (streak >= 10) {
+
+            document
+                .getElementById("streak-ten")
+                .classList.add("unlocked");
+
+        }
+
+        if (totalStars >= 20) {
+
+            document
+                .getElementById("twenty-stars")
+                .classList.add("unlocked");
+
+        }
+
+    }
+
+
+    /* ========================================================
+       ENTER KEY
+    ========================================================= */
+
+    function handleMathKey(event) {
+
+        if (event.key === "Enter") {
+
+            checkMathAnswer();
+
+        }
+
+    }
+
+
+    /* ========================================================
+       START FIRST PROBLEM
+    ========================================================= */
+
+    generateMathProblem();
+
+</script>
+
+</body>
+</html>

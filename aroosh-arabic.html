@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TomToms Arabisch-Abenteuer 🕌🌙</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: "Segoe UI", "Tahoma", "Arial", sans-serif;
+            min-height: 100vh;
+            color: #263238;
+            background:
+                radial-gradient(circle at 15% 10%, #d1fae5 0%, transparent 30%),
+                radial-gradient(circle at 85% 20%, #ecfdf5 0%, transparent 30%),
+                linear-gradient(135deg, #f0fdf4, #f5f4ff);
+            padding: 18px;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .top { text-align: center; padding: 28px 10px 22px; }
+        .rocket { font-size: 58px; margin-bottom: 10px; }
+        .top h1 { color: #173f73; font-size: clamp(32px, 6vw, 50px); font-weight: 900; }
+        .top h2 { margin-top: 8px; color: #10b981; font-size: 23px; }
+        .top p { color: #687786; margin-top: 11px; line-height: 1.6; }
+        .back-home {
+            display: inline-block; margin-top: 18px; padding: 11px 18px;
+            border-radius: 25px; background: white; border: 2px solid #d1fae5;
+            color: #173f73; text-decoration: none; font-weight: 700; transition: 0.2s;
+        }
+        .back-home:hover { background: #10b981; color: white; border-color: #10b981; }
+
+        .magic-area {
+            background: linear-gradient(135deg, #172554, #312e81, #4c1d95);
+            color: white; border-radius: 27px; padding: 32px; margin: 18px 0 32px;
+            text-align: center; box-shadow: 0 15px 35px rgba(49,46,129,0.22);
+            position: relative; overflow: hidden;
+        }
+        .magic-area::before { content: "✨"; position: absolute; left: 10%; top: 22px; font-size: 32px; opacity: 0.5; }
+        .magic-area::after { content: "🌙"; position: absolute; right: 10%; bottom: 22px; font-size: 30px; opacity: 0.5; }
+        .magic-area h2 { color: #fde68a; font-size: 28px; margin-bottom: 12px; }
+        .magic-area p { color: #ede9fe; line-height: 1.65; max-width: 720px; margin: 0 auto 22px; }
+        .focus-button {
+            border: none; cursor: pointer;
+            background: linear-gradient(135deg, #facc15, #f59e0b);
+            color: #422006; padding: 16px 32px; border-radius: 16px;
+            font-size: 21px; font-weight: 900;
+            box-shadow: 0 7px 0 #b45309, 0 12px 25px rgba(0,0,0,0.2);
+            transition: 0.15s;
+        }
+        .focus-button:hover { transform: translateY(-2px); }
+        .focus-button:active { transform: translateY(5px); box-shadow: 0 2px 0 #b45309, 0 5px 12px rgba(0,0,0,0.2); }
+        #focus-message { min-height: 28px; margin-top: 18px; color: #fde68a; font-weight: 800; font-size: 17px; }
+
+        .score-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 13px; margin-bottom: 30px; }
+        .score-card {
+            background: white; border-radius: 17px; padding: 15px 23px; min-width: 150px;
+            text-align: center; box-shadow: 0 7px 20px rgba(40,60,80,0.07); border: 2px solid #d1fae5;
+        }
+        .score-card .number { display: block; color: #173f73; font-size: 27px; font-weight: 900; }
+        .score-card .label { display: block; color: #7b8794; font-size: 13px; margin-top: 4px; }
+
+        .exercise-selector {
+            background: white; border-radius: 22px; padding: 24px; margin-bottom: 26px;
+            box-shadow: 0 8px 22px rgba(40,60,80,0.07);
+        }
+        .exercise-selector h3 { color: #173f73; text-align: center; margin-bottom: 16px; font-size: 21px; }
+        .exercise-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+        .ex-btn {
+            border: 3px solid #d1fae5; background: #f0fdf4; color: #065f46;
+            border-radius: 16px; padding: 12px 18px; cursor: pointer;
+            font-weight: 800; font-size: 15px; transition: 0.2s; min-width: 150px;
+        }
+        .ex-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(16,185,129,0.15); }
+        .ex-btn.active { background: #10b981; color: white; border-color: #10b981; }
+
+        .exercise-room {
+            display: none; background: white; border-radius: 24px; padding: 30px;
+            margin-bottom: 26px; box-shadow: 0 10px 30px rgba(40,60,80,0.08);
+        }
+        .exercise-room.active { display: block; }
+        .room-header { text-align: center; margin-bottom: 22px; }
+        .room-header .room-icon { font-size: 48px; margin-bottom: 8px; }
+        .room-header h2 { color: #173f73; font-size: 27px; margin-bottom: 6px; }
+        .room-header p { color: #718096; font-size: 15px; }
+
+        .letter-box {
+            background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+            border: 3px solid #6ee7b7; border-radius: 22px; padding: 32px; text-align: center;
+        }
+        .arabic-display {
+            font-family: "Traditional Arabic", "Arial", "Tahoma", sans-serif;
+            font-size: clamp(64px, 12vw, 100px); color: #065f46;
+            margin: 18px 0; line-height: 1.2; direction: rtl;
+        }
+        .quiz-question { color: #718096; font-size: 16px; margin-bottom: 18px; font-weight: 600; }
+        .quiz-options { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+        .quiz-btn {
+            border: 3px solid #10b981; background: white; color: #065f46;
+            border-radius: 16px; padding: 14px 24px; cursor: pointer;
+            font-weight: 800; font-size: 18px; transition: 0.2s; min-width: 120px;
+        }
+        .quiz-btn:hover { background: #10b981; color: white; transform: translateY(-3px); }
+        #letter-feedback, #vocab-feedback, #sentence-feedback {
+            min-height: 34px; margin-top: 22px; font-weight: 800; font-size: 18px;
+        }
+        .next-btn {
+            border: none; background: #173f73; color: white;
+            padding: 12px 22px; border-radius: 13px; font-size: 16px;
+            font-weight: 700; cursor: pointer; margin-top: 14px; transition: 0.2s;
+        }
+        .next-btn:hover { background: #0f2d52; transform: translateY(-2px); }
+
+        .vocab-box {
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border: 3px solid #fcd34d; border-radius: 22px; padding: 32px; text-align: center;
+        }
+        .vocab-arabic {
+            font-family: "Traditional Arabic", "Arial", "Tahoma", sans-serif;
+            font-size: clamp(40px, 8vw, 60px); color: #92400e; margin: 18px 0; direction: rtl;
+        }
+        .vocab-emoji { font-size: 60px; margin-bottom: 10px; }
+
+        .teacher-tip {
+            background: #fff9db; border-left: 5px solid #f59f00;
+            border-radius: 10px; padding: 18px; margin-top: 24px;
+            color: #6b5b20; line-height: 1.6; text-align: left;
+        }
+        .teacher-tip h4 { color: #b9770e; margin-bottom: 10px; font-size: 17px; }
+        .teacher-tip ul { margin-left: 20px; margin-top: 8px; }
+        .teacher-tip li { margin-bottom: 8px; }
+
+        .achievements {
+            background: white; border-radius: 22px; padding: 26px; margin-top: 28px;
+            box-shadow: 0 8px 22px rgba(40,60,80,0.07);
+        }
+        .achievements h3 { color: #173f73; text-align: center; margin-bottom: 18px; font-size: 22px; }
+        .achievement-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
+        .achievement {
+            background: #f8fafc; border-radius: 16px; padding: 18px; text-align: center;
+            border: 2px solid #e5edf5; opacity: 0.5; transition: 0.3s;
+        }
+        .achievement.unlocked {
+            opacity: 1; border-color: #fbbf24;
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+        }
+        .achievement .badge-icon { font-size: 38px; margin-bottom: 8px; }
+        .achievement h4 { color: #173f73; font-size: 15px; margin-bottom: 5px; }
+        .achievement p { color: #718096; font-size: 12px; }
+
+        footer { text-align: center; padding: 42px 10px 22px; color: #8795a1; font-size: 14px; }
+        footer strong { color: #173f73; }
+
+        /* AM-PARA SUB-TABS */
+        .sub-tab-nav {
+            display: flex; justify-content: center; flex-wrap: wrap;
+            gap: 8px; margin: 20px 0;
+        }
+        .sub-tab-btn {
+            border: 3px solid #d1fae5; background: white; color: #065f46;
+            border-radius: 14px; padding: 10px 18px; cursor: pointer;
+            font-weight: 800; font-size: 14px; transition: 0.2s;
+        }
+        .sub-tab-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(16,185,129,0.15); }
+        .sub-tab-btn.active { background: #059669; color: white; border-color: #059669; }
+
+        .sub-tab-content { display: none; }
+        .sub-tab-content.active { display: block; }
+
+        .surah-grid { display: grid; gap: 16px; }
+        .surah-card-full {
+            background: white; border-radius: 20px; padding: 24px;
+            border: 3px solid #d1fae5; box-shadow: 0 5px 15px rgba(40,60,80,0.06);
+        }
+        .surah-header {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border-radius: 14px; padding: 16px; margin-bottom: 18px;
+            text-align: center; border: 2px solid #6ee7b7;
+        }
+        .surah-number-badge {
+            display: inline-block; background: #10b981; color: white;
+            width: 42px; height: 42px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 18px; margin: 0 auto 8px;
+        }
+        .surah-arabic-title {
+            font-family: "Traditional Arabic", "Arial", sans-serif;
+            font-size: 34px; color: #065f46; direction: rtl; margin: 8px 0;
+        }
+        .surah-name-de { color: #173f73; font-size: 19px; font-weight: 800; margin: 6px 0; }
+        .surah-meaning-de { color: #718096; font-size: 14px; font-style: italic; }
+        .surah-meta { display: flex; justify-content: center; gap: 15px; margin-top: 10px; flex-wrap: wrap; }
+        .meta-item {
+            background: white; padding: 3px 10px; border-radius: 12px;
+            font-size: 12px; color: #065f46; font-weight: 700; border: 1px solid #6ee7b7;
+        }
+        .bismillah {
+            font-family: "Traditional Arabic", "Arial", sans-serif;
+            font-size: 26px; color: #065f46; text-align: center;
+            direction: rtl; margin: 16px 0; padding: 12px;
+            background: #f0fdf4; border-radius: 10px;
+        }
+        .surah-text {
+            font-family: "Traditional Arabic", "Amiri", "Arial", sans-serif;
+            font-size: 24px; line-height: 2.1; color: #065f46;
+            direction: rtl; text-align: right;
+            background: #fafafa; padding: 20px; border-radius: 14px;
+            border: 2px solid #e5e7eb; margin-bottom: 14px;
+        }
+        .ayah-number {
+            display: inline-block; color: #10b981; font-size: 16px;
+            font-weight: 700; margin: 0 6px;
+        }
+        .surah-info-box {
+            background: #fffbeb; border-left: 4px solid #f59e0b;
+            border-radius: 10px; padding: 12px; margin-top: 14px;
+        }
+        .surah-info-box h4 { color: #92400e; margin-bottom: 6px; font-size: 15px; }
+        .surah-info-box p { color: #78350f; line-height: 1.6; font-size: 13px; }
+
+        .prayer-intro {
+            background: white; border-radius: 22px; padding: 24px;
+            border: 2px solid #d1fae5; margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(40,60,80,0.06);
+        }
+        .prayer-intro h2 { color: #173f73; font-size: 24px; margin-bottom: 10px; text-align: center; }
+        .prayer-intro p { color: #52606d; line-height: 1.7; text-align: center; max-width: 700px; margin: 0 auto; }
+        .prayer-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+        .prayer-card {
+            background: white; border-radius: 20px; padding: 22px;
+            border: 3px solid; box-shadow: 0 8px 22px rgba(40,60,80,0.07); transition: 0.2s;
+        }
+        .prayer-card:hover { transform: translateY(-3px); }
+        .prayer-card.fajr { border-color: #f59e0b; }
+        .prayer-card.dhuhr { border-color: #3b82f6; }
+        .prayer-card.asr { border-color: #f97316; }
+        .prayer-card.maghrib { border-color: #ef4444; }
+        .prayer-card.isha { border-color: #8b5cf6; }
+        .prayer-card .prayer-icon { font-size: 40px; margin-bottom: 8px; text-align: center; }
+        .prayer-card h3 { color: #173f73; font-size: 20px; text-align: center; margin-bottom: 4px; }
+        .prayer-card .prayer-arabic {
+            font-family: "Traditional Arabic", "Arial", sans-serif;
+            font-size: 24px; color: #065f46; text-align: center; direction: rtl; margin-bottom: 10px;
+        }
+        .prayer-card .prayer-time { color: #718096; font-size: 13px; text-align: center; margin-bottom: 12px; }
+        .rakat-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .rakat-table th, .rakat-table td { padding: 7px 8px; text-align: center; font-size: 13px; border-bottom: 1px solid #e5e7eb; }
+        .rakat-table th { color: #173f73; font-weight: 700; background: #f8fafc; }
+        .rakat-table td { color: #52606d; }
+        .rakat-table .total { font-weight: 800; color: #173f73; background: #ecfdf5; }
+
+        .special-prayer {
+            background: white; border-radius: 22px; padding: 26px;
+            border: 3px solid #fbbf24; margin-bottom: 20px; box-shadow: 0 8px 22px rgba(40,60,80,0.07);
+        }
+        .special-prayer h2 { color: #173f73; font-size: 24px; margin-bottom: 6px; text-align: center; }
+        .special-prayer .arabic-title {
+            font-family: "Traditional Arabic", "Arial", sans-serif;
+            font-size: 28px; color: #065f46; text-align: center; direction: rtl; margin-bottom: 14px;
+        }
+        .special-prayer p { color: #52606d; line-height: 1.75; margin-bottom: 12px; }
+        .step-list { list-style: none; margin: 16px 0; }
+        .step-list li {
+            background: #f8fafc; border-radius: 14px; padding: 12px 16px;
+            margin-bottom: 10px; border-left: 4px solid #10b981; line-height: 1.6; color: #374151;
+        }
+        .step-list li strong { color: #173f73; }
+        .step-list .step-num {
+            display: inline-block; background: #10b981; color: white;
+            width: 26px; height: 26px; border-radius: 50%; text-align: center;
+            line-height: 26px; font-weight: 800; font-size: 13px; margin-right: 10px;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+            border: 2px solid #6ee7b7; border-radius: 16px; padding: 16px; margin: 16px 0;
+        }
+        .highlight-box h4 { color: #065f46; margin-bottom: 8px; }
+        .highlight-box p { color: #374151; margin-bottom: 6px; }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .magic-area { padding: 26px 18px; }
+            .exercise-room { padding: 22px 15px; }
+            .quiz-btn { min-width: 100px; padding: 12px 16px; font-size: 16px; }
+            .ex-btn { min-width: 120px; font-size: 13px; padding: 10px 14px; }
+            .surah-text { font-size: 20px; padding: 14px; }
+            .surah-arabic-title { font-size: 26px; }
+            .prayer-grid { grid-template-columns: 1fr; }
+            .sub-tab-btn { padding: 8px 12px; font-size: 12px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header class="top">
+        <div class="rocket">🕌🌙</div>
+        <h1>TomToms Arabisch-Abenteuer</h1>
+        <h2>Alif Ba Ta · Wörter · Lesen · Am-Para</h2>
+        <p>
+            Jeder arabische Buchstabe ist wie ein kleines Kunstwerk.<br>
+            Wir lernen sie Schritt für Schritt! ⭐
+        </p>
+        <a href="aroosh.html" class="back-home">← Zurück zur Lernwelt</a>
+    </header>
+
+    <section class="magic-area">
+        <h2>🎮 Die magische Fernbedienung</h2>
+        <p>Erinnerst du dich an Prinz Aroosh? Wenn der Schmetterling kommt, benutze deine unsichtbare Fernbedienung.</p>
+        <p>Die echte Magie steckt in dir: <strong>Fokus · Geduld · Mut</strong></p>
+        <button class="focus-button" onclick="activateFocus()">⚡ FOKUS AKTIVIEREN</button>
+        <div id="focus-message">Deine magische Fernbedienung wartet ... ✨</div>
+    </section>
+
+    <div class="score-row">
+        <div class="score-card"><span class="number" id="total-stars">0 ⭐</span><span class="label">Deine Sterne</span></div>
+        <div class="score-card"><span class="number" id="today-correct">0</span><span class="label">Heute richtig</span></div>
+        <div class="score-card"><span class="number" id="streak">0 🔥</span><span class="label">Serie</span></div>
+    </div>
+
+    <section class="exercise-selector">
+        <h3>🎯 Was möchtest du heute üben?</h3>
+        <div class="exercise-buttons">
+            <button class="ex-btn active" id="letters-btn" onclick="openExercise('letters-room')">🅰️ Buchstaben</button>
+            <button class="ex-btn" id="vocab-btn" onclick="openExercise('vocab-room')">📖 Wörter</button>
+            <button class="ex-btn" id="reading-btn" onclick="openExercise('reading-room')">👁️ Erkennen</button>
+            <button class="ex-btn" id="ampara-btn" onclick="openExercise('ampara-room')">📖 Am-Para & Gebete</button>
+        </div>
+    </section>
+
+    <!-- LETTERS ROOM -->
+    <section id="letters-room" class="exercise-room active">
+        <div class="room-header">
+            <div class="room-icon">🅰️</div>
+            <h2>Die arabischen Buchstaben</h2>
+            <p>Wie heißt dieser Buchstabe?</p>
+        </div>
+        <div class="letter-box">
+            <div class="quiz-question">Welcher Buchstabe ist das?</div>
+            <div class="arabic-display" id="letter-display" lang="ar">أ</div>
+            <div class="quiz-options" id="letter-options"></div>
+            <div id="letter-feedback"></div>
+            <button class="next-btn" onclick="generateLetterQuestion()">Nächster Buchstabe →</button>
+        </div>
+        <div class="teacher-tip">
+            <h4>💡 Tipp vom Lehrer</h4>
+            <ul>
+                <li>Arabisch wird <strong>von rechts nach links</strong> gelesen und geschrieben.</li>
+                <li>Jeder Buchstabe hat einen eigenen, schönen Klang. Sprich ihn laut aus!</li>
+                <li>Beispiel: <strong lang="ar">أ</strong> heißt "Alif" und klingt wie ein langes "Aaa".</li>
+                <li>Keine Sorge, wenn es am Anfang schwer aussieht. Mit jedem Mal wird es leichter!</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- VOCABULARY ROOM -->
+    <section id="vocab-room" class="exercise-room">
+        <div class="room-header">
+            <div class="room-icon">📖</div>
+            <h2>Arabische Wörter</h2>
+            <p>Was bedeutet dieses arabische Wort auf Deutsch?</p>
+        </div>
+        <div class="vocab-box">
+            <div class="vocab-emoji" id="vocab-emoji">📚</div>
+            <div class="vocab-arabic" id="vocab-display" lang="ar">كِتَاب</div>
+            <div class="quiz-question">Was bedeutet das?</div>
+            <div class="quiz-options" id="vocab-options"></div>
+            <div id="vocab-feedback"></div>
+            <button class="next-btn" onclick="generateVocabQuestion()">Nächstes Wort →</button>
+        </div>
+        <div class="teacher-tip">
+            <h4>💡 Tipp vom Lehrer</h4>
+            <ul>
+                <li>Viele arabische Wörter haben eine Wurzel aus 3 Buchstaben.</li>
+                <li>Versuche, das Wort laut vorzulesen, bevor du die Antwort wählst.</li>
+                <li>Verbinde das arabische Wort mit dem Bild (Emoji) in deinem Kopf.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- RECOGNITION ROOM -->
+    <section id="reading-room" class="exercise-room">
+        <div class="room-header">
+            <div class="room-icon">👁️</div>
+            <h2>Wörter erkennen</h2>
+            <p>Finde das richtige arabische Wort für das deutsche Wort.</p>
+        </div>
+        <div class="letter-box">
+            <div class="quiz-question" id="reading-german-word">Wie schreibt man "Sonne"?</div>
+            <div class="quiz-options" id="reading-options"></div>
+            <div id="sentence-feedback"></div>
+            <button class="next-btn" onclick="generateReadingQuestion()">Nächste Frage →</button>
+        </div>
+        <div class="teacher-tip">
+            <h4>💡 Tipp vom Lehrer</h4>
+            <ul>
+                <li>Schau dir die Form der Buchstaben genau an.</li>
+                <li>Manche Buchstaben sehen ähnlich aus, haben aber unterschiedliche Punkte (z.B. ب, ت, ث).</li>
+                <li>Die Punkte sind wie kleine Geheimzeichen, die den Laut verändern!</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- AM-PARA ROOM -->
+    <section id="ampara-room" class="exercise-room">
+        <div class="room-header">
+            <div class="room-icon">📖🕌</div>
+            <h2>Am-Para & Gebetsregeln</h2>
+            <p>37 Suren · 5 Gebete · Eid · Janaza</p>
+        </div>
+
+        <nav class="sub-tab-nav">
+            <button class="sub-tab-btn active" onclick="openSubTab('surah-tab')">📖 37 Suren</button>
+            <button class="sub-tab-btn" onclick="openSubTab('prayer-tab')">🕌 5 Gebete</button>
+            <button class="sub-tab-btn" onclick="openSubTab('eid-tab')">🌙 Eid-Gebet</button>
+            <button class="sub-tab-btn" onclick="openSubTab('janaza-tab')">🤲 Janaza-Gebet</button>
+        </nav>
+
+        <!-- SUB-TAB 1: 37 SUREN -->
+        <div id="surah-tab" class="sub-tab-content active">
+            <div class="prayer-intro">
+                <h2>📖 Die 37 Suren des Am-Para</h2>
+                <p>Der Am-Para (Juz 30) ist der letzte Teil des Quran. Lies jede Sure mit!</p>
+            </div>
+            <div class="surah-grid" id="surah-grid"></div>
+            <div class="teacher-tip">
+                <h4>💡 Tipp vom Lehrer</h4>
+                <ul>
+                    <li>Fange mit den <strong>kürzesten Suren</strong> an: Al-Ikhlas, Al-Falaq, An-Nas, Al-Kawthar, Al-Asr.</li>
+                    <li>Lerne zuerst <strong>Al-Ikhlas, Al-Falaq und An-Nas</strong> - sie werden in fast jedem Gebet gelesen!</li>
+                    <li>Höre dir die Suren von einem <strong>Qari (Rezitor)</strong> an und sprich sie nach.</li>
+                    <li>Der Prophet ﷺ sagte: Wer Al-Ikhlas liest, dem wird es angerechnet wie <strong>ein Drittel des Quran</strong>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SUB-TAB 2: 5 GEBETE -->
+        <div id="prayer-tab" class="sub-tab-content">
+            <div class="prayer-intro">
+                <h2>🕌 Die 5 täglichen Gebete (Salah)</h2>
+                <p>Das Gebet ist eine der fünf Säulen des Islam. Muslime beten fünfmal am Tag.</p>
+            </div>
+            <div class="prayer-grid">
+                <div class="prayer-card fajr">
+                    <div class="prayer-icon">🌅</div>
+                    <h3>Fajr</h3>
+                    <div class="prayer-arabic">الفَجْر</div>
+                    <div class="prayer-time">Morgendämmerung</div>
+                    <table class="rakat-table">
+                        <tr><th>Art</th><th>Rakat</th></tr>
+                        <tr><td>Sunnah</td><td>2</td></tr>
+                        <tr><td>Fard</td><td>2</td></tr>
+                        <tr class="total"><td>Gesamt</td><td>4</td></tr>
+                    </table>
+                </div>
+                <div class="prayer-card dhuhr">
+                    <div class="prayer-icon">☀️</div>
+                    <h3>Dhuhr</h3>
+                    <div class="prayer-arabic">الظُّهْر</div>
+                    <div class="prayer-time">Mittag</div>
+                    <table class="rakat-table">
+                        <tr><th>Art</th><th>Rakat</th></tr>
+                        <tr><td>Sunnah</td><td>4+2</td></tr>
+                        <tr><td>Fard</td><td>4</td></tr>
+                        <tr><td>Nafl</td><td>2</td></tr>
+                        <tr class="total"><td>Gesamt</td><td>12</td></tr>
+                    </table>
+                </div>
+                <div class="prayer-card asr">
+                    <div class="prayer-icon">🌤️</div>
+                    <h3>Asr</h3>
+                    <div class="prayer-arabic">العَصْر</div>
+                    <div class="prayer-time">Nachmittag</div>
+                    <table class="rakat-table">
+                        <tr><th>Art</th><th>Rakat</th></tr>
+                        <tr><td>Sunnah</td><td>4</td></tr>
+                        <tr><td>Fard</td><td>4</td></tr>
+                        <tr class="total"><td>Gesamt</td><td>8</td></tr>
+                    </table>
+                </div>
+                <div class="prayer-card maghrib">
+                    <div class="prayer-icon">🌇</div>
+                    <h3>Maghrib</h3>
+                    <div class="prayer-arabic">المَغْرِب</div>
+                    <div class="prayer-time">Sonnenuntergang</div>
+                    <table class="rakat-table">
+                        <tr><th>Art</th><th>Rakat</th></tr>
+                        <tr><td>Fard</td><td>3</td></tr>
+                        <tr><td>Sunnah</td><td>2</td></tr>
+                        <tr class="total"><td>Gesamt</td><td>5</td></tr>
+                    </table>
+                </div>
+                <div class="prayer-card isha">
+                    <div class="prayer-icon">🌙</div>
+                    <h3>Isha</h3>
+                    <div class="prayer-arabic">العِشَاء</div>
+                    <div class="prayer-time">Nacht</div>
+                    <table class="rakat-table">
+                        <tr><th>Art</th><th>Rakat</th></tr>
+                        <tr><td>Sunnah</td><td>4+2</td></tr>
+                        <tr><td>Fard</td><td>4</td></tr>
+                        <tr><td>Witr</td><td>3</td></tr>
+                        <tr class="total"><td>Gesamt</td><td>13</td></tr>
+                    </table>
+                </div>
+            </div>
+            <div class="highlight-box" style="margin-top: 20px;">
+                <h4>📌 Was bedeuten die Begriffe?</h4>
+                <p><strong>Fard</strong> = Pflicht. Diese Rakat <strong>müssen</strong> gebetet werden.</p>
+                <p><strong>Sunnah</strong> = Vom Propheten ﷺ empfohlen. Sehr belohnt, aber nicht Pflicht.</p>
+                <p><strong>Nafl</strong> = Freiwillig. Extra Belohnung von Allah.</p>
+                <p><strong>Witr</strong> = Besonderes Gebet mit ungerader Rakat-Zahl am Ende der Nacht.</p>
+            </div>
+        </div>
+
+        <!-- SUB-TAB 3: EID-GEBET -->
+        <div id="eid-tab" class="sub-tab-content">
+            <div class="special-prayer">
+                <h2>🌙 Das Eid-Gebet</h2>
+                <div class="arabic-title">صَلَاة العِيد</div>
+                <p>Das Eid-Gebet ist ein besonderes Festgebet zweimal im Jahr: am Eid al-Fitr und am Eid al-Adha.</p>
+                <div class="highlight-box">
+                    <h4>📌 Wann wird Eid gebetet?</h4>
+                    <p><strong>Eid al-Fitr:</strong> 1. Shawwal (nach Ramadan)</p>
+                    <p><strong>Eid al-Adha:</strong> 10. Dhul Hijjah (während der Hadsch-Zeit)</p>
+                </div>
+                <h3 style="color: #173f73; margin: 20px 0 14px; text-align: center;">So wird das Eid-Gebet verrichtet:</h3>
+                <ol class="step-list">
+                    <li><span class="step-num">1</span><strong>Niyyah:</strong> Du fasst den Entschluss, das Eid-Gebet zu beten.</li>
+                    <li><span class="step-num">2</span><strong>Erster Takbir:</strong> Der Imam sagt "Allahu Akbar" und du hebst die Hände.</li>
+                    <li><span class="step-num">3</span><strong>3 weitere Takbirs (1. Rakat):</strong> Bei jedem Takbir hebst du die Hände.</li>
+                    <li><span class="step-num">4</span><strong>Al-Fatiha + Sure:</strong> Der Imam liest vor, du hörst zu.</li>
+                    <li><span class="step-num">5</span><strong>Ruku und Sujud:</strong> Wie im normalen Gebet.</li>
+                    <li><span class="step-num">6</span><strong>2. Rakat:</strong> Wieder 3 weitere Takbirs.</li>
+                    <li><span class="step-num">7</span><strong>Al-Fatiha + Sure:</strong> Wieder vorlesen lassen.</li>
+                    <li><span class="step-num">8</span><strong>Salam:</strong> Nach rechts und links.</li>
+                </ol>
+                <div class="highlight-box">
+                    <h4>🎉 Sunnah am Eid-Tag</h4>
+                    <p>🛁 Ghusl vor dem Gebet · 👕 Schöne Kleidung · 🍽️ Vor Eid al-Fitr etwas essen</p>
+                    <p>📿 Takbir: <em>Allahu Akbar, Allahu Akbar, La ilaha illallah ...</em></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUB-TAB 4: JANAZA-GEBET -->
+        <div id="janaza-tab" class="sub-tab-content">
+            <div class="special-prayer">
+                <h2>🤲 Das Janaza-Gebet</h2>
+                <div class="arabic-title">صَلَاة الجَنَازَة</div>
+                <p>Das Beerdigungsgebet für verstorbene Muslime. Ein Akt der Liebe und des Respekts.</p>
+                <div class="highlight-box">
+                    <h4>📌 Was ist besonders?</h4>
+                    <p>❌ Kein Ruku (Verbeugen) · ❌ Kein Sujud (Niederwerfen)</p>
+                    <p>✅ Nur <strong>Stehen</strong> · ✅ <strong>4 Takbirs</strong></p>
+                </div>
+                <h3 style="color: #173f73; margin: 20px 0 14px; text-align: center;">So wird das Janaza-Gebet verrichtet:</h3>
+                <ol class="step-list">
+                    <li><span class="step-num">1</span><strong>1. Takbir:</strong> Al-Fatiha lesen.</li>
+                    <li><span class="step-num">2</span><strong>2. Takbir:</strong> Salawat (Durood) für den Propheten ﷺ sprechen.</li>
+                    <li><span class="step-num">3</span><strong>3. Takbir:</strong> Dua für den Verstorbenen: <em>"Allahummaghfir lahu warhamhu ..."</em></li>
+                    <li><span class="step-num">4</span><strong>4. Takbir:</strong> Dua für alle Muslime + Salam nach rechts und links.</li>
+                </ol>
+                <div class="highlight-box">
+                    <h4>📌 Die 4 Takbirs im Überblick</h4>
+                    <p><strong>1.</strong> Al-Fatiha · <strong>2.</strong> Salawat · <strong>3.</strong> Dua für Verstorbenen · <strong>4.</strong> Dua für alle + Salam</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="achievements">
+        <h3>🏆 Deine Erfolge</h3>
+        <div class="achievement-grid">
+            <div class="achievement" id="first-star"><div class="badge-icon">⭐</div><h4>Erste Aufgabe</h4><p>Du hast deine erste Aufgabe gelöst!</p></div>
+            <div class="achievement" id="five-correct"><div class="badge-icon">🎯</div><h4>5 Richtige</h4><p>5 Aufgaben heute geschafft!</p></div>
+            <div class="achievement" id="ten-correct"><div class="badge-icon">🚀</div><h4>10 Richtige</h4><p>10 Aufgaben heute richtig!</p></div>
+            <div class="achievement" id="streak-five"><div class="badge-icon">🔥</div><h4>5er-Serie</h4><p>5 richtige in Folge!</p></div>
+            <div class="achievement" id="all-rooms"><div class="badge-icon">🌟</div><h4>Alles probiert</h4><p>Alle 4 Bereiche ausprobiert!</p></div>
+            <div class="achievement" id="twenty-stars"><div class="badge-icon">🏆</div><h4>20 Sterne</h4><p>20 Sterne gesammelt!</p></div>
+        </div>
+    </section>
+
+    <footer>
+        <p>🕌 <strong>TomTom</strong>, Masha'Allah! Jeder Buchstabe bringt dich weiter.</p>
+        <p style="margin-top: 9px;">Mama Tabassum & Papa Farhad ❤️</p>
+    </footer>
+
+</div>
+
+<script>
+    let totalStars = 0;
+    let todayCorrect = 0;
+    let streak = 0;
+    let roomsVisited = new Set();
+    let currentLetterAnswer = "";
+    let currentVocabAnswer = "";
+    let currentReadingAnswer = "";
+
+    function activateFocus() {
+        const message = document.getElementById("focus-message");
+        const messages = [
+            "⚡ FOKUS AKTIV! Der Schmetterling muss warten!",
+            "🎮 Magische Fernbedienung aktiviert!",
+            "🕌 TomTom ist bereit für Arabisch!",
+            "🧠 Dein Gehirn ist bereit für neue Buchstaben!",
+            "⭐ Fokus an. Wir schaffen das!",
+            "🌙 Masha'Allah, du machst das großartig!"
+        ];
+        const random = messages[Math.floor(Math.random() * messages.length)];
+        message.innerText = random;
+        setTimeout(() => {
+            message.innerText = "✨ Konzentriert bleiben, TomTom. Du kannst das!";
+        }, 3500);
+    }
+
+    function openExercise(roomId) {
+        document.querySelectorAll(".exercise-room").forEach(room => room.classList.remove("active"));
+        document.querySelectorAll(".ex-btn").forEach(btn => btn.classList.remove("active"));
+        document.getElementById(roomId).classList.add("active");
+        const btnId = roomId.replace("-room", "-btn");
+        document.getElementById(btnId).classList.add("active");
+        roomsVisited.add(roomId);
+        if (roomsVisited.size >= 4) {
+            document.getElementById("all-rooms").classList.add("unlocked");
+        }
+        document.getElementById(roomId).scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function openSubTab(tabId) {
+        document.querySelectorAll(".sub-tab-content").forEach(tab => tab.classList.remove("active"));
+        document.querySelectorAll(".sub-tab-btn").forEach(btn => btn.classList.remove("active"));
+        document.getElementById(tabId).classList.add("active");
+        event.target.classList.add("active");
+    }
+
+    // LETTERS QUIZ
+    const lettersData = [
+        { letter: "أ", name: "Alif", options: ["Alif", "Ba", "Ta"] },
+        { letter: "ب", name: "Ba", options: ["Ba", "Ta", "Tha"] },
+        { letter: "ت", name: "Ta", options: ["Ba", "Ta", "Tha"] },
+        { letter: "ث", name: "Tha", options: ["Ta", "Tha", "Jim"] },
+        { letter: "ج", name: "Jim", options: ["Ha", "Jim", "Kha"] },
+        { letter: "ح", name: "Ha", options: ["Ha", "Kha", "Dal"] },
+        { letter: "خ", name: "Kha", options: ["Ha", "Kha", "Dal"] },
+        { letter: "د", name: "Dal", options: ["Dal", "Dhal", "Ra"] },
+        { letter: "ر", name: "Ra", options: ["Zay", "Ra", "Zayn"] },
+        { letter: "س", name: "Sin", options: ["Sin", "Shin", "Sad"] },
+        { letter: "ش", name: "Shin", options: ["Sin", "Shin", "Sad"] },
+        { letter: "م", name: "Mim", options: ["Mim", "Nun", "Lam"] },
+        { letter: "ن", name: "Nun", options: ["Mim", "Nun", "Ha"] },
+        { letter: "هـ", name: "Ha", options: ["Ha", "Waw", "Ya"] },
+        { letter: "و", name: "Waw", options: ["Waw", "Ya", "Ha"] },
+        { letter: "ي", name: "Ya", options: ["Waw", "Ya", "Nun"] }
+    ];
+
+    function generateLetterQuestion() {
+        document.getElementById("letter-feedback").innerText = "";
+        const item = lettersData[Math.floor(Math.random() * lettersData.length)];
+        currentLetterAnswer = item.name;
+        document.getElementById("letter-display").innerText = item.letter;
+        const optionsContainer = document.getElementById("letter-options");
+        optionsContainer.innerHTML = "";
+        const shuffled = [...item.options].sort(() => Math.random() - 0.5);
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "quiz-btn";
+            btn.innerText = opt;
+            btn.onclick = () => checkLetter(opt);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    function checkLetter(answer) {
+        const feedback = document.getElementById("letter-feedback");
+        if (answer === currentLetterAnswer) {
+            totalStars++; todayCorrect++; streak++;
+            updateScore();
+            feedback.innerText = "🎉 Masha'Allah! Richtig: " + currentLetterAnswer + "! +1 Stern ⭐";
+            feedback.style.color = "#16a34a";
+            checkAchievements();
+            setTimeout(generateLetterQuestion, 2000);
+        } else {
+            streak = 0; updateScore();
+            feedback.innerText = "💪 Fast! Das war: " + currentLetterAnswer;
+            feedback.style.color = "#e74c3c";
+        }
+    }
+
+    // VOCABULARY QUIZ
+    const vocabData = [
+        { arabic: "كِتَاب", german: "Buch", emoji: "📚", options: ["Buch", "Stift", "Tisch"] },
+        { arabic: "قَلَم", german: "Stift", emoji: "✏️", options: ["Buch", "Stift", "Radiergummi"] },
+        { arabic: "شَمْس", german: "Sonne", emoji: "🌞", options: ["Mond", "Sonne", "Stern"] },
+        { arabic: "قَمَر", german: "Mond", emoji: "🌙", options: ["Mond", "Sonne", "Wolke"] },
+        { arabic: "بَيْت", german: "Haus", emoji: "🏠", options: ["Schule", "Haus", "Baum"] },
+        { arabic: "وَلَد", german: "Junge", emoji: "👦", options: ["Junge", "Mädchen", "Mann"] },
+        { arabic: "بِنْت", german: "Mädchen", emoji: "👧", options: ["Junge", "Mädchen", "Frau"] },
+        { arabic: "قَلْب", german: "Herz", emoji: "❤️", options: ["Herz", "Auge", "Hand"] },
+        { arabic: "مَاء", german: "Wasser", emoji: "💧", options: ["Milch", "Wasser", "Saft"] },
+        { arabic: "خُبْز", german: "Brot", emoji: "🍞", options: ["Brot", "Apfel", "Käse"] }
+    ];
+
+    function generateVocabQuestion() {
+        document.getElementById("vocab-feedback").innerText = "";
+        const item = vocabData[Math.floor(Math.random() * vocabData.length)];
+        currentVocabAnswer = item.german;
+        document.getElementById("vocab-emoji").innerText = item.emoji;
+        document.getElementById("vocab-display").innerText = item.arabic;
+        const optionsContainer = document.getElementById("vocab-options");
+        optionsContainer.innerHTML = "";
+        const shuffled = [...item.options].sort(() => Math.random() - 0.5);
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "quiz-btn";
+            btn.innerText = opt;
+            btn.onclick = () => checkVocab(opt);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    function checkVocab(answer) {
+        const feedback = document.getElementById("vocab-feedback");
+        if (answer === currentVocabAnswer) {
+            totalStars++; todayCorrect++; streak++;
+            updateScore();
+            feedback.innerText = "🎉 Fantastisch! " + currentVocabAnswer + "! +1 Stern ⭐";
+            feedback.style.color = "#16a34a";
+            checkAchievements();
+            setTimeout(generateVocabQuestion, 2000);
+        } else {
+            streak = 0; updateScore();
+            feedback.innerText = "💪 Nicht ganz. Das bedeutet: " + currentVocabAnswer;
+            feedback.style.color = "#e74c3c";
+        }
+    }
+
+    // RECOGNITION QUIZ
+    const readingData = [
+        { german: "Sonne", arabic: "شَمْس", options: ["شَمْس", "قَمَر", "نَجْم"] },
+        { german: "Mond", arabic: "قَمَر", options: ["شَمْس", "قَمَر", "سَحَاب"] },
+        { german: "Buch", arabic: "كِتَاب", options: ["قَلَم", "كِتَاب", "دَفْتَر"] },
+        { german: "Stift", arabic: "قَلَم", options: ["قَلَم", "كِتَاب", "مِمْحَاة"] },
+        { german: "Haus", arabic: "بَيْت", options: ["مَدْرَسَة", "بَيْت", "شَجَرَة"] },
+        { german: "Wasser", arabic: "مَاء", options: ["حَلِيب", "مَاء", "عَصِير"] },
+        { german: "Junge", arabic: "وَلَد", options: ["وَلَد", "بِنْت", "رَجُل"] },
+        { german: "Mädchen", arabic: "بِنْت", options: ["وَلَد", "بِنْت", "اِمْرَأَة"] }
+    ];
+
+    function generateReadingQuestion() {
+        document.getElementById("sentence-feedback").innerText = "";
+        const item = readingData[Math.floor(Math.random() * readingData.length)];
+        currentReadingAnswer = item.arabic;
+        document.getElementById("reading-german-word").innerText = "Wie schreibt man \"" + item.german + "\"?";
+        const optionsContainer = document.getElementById("reading-options");
+        optionsContainer.innerHTML = "";
+        const shuffled = [...item.options].sort(() => Math.random() - 0.5);
+        shuffled.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "quiz-btn";
+            btn.innerText = opt;
+            btn.style.fontFamily = "'Traditional Arabic', 'Arial', 'Tahoma', sans-serif";
+            btn.style.fontSize = "28px";
+            btn.onclick = () => checkReading(opt);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    function checkReading(answer) {
+        const feedback = document.getElementById("sentence-feedback");
+        if (answer === currentReadingAnswer) {
+            totalStars++; todayCorrect++; streak++;
+            updateScore();
+            feedback.innerText = "🎉 Masha'Allah! Perfekt erkannt! +1 Stern ⭐";
+            feedback.style.color = "#16a34a";
+            checkAchievements();
+            setTimeout(generateReadingQuestion, 2000);
+        } else {
+            streak = 0; updateScore();
+            feedback.innerText = "💪 Schau dir die Punkte genau an. Richtig wäre: " + currentReadingAnswer;
+            feedback.style.color = "#e74c3c";
+        }
+    }
+
+    // AM-PARA: 37 SUREN DATA (mit korrigierten Anführungszeichen)
+    const surahsData = [
+        { num: 78, arabic: "النَّبَأ", name: "An-Naba", meaning: "Die Ankündigung", ayat: 40, type: "Makki", text: "عَمَّ يَتَسَاءَلُونَ ﴿١﴾ عَنِ النَّبَإِ الْعَظِيمِ ﴿٢﴾ الَّذِي هُمْ فِيهِ مُخْتَلِفُونَ ﴿٣﴾ كَلَّا سَيَعْلَمُونَ ﴿٤﴾ ثُمَّ كَلَّا سَيَعْلَمُونَ ﴿٥﴾ أَلَمْ نَجْعَلِ الْأَرْضَ مِهَادًا ﴿٦﴾ وَالْجِبَالَ أَوْتَادًا ﴿٧﴾ وَخَلَقْنَاكُمْ أَزْوَاجًا ﴿٨﴾ وَجَعَلْنَا نَوْمَكُمْ سُبَاتًا ﴿٩﴾ وَجَعَلْنَا اللَّيْلَ لِبَاسًا ﴿١٠﴾ وَجَعَلْنَا النَّهَارَ مَعَاشًا ﴿١١﴾ وَبَنَيْنَا فَوْقَكُمْ سَبْعًا شِدَادًا ﴿١٢﴾ وَجَعَلْنَا سِرَاجًا وَهَّاجًا ﴿١٣﴾ وَأَنزَلْنَا مِنَ الْمُعْصِرَاتِ مَاءً ثَجَّاجًا ﴿١٤﴾ لِنُخْرِجَ بِهِ حَبًّا وَنَبَاتًا ﴿١٥﴾ وَجَنَّاتٍ أَلْفَافًا ﴿١٦﴾", info: "Diese Sure spricht über den Tag des Gerichts und Allahs Macht in der Schöpfung." },
+        { num: 79, arabic: "النَّازِعَات", name: "An-Nazi'at", meaning: "Die Entreißenden", ayat: 46, type: "Makki", text: "وَالنَّازِعَاتِ غَرْقًا ﴿١﴾ وَالنَّاشِطَاتِ نَشْطًا ﴿٢﴾ وَالسَّابِحَاتِ سَبْحًا ﴿٣﴾ فَالسَّابِقَاتِ سَبْقًا ﴿٤﴾ فَالْمُدَبِّرَاتِ أَمْرًا ﴿٥﴾ يَوْمَ تَرْجُفُ الرَّاجِفَةُ ﴿٦﴾ تَتْبَعُهَا الرَّادِفَةُ ﴿٧﴾ قُلُوبٌ يَوْمَئِذٍ وَاجِفَةٌ ﴿٨﴾ أَبْصَارُهَا خَاشِعَةٌ ﴿٩﴾", info: "Über die Engel, die die Seelen entnehmen, und über die Auferstehung." },
+        { num: 80, arabic: "عَبَسَ", name: "'Abasa", meaning: "Er runzelte die Stirn", ayat: 42, type: "Makki", text: "عَبَسَ وَتَوَلَّىٰ ﴿١﴾ أَن جَاءَهُ الْأَعْمَىٰ ﴿٢﴾ وَمَا يُدْرِيكَ لَعَلَّهُ يَزَّكَّىٰ ﴿٣﴾ أَوْ يَذَّكَّرُ فَتَنفَعَهُ الذِّكْرَىٰ ﴿٤﴾ أَمَّا مَنِ اسْتَغْنَىٰ ﴿٥﴾ فَأَنتَ لَهُ تَصَدَّىٰ ﴿٦﴾ وَمَا عَلَيْكَ أَلَّا يَزَّكَّىٰ ﴿٧﴾ وَأَمَّا مَن جَاءَكَ يَسْعَىٰ ﴿٨﴾ وَهُوَ يَخْشَىٰ ﴿٩﴾ فَأَنتَ عَنْهُ تَلَهَّىٰ ﴿١٠﴾", info: "Jeder Mensch ist wichtig - egal ob reich oder arm." },
+        { num: 81, arabic: "التَّكْوِير", name: "At-Takwir", meaning: "Das Zusammenrollen", ayat: 29, type: "Makki", text: "إِذَا الشَّمْسُ كُوِّرَتْ ﴿١﴾ وَإِذَا النُّجُومُ انكَدَرَتْ ﴿٢﴾ وَإِذَا الْجِبَالُ سُيِّرَتْ ﴿٣﴾ وَإِذَا الْعِشَارُ عُطِّلَتْ ﴿٤﴾ وَإِذَا الْوُحُوشُ حُشِرَتْ ﴿٥﴾ وَإِذَا الْبِحَارُ سُجِّرَتْ ﴿٦﴾ وَإِذَا النُّفُوسُ زُوِّجَتْ ﴿٧﴾ وَإِذَا الْمَوْءُودَةُ سُئِلَتْ ﴿٨﴾ بِأَيِّ ذَنبٍ قُتِلَتْ ﴿٩﴾ وَإِذَا الصُّحُفُ نُشِرَتْ ﴿١٠﴾", info: "Beschreibt, wie die Sonne zusammenrollt am Tag des Gerichts." },
+        { num: 82, arabic: "الانْفِطَار", name: "Al-Infitar", meaning: "Das Zerbrechen", ayat: 19, type: "Makki", text: "إِذَا السَّمَاءُ انفَطَرَتْ ﴿١﴾ وَإِذَا الْكَوَاكِبُ انتَثَرَتْ ﴿٢﴾ وَإِذَا الْبِحَارُ فُجِّرَتْ ﴿٣﴾ وَإِذَا الْقُبُورُ بُعْثِرَتْ ﴿٤﴾ عَلِمَتْ نَفْسٌ مَّا قَدَّمَتْ وَأَخَّرَتْ ﴿٥﴾ يَا أَيُّهَا الْإِنسَانُ مَا غَرَّكَ بِرَبِّكَ الْكَرِيمِ ﴿٦﴾", info: "Wenn der Himmel zerbricht und die Meere überfluten." },
+        { num: 83, arabic: "المُطَفِّفِين", name: "Al-Mutaffifin", meaning: "Die Betrüger", ayat: 36, type: "Makki", text: "وَيْلٌ لِّلْمُطَفِّفِينَ ﴿١﴾ الَّذِينَ إِذَا اكْتَالُوا عَلَى النَّاسِ يَسْتَوْفُونَ ﴿٢﴾ وَإِذَا كَالُوهُمْ أَو وَّزَنُوهُمْ يُخْسِرُونَ ﴿٣﴾ أَلَا يَظُنُّ أُولَٰئِكَ أَنَّهُم مَّبْعُوثُونَ ﴿٤﴾ لِيَوْمٍ عَظِيمٍ ﴿٥﴾ يَوْمَ يَقُومُ النَّاسُ لِرَبِّ الْعَالَمِينَ ﴿٦﴾", info: "Eine Warnung an diejenigen, die betrügen." },
+        { num: 84, arabic: "الانْشِقَاق", name: "Al-Inshiqaq", meaning: "Das Auseinanderbrechen", ayat: 25, type: "Makki", text: "إِذَا السَّمَاءُ انشَقَّتْ ﴿١﴾ وَأَذِنَتْ لِرَبِّهَا وَحُقَّتْ ﴿٢﴾ وَإِذَا الْأَرْضُ مُدَّتْ ﴿٣﴾ وَأَلْقَتْ مَا فِيهَا وَتَخَلَّتْ ﴿٤﴾ وَأَذِنَتْ لِرَبِّهَا وَحُقَّتْ ﴿٥﴾ يَا أَيُّهَا الْإِنسَانُ إِنَّكَ كَادِحٌ إِلَىٰ رَبِّكَ كَدْحًا فَمُلَاقِيهِ ﴿٦﴾", info: "Wenn der Himmel aufbricht und die Erde sich ausdehnt." },
+        { num: 85, arabic: "البُرُوج", name: "Al-Buruj", meaning: "Die Türme", ayat: 22, type: "Makki", text: "وَالسَّمَاءِ ذَاتِ الْبُرُوجِ ﴿١﴾ وَالْيَوْمِ الْمَوْعُودِ ﴿٢﴾ وَشَاهِدٍ وَمَشْهُودٍ ﴿٣﴾ قُتِلَ أَصْحَابُ الْأُخْدُودِ ﴿٤﴾ النَّارِ ذَاتِ الْوَقُودِ ﴿٥﴾ إِذْ هُمْ عَلَيْهَا قُعُودٌ ﴿٦﴾ وَهُمْ عَلَىٰ مَا يَفْعَلُونَ بِالْمُؤْمِنِينَ شُهُودٌ ﴿٧﴾", info: "Über die Gläubigen, die für ihren Glauben geprüft wurden." },
+        { num: 86, arabic: "الطَّارِق", name: "At-Tariq", meaning: "Der Pochende", ayat: 17, type: "Makki", text: "وَالسَّمَاءِ وَالطَّارِقِ ﴿١﴾ وَمَا أَدْرَاكَ مَا الطَّارِقُ ﴿٢﴾ النَّجْمُ الثَّاقِبُ ﴿٣﴾ إِن كُلُّ نَفْسٍ لَّمَّا عَلَيْهَا حَافِظٌ ﴿٤﴾ فَلْيَنظُرِ الْإِنسَانُ مِمَّ خُلِقَ ﴿٥﴾ خُلِقَ مِن مَّاءٍ دَافِقٍ ﴿٦﴾ يَخْرُجُ مِن بَيْنِ الصُّلْبِ وَالتَّرَائِبِ ﴿٧﴾", info: "Schwört bei dem hellen Stern in der Nacht." },
+        { num: 87, arabic: "الأَعْلَى", name: "Al-A'la", meaning: "Der Höchste", ayat: 19, type: "Makki", text: "سَبِّحِ اسْمَ رَبِّكَ الْأَعْلَى ﴿١﴾ الَّذِي خَلَقَ فَسَوَّىٰ ﴿٢﴾ وَالَّذِي قَدَّرَ فَهَدَىٰ ﴿٣﴾ وَالَّذِي أَخْرَجَ الْمَرْعَىٰ ﴿٤﴾ فَجَعَلَهُ غُثَاءً أَحْوَىٰ ﴿٥﴾ سَنُقْرِئُكَ فَلَا تَنسَىٰ ﴿٦﴾ إِلَّا مَا شَاءَ اللَّهُ ۚ إِنَّهُ يَعْلَمُ الْجَهْرَ وَمَا يَخْفَىٰ ﴿٧﴾", info: "Preist Allah, den Höchsten, der alles erschaffen hat." },
+        { num: 88, arabic: "الغَاشِيَة", name: "Al-Ghashiyah", meaning: "Die Überdeckende", ayat: 26, type: "Makki", text: "هَلْ أَتَاكَ حَدِيثُ الْغَاشِيَةِ ﴿١﴾ وُجُوهٌ يَوْمَئِذٍ خَاشِعَةٌ ﴿٢﴾ عَامِلَةٌ نَّاصِبَةٌ ﴿٣﴾ تَصْلَىٰ نَارًا حَامِيَةً ﴿٤﴾ تُسْقَىٰ مِنْ عَيْنٍ آنِيَةٍ ﴿٥﴾ لَّيْسَ لَهُمْ طَعَامٌ إِلَّا مِن ضَرِيعٍ ﴿٦﴾ لَّا يُسْمِنُ وَلَا يُغْنِي مِن جُوعٍ ﴿٧﴾", info: "Beschreibt die Gesichter am Tag des Gerichts." },
+        { num: 89, arabic: "الفَجْر", name: "Al-Fajr", meaning: "Die Morgendämmerung", ayat: 30, type: "Makki", text: "وَالْفَجْرِ ﴿١﴾ وَلَيَالٍ عَشْرٍ ﴿٢﴾ وَالشَّفْعِ وَالْوَتْرِ ﴿٣﴾ وَاللَّيْلِ إِذَا يَسْرِ ﴿٤﴾ هَلْ فِي ذَٰلِكَ قَسَمٌ لِّذِي حِجْرٍ ﴿٥﴾ أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِعَادٍ ﴿٦﴾ إِرَمَ ذَاتِ الْعِمَادِ ﴿٧﴾ الَّتِي لَمْ يُخْلَقْ مِثْلُهَا فِي الْبِلَادِ ﴿٨﴾", info: "Schwört bei der Morgendämmerung und erinnert an vergangene Völker." },
+        { num: 90, arabic: "البَلَد", name: "Al-Balad", meaning: "Die Stadt", ayat: 20, type: "Makki", text: "لَا أُقْسِمُ بِهَٰذَا الْبَلَدِ ﴿١﴾ وَأَنتَ حِلٌّ بِهَٰذَا الْبَلَدِ ﴿٢﴾ وَوَالِدٍ وَمَا وَلَدَ ﴿٣﴾ لَقَدْ خَلَقْنَا الْإِنسَانَ فِي كَبَدٍ ﴿٤﴾ أَيَحْسَبُ أَن لَّن يَقْدِرَ عَلَيْهِ أَحَدٌ ﴿٥﴾ يَقُولُ أَهْلَكْتُ مَالًا لُّبَدًا ﴿٦﴾ أَيَحْسَبُ أَن لَّمْ يَرَهُ أَحَدٌ ﴿٧﴾", info: "Über die heilige Stadt Mekka und den schwierigen Weg des Glaubens." },
+        { num: 91, arabic: "الشَّمْس", name: "Ash-Shams", meaning: "Die Sonne", ayat: 15, type: "Makki", text: "وَالشَّمْسِ وَضُحَاهَا ﴿١﴾ وَالْقَمَرِ إِذَا تَلَاهَا ﴿٢﴾ وَالنَّهَارِ إِذَا جَلَّاهَا ﴿٣﴾ وَاللَّيْلِ إِذَا يَغْشَاهَا ﴿٤﴾ وَالسَّمَاءِ وَمَا بَنَاهَا ﴿٥﴾ وَالْأَرْضِ وَمَا طَحَاهَا ﴿٦﴾ وَنَفْسٍ وَمَا سَوَّاهَا ﴿٧﴾ فَأَلْهَمَهَا فُجُورَهَا وَتَقْوَاهَا ﴿٨﴾ قَدْ أَفْلَحَ مَن زَكَّاهَا ﴿٩﴾ وَقَدْ خَابَ مَن دَسَّاهَا ﴿١٠﴾", info: "Wer seine Seele reinigt, hat Erfolg." },
+        { num: 92, arabic: "اللَّيْل", name: "Al-Layl", meaning: "Die Nacht", ayat: 21, type: "Makki", text: "وَاللَّيْلِ إِذَا يَغْشَىٰ ﴿١﴾ وَالنَّهَارِ إِذَا تَجَلَّىٰ ﴿٢﴾ وَمَا خَلَقَ الذَّكَرَ وَالْأُنثَىٰ ﴿٣﴾ إِنَّ سَعْيَكُمْ لَشَتَّىٰ ﴿٤﴾ فَأَمَّا مَنْ أَعْطَىٰ وَاتَّقَىٰ ﴿٥﴾ وَصَدَّقَ بِالْحُسْنَىٰ ﴿٦﴾ فَسَنُيَسِّرُهُ لِلْيُسْرَىٰ ﴿٧﴾ وَأَمَّا مَن بَخِلَ وَاسْتَغْنَىٰ ﴿٨﴾ وَكَذَّبَ بِالْحُسْنَىٰ ﴿٩﴾ فَسَنُيَسِّرُهُ لِلْعُسْرَىٰ ﴿١٠﴾", info: "Über zwei Wege: den Weg des Gebens und den Weg der Gier." },
+        { num: 93, arabic: "الضُّحَى", name: "Ad-Duha", meaning: "Der Vormittag", ayat: 11, type: "Makki", text: "وَالضُّحَىٰ ﴿١﴾ وَاللَّيْلِ إِذَا سَجَىٰ ﴿٢﴾ مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ ﴿٣﴾ وَلَلْآخِرَةُ خَيْرٌ لَّكَ مِنَ الْأُولَىٰ ﴿٤﴾ وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰ ﴿٥﴾ أَلَمْ يَجِدْكَ يَتِيمًا فَآوَىٰ ﴿٦﴾ وَوَجَدَكَ ضَالًّا فَهَدَىٰ ﴿٧﴾ وَوَجَدَكَ عَائِلًا فَأَغْنَىٰ ﴿٨﴾ فَأَمَّا الْيَتِيمَ فَلَا تَقْهَرْ ﴿٩﴾ وَأَمَّا السَّائِلَ فَلَا تَنْهَرْ ﴿١٠﴾ وَأَمَّا بِنِعْمَةِ رَبِّكَ فَحَدِّثْ ﴿١١﴾", info: "Eine tröstende Sure: Dein Herr hat dich nicht verlassen." },
+        { num: 94, arabic: "الشَّرْح", name: "Ash-Sharh", meaning: "Die Erweiterung", ayat: 8, type: "Makki", text: "أَلَمْ نَشْرَحْ لَكَ صَدْرَكَ ﴿١﴾ وَوَضَعْنَا عَنكَ وِزْرَكَ ﴿٢﴾ الَّذِي أَنقَضَ ظَهْرَكَ ﴿٣﴾ وَرَفَعْنَا لَكَ ذِكْرَكَ ﴿٤﴾ فَإِنَّ مَعَ الْعُسْرِ يُسْرًا ﴿٥﴾ إِنَّ مَعَ الْعُسْرِ يُسْرًا ﴿٦﴾ فَإِذَا فَرَغْتَ فَانصَبْ ﴿٧﴾ وَإِلَىٰ رَبِّكَ فَارْغَب ﴿٨﴾", info: "Mit der Erschwernis kommt die Erleichterung." },
+        { num: 95, arabic: "التِّين", name: "At-Tin", meaning: "Die Feige", ayat: 8, type: "Makki", text: "وَالتِّينِ وَالزَّيْتُونِ ﴿١﴾ وَطُورِ سِينِينَ ﴿٢﴾ وَهَٰذَا الْبَلَدِ الْأَمِينِ ﴿٣﴾ لَقَدْ خَلَقْنَا الْإِنسَانَ فِي أَحْسَنِ تَقْوِيمٍ ﴿٤﴾ ثُمَّ رَدَدْنَاهُ أَسْفَلَ سَافِلِينَ ﴿٥﴾ إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ فَلَهُمْ أَجْرٌ غَيْرُ مَمْنُونٍ ﴿٦﴾ فَمَا يُكَذِّبُكَ بَعْدُ بِالدِّينِ ﴿٧﴾ أَلَيْسَ اللَّهُ بِأَحْكَمِ الْحَاكِمِينَ ﴿٨﴾", info: "Allah hat den Menschen in bester Form erschaffen." },
+        { num: 96, arabic: "العَلَق", name: "Al-'Alaq", meaning: "Der Blutklumpen", ayat: 19, type: "Makki", text: "اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ ﴿١﴾ خَلَقَ الْإِنسَانَ مِنْ عَلَقٍ ﴿٢﴾ اقْرَأْ وَرَبُّكَ الْأَكْرَمُ ﴿٣﴾ الَّذِي عَلَّمَ بِالْقَلَمِ ﴿٤﴾ عَلَّمَ الْإِنسَانَ مَا لَمْ يَعْلَمْ ﴿٥﴾ كَلَّا إِنَّ الْإِنسَانَ لَيَطْغَىٰ ﴿٦﴾ أَن رَّآهُ اسْتَغْنَىٰ ﴿٧﴾ إِنَّ إِلَىٰ رَبِّكَ الرُّجْعَىٰ ﴿٨﴾", info: "Die allererste Offenbarung: Lies! Im Namen deines Herrn." },
+        { num: 97, arabic: "القَدْر", name: "Al-Qadr", meaning: "Die Nacht der Macht", ayat: 5, type: "Makki", text: "إِنَّا أَنزَلْنَاهُ فِي لَيْلَةِ الْقَدْرِ ﴿١﴾ وَمَا أَدْرَاكَ مَا لَيْلَةُ الْقَدْرِ ﴿٢﴾ لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ ﴿٣﴾ تَنَزَّلُ الْمَلَائِكَةُ وَالرُّوحُ فِيهَا بِإِذْنِ رَبِّهِم مِّن كُلِّ أَمْرٍ ﴿٤﴾ سَلَامٌ هِيَ حَتَّىٰ مَطْلَعِ الْفَجْرِ ﴿٥﴾", info: "Die Nacht der Macht ist besser als tausend Monate." },
+        { num: 98, arabic: "البَيِّنَة", name: "Al-Bayyinah", meaning: "Der klare Beweis", ayat: 8, type: "Madinah", text: "لَمْ يَكُنِ الَّذِينَ كَفَرُوا مِنْ أَهْلِ الْكِتَابِ وَالْمُشْرِكِينَ مُنفَكِّينَ حَتَّىٰ تَأْتِيَهُمُ الْبَيِّنَةُ ﴿١﴾ رَسُولٌ مِّنَ اللَّهِ يَتْلُو صُحُفًا مُّطَهَّرَةً ﴿٢﴾ فِيهَا كُتُبٌ قَيِّمَةٌ ﴿٣﴾ وَمَا تَفَرَّقَ الَّذِينَ أُوتُوا الْكِتَابَ إِلَّا مِن بَعْدِ مَا جَاءَتْهُمُ الْبَيِّنَةُ ﴿٤﴾", info: "Über den klaren Beweis durch den Gesandten." },
+        { num: 99, arabic: "الزَّلْزَلَة", name: "Az-Zalzalah", meaning: "Das Erdbeben", ayat: 8, type: "Madinah", text: "إِذَا زُلْزِلَتِ الْأَرْضُ زِلْزَالَهَا ﴿١﴾ وَأَخْرَجَتِ الْأَرْضُ أَثْقَالَهَا ﴿٢﴾ وَقَالَ الْإِنسَانُ مَا لَهَا ﴿٣﴾ يَوْمَئِذٍ تُحَدِّثُ أَخْبَارَهَا ﴿٤﴾ بِأَنَّ رَبَّكَ أَوْحَىٰ لَهَا ﴿٥﴾ يَوْمَئِذٍ يَصْدُرُ النَّاسُ أَشْتَاتًا لِّيُرَوْا أَعْمَالَهُمْ ﴿٦﴾ فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ ﴿٧﴾ وَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ شَرًّا يَرَهُ ﴿٨﴾", info: "Jedes Atom Gutes wird belohnt." },
+        { num: 100, arabic: "العَادِيَات", name: "Al-'Adiyat", meaning: "Die Rennenden", ayat: 11, type: "Makki", text: "وَالْعَادِيَاتِ ضَبْحًا ﴿١﴾ فَالْمُورِيَاتِ قَدْحًا ﴿٢﴾ فَالْمُغِيرَاتِ صُبْحًا ﴿٣﴾ فَأَثَرْنَ بِهِ نَقْعًا ﴿٤﴾ فَوَسَطْنَ بِهِ جَمْعًا ﴿٥﴾ إِنَّ الْإِنسَانَ لِرَبِّهِ لَكَنُودٌ ﴿٦﴾ وَإِنَّهُ عَلَىٰ ذَٰلِكَ لَشَهِيدٌ ﴿٧﴾ وَإِنَّهُ عَلَىٰ حُبِّ الْمَالِ لَشَدِيدٌ ﴿٨﴾", info: "Schwört bei den galoppierenden Pferden." },
+        { num: 101, arabic: "القَارِعَة", name: "Al-Qari'ah", meaning: "Die Katastrophe", ayat: 11, type: "Makki", text: "القَارِعَةُ ﴿١﴾ مَا الْقَارِعَةُ ﴿٢﴾ وَمَا أَدْرَاكَ مَا الْقَارِعَةُ ﴿٣﴾ يَوْمَ يَكُونُ النَّاسُ كَالْفَرَاشِ الْمَبْثُوثِ ﴿٤﴾ وَتَكُونُ الْجِبَالُ كَالْعِهْنِ الْمَنفُوشِ ﴿٥﴾ فَأَمَّا مَن ثَقُلَتْ مَوَازِينُهُ ﴿٦﴾ فَهُوَ فِي عِيشَةٍ رَّاضِيَةٍ ﴿٧﴾ وَأَمَّا مَنْ خَفَّتْ مَوَازِينُهُ ﴿٨﴾ فَأُمُّهُ هَاوِيَةٌ ﴿٩﴾ وَمَا أَدْرَاكَ مَا هِيَهْ ﴿١٠﴾ نَارٌ حَامِيَةٌ ﴿١١﴾", info: "Die Katastrophe! Menschen wie verstreute Motten." },
+        { num: 102, arabic: "التَّكَاثُر", name: "At-Takathur", meaning: "Die Vermehrung", ayat: 8, type: "Makki", text: "أَلْهَاكُمُ التَّكَاثُرُ ﴿١﴾ حَتَّىٰ زُرْتُمُ الْمَقَابِرَ ﴿٢﴾ كَلَّا سَوْفَ تَعْلَمُونَ ﴿٣﴾ ثُمَّ كَلَّا سَوْفَ تَعْلَمُونَ ﴿٤﴾ كَلَّا لَوْ تَعْلَمُونَ عِلْمَ الْيَقِينِ ﴿٥﴾ لَتَرَوُنَّ الْجَحِيمَ ﴿٦﴾ ثُمَّ لَتَرَوُنَّهَا عَيْنَ الْيَقِينِ ﴿٧﴾ ثُمَّ لَتُسْأَلُنَّ يَوْمَئِذٍ عَنِ النَّعِيمِ ﴿٨﴾", info: "Das Streben nach mehr lenkt euch ab." },
+        { num: 103, arabic: "العَصْر", name: "Al-'Asr", meaning: "Die Zeit", ayat: 3, type: "Makki", text: "وَالْعَصْرِ ﴿١﴾ إِنَّ الْإِنسَانَ لَفِي خُسْرٍ ﴿٢﴾ إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ ﴿٣﴾", info: "Nur Gläubige, die Gutes tun, gewinnen." },
+        { num: 104, arabic: "الهُمَزَة", name: "Al-Humazah", meaning: "Der Stichler", ayat: 9, type: "Makki", text: "وَيْلٌ لِّكُلِّ هُمَزَةٍ لُّمَزَةٍ ﴿١﴾ الَّذِي جَمَعَ مَالًا وَعَدَّدَهُ ﴿٢﴾ يَحْسَبُ أَنَّ مَالَهُ أَخْلَدَهُ ﴿٣﴾ كَلَّا ۖ لَيُنبَذَنَّ فِي الْحُطَمَةِ ﴿٤﴾ وَمَا أَدْرَاكَ مَا الْحُطَمَةُ ﴿٥﴾ نَارُ اللَّهِ الْمُوقَدَةُ ﴿٦﴾ الَّتِي تَطَّلِعُ عَلَى الْأَفْئِدَةِ ﴿٧﴾ إِنَّهَا عَلَيْهِم مُّؤْصَدَةٌ ﴿٨﴾ فِي عَمَدٍ مُّمَدَّدَةٍ ﴿٩﴾", info: "Wehe jedem Spötter und Verleumder." },
+        { num: 105, arabic: "الفِيل", name: "Al-Fil", meaning: "Der Elefant", ayat: 5, type: "Makki", text: "أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ ﴿١﴾ أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ ﴿٢﴾ وَأَرْسَلَ عَلَيْهِمْ طَيْرًا أَبَابِيلَ ﴿٣﴾ تَرْمِيهِم بِحِجَارَةٍ مِّن سِجِّيلٍ ﴿٤﴾ فَجَعَلَهُمْ كَعَصْفٍ مَّأْكُولٍ ﴿٥﴾", info: "Die Geschichte vom Heer mit Elefanten." },
+        { num: 106, arabic: "قُرَيْش", name: "Quraysh", meaning: "Quraysh", ayat: 4, type: "Makki", text: "لِإِيلَافِ قُرَيْشٍ ﴿١﴾ إِيلَافِهِمْ رِحْلَةَ الشِّتَاءِ وَالصَّيْفِ ﴿٢﴾ فَلْيَعْبُدُوا رَبَّ هَٰذَا الْبَيْتِ ﴿٣﴾ الَّذِي أَطْعَمَهُم مِّن جُوعٍ وَآمَنَهُم مِّنْ خَوْفٍ ﴿٤﴾", info: "Erinnert den Stamm Quraysh an Allahs Gnade." },
+        { num: 107, arabic: "المَاعُون", name: "Al-Ma'un", meaning: "Die Hilfeleistung", ayat: 7, type: "Makki", text: "أَرَأَيْتَ الَّذِي يُكَذِّبُ بِالدِّينِ ﴿١﴾ فَذَٰلِكَ الَّذِي يَدُعُّ الْيَتِيمَ ﴿٢﴾ وَلَا يَحُضُّ عَلَىٰ طَعَامِ الْمِسْكِينِ ﴿٣﴾ فَوَيْلٌ لِّلْمُصَلِّينَ ﴿٤﴾ الَّذِينَ هُمْ عَن صَلَاتِهِمْ سَاهُونَ ﴿٥﴾ الَّذِينَ هُمْ يُرَاءُونَ ﴿٦﴾ وَيَمْنَعُونَ الْمَاعُونَ ﴿٧﴾", info: "Wer die Waisen wegstößt - wehe den Betenden, die achtlos sind." },
+        { num: 108, arabic: "الكَوْثَر", name: "Al-Kawthar", meaning: "Die Überfülle", ayat: 3, type: "Makki", text: "إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ ﴿١﴾ فَصَلِّ لِرَبِّكَ وَانْحَرْ ﴿٢﴾ إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ ﴿٣﴾", info: "Die kürzeste Sure! Allah hat dem Propheten Überfluss gegeben." },
+        { num: 109, arabic: "الكَافِرُون", name: "Al-Kafirun", meaning: "Die Ungläubigen", ayat: 6, type: "Makki", text: "قُلْ يَا أَيُّهَا الْكَافِرُونَ ﴿١﴾ لَا أَعْبُدُ مَا تَعْبُدُونَ ﴿٢﴾ وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ ﴿٣﴾ وَلَا أَنَا عَابِدٌ مَّا عَبَدتُّمْ ﴿٤﴾ وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ ﴿٥﴾ لَكُمْ دِينُكُمْ وَلِيَ دِينِ ﴿٦﴾", info: "Euch eure Religion und mir meine Religion." },
+        { num: 110, arabic: "النَّصْر", name: "An-Nasr", meaning: "Die Hilfe", ayat: 3, type: "Madinah", text: "إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ ﴿١﴾ وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا ﴿٢﴾ فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ ۚ إِنَّهُ كَانَ تَوَّابًا ﴿٣﴾", info: "Wenn die Hilfe Allahs und der Sieg kommt." },
+        { num: 111, arabic: "المَسَد", name: "Al-Masad", meaning: "Die Palmfasern", ayat: 5, type: "Makki", text: "تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ ﴿١﴾ مَا أَغْنَىٰ عَنْهُ مَالُهُ وَمَا كَسَبَ ﴿٢﴾ سَيَصْلَىٰ نَارًا ذَاتَ لَهَبٍ ﴿٣﴾ وَامْرَأَتُهُ حَمَّالَةَ الْحَطَبِ ﴿٤﴾ فِي جِيدِهَا حَبْلٌ مِّن مَّسَدٍ ﴿٥﴾", info: "Über Abu Lahab, der den Islam bekämpfte." },
+        { num: 112, arabic: "الإِخْلَاص", name: "Al-Ikhlas", meaning: "Die Aufrichtigkeit", ayat: 4, type: "Makki", text: "قُلْ هُوَ اللَّهُ أَحَدٌ ﴿١﴾ اللَّهُ الصَّمَدُ ﴿٢﴾ لَمْ يَلِدْ وَلَمْ يُولَدْ ﴿٣﴾ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ ﴿٤﴾", info: "Die wichtigste kurze Sure! Wie ein Drittel des Quran." },
+        { num: 113, arabic: "الفَلَق", name: "Al-Falaq", meaning: "Die Morgendämmerung", ayat: 5, type: "Makki", text: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ﴿١﴾ مِن شَرِّ مَا خَلَقَ ﴿٢﴾ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ﴿٣﴾ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ﴿٤﴾ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ ﴿٥﴾", info: "Eine Schutz-Sure! Lies sie morgens und abends." },
+        { num: 114, arabic: "النَّاس", name: "An-Nas", meaning: "Die Menschen", ayat: 6, type: "Makki", text: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ ﴿١﴾ مَلِكِ النَّاسِ ﴿٢﴾ إِلَٰهِ النَّاسِ ﴿٣﴾ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ﴿٤﴾ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ﴿٥﴾ مِنَ الْجِنَّةِ وَالنَّاسِ ﴿٦﴾", info: "Die letzte Sure im Quran! Zusammen mit Al-Falaq die Schutz-Suren." }
+    ];
+
+    function initSurahGrid() {
+        const grid = document.getElementById("surah-grid");
+        surahsData.forEach(surah => {
+            const card = document.createElement("div");
+            card.className = "surah-card-full";
+            card.innerHTML = `
+                <div class="surah-header">
+                    <div class="surah-number-badge">${surah.num}</div>
+                    <div class="surah-arabic-title">${surah.arabic}</div>
+                    <div class="surah-name-de">${surah.name}</div>
+                    <div class="surah-meaning-de">${surah.meaning}</div>
+                    <div class="surah-meta">
+                        <span class="meta-item">${surah.ayat} Verse</span>
+                        <span class="meta-item">${surah.type}</span>
+                    </div>
+                </div>
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <div class="surah-text">${surah.text}</div>
+                <div class="surah-info-box">
+                    <h4>📌 Worum geht es?</h FULLY
+                    <p>${surah.info}</p>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    function updateScore() {
+        document.getElementById("total-stars").innerText = totalStars + " ⭐";
+        document.getElementById("today-correct").innerText = todayCorrect;
+        document.getElementById("streak").innerText = streak + " 🔥";
+    }
+
+    function checkAchievements() {
+        if (totalStars >= 1) document.getElementById("first-star").classList.add("unlocked");
+        if (todayCorrect >= 5) document.getElementById("five-correct").classList.add("unlocked");
+        if (todayCorrect >= 10) document.getElementById("ten-correct").classList.add("unlocked");
+        if (streak >= 5) document.getElementById("streak-five").classList.add("unlocked");
+        if (totalStars >= 20) document.getElementById("twenty-stars").classList.add("unlocked");
+    }
+
+    // INIT
+    generateLetterQuestion();
+    generateVocabQuestion();
+    generateReadingQuestion();
+    initSurahGrid();
+    roomsVisited.add("letters-room");
+</script>
+
+</body>
+</html>

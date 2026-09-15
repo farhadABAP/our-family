@@ -1,10 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Unsere Familie ❤️</title>
+
     <style>
         * {
             box-sizing: border-box;
@@ -27,6 +28,187 @@
                 linear-gradient(135deg, #fffaf4, #f5f9ff);
             padding: 20px;
         }
+
+        /* =====================================================
+           🔒 PASSWORD OVERLAY
+        ====================================================== */
+
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 30% 20%, #e3f2fd 0%, transparent 40%),
+                radial-gradient(circle at 70% 80%, #fce4ec 0%, transparent 40%),
+                linear-gradient(135deg, #173f73, #312e81);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .password-card {
+            background: white;
+            border-radius: 28px;
+            padding: 40px 32px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            animation: popIn 0.5s ease;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .password-card .lock-icon {
+            font-size: 58px;
+            margin-bottom: 12px;
+        }
+
+        .password-card h2 {
+            color: #173f73;
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+
+        .password-card .pw-subtitle {
+            color: #607080;
+            font-size: 14px;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .password-input-wrap {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .password-input-wrap input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #dce7f3;
+            border-radius: 16px;
+            font-size: 17px;
+            text-align: center;
+            letter-spacing: 3px;
+            font-weight: 700;
+            color: #173f73;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .password-input-wrap input:focus {
+            border-color: #173f73;
+        }
+
+        .password-input-wrap input.shake {
+            animation: shake 0.4s ease;
+            border-color: #e74c3c;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        .password-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #173f73, #312e81);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .password-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(23,63,115,0.3);
+        }
+
+        .password-btn:active {
+            transform: translateY(0);
+        }
+
+        .password-error {
+            color: #e74c3c;
+            font-size: 13px;
+            margin-top: 12px;
+            min-height: 18px;
+            font-weight: 600;
+        }
+
+        .password-hint {
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px dashed #e7eef5;
+            color: #8795a1;
+            font-size: 12px;
+        }
+
+        /* Hide main content until unlocked */
+        body.locked .container {
+            display: none;
+        }
+
+        /* =====================================================
+           🚪 LOGOUT BUTTON
+        ====================================================== */
+
+        .logout-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            color: #173f73;
+            border: 2px solid #dce7f3;
+            border-radius: 30px;
+            padding: 10px 18px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(40,60,80,0.1);
+            z-index: 1000;
+            display: none;
+        }
+
+        body.unlocked .logout-btn {
+            display: block;
+        }
+
+        .logout-btn:hover {
+            background: #e74c3c;
+            color: white;
+            border-color: #e74c3c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(231,76,60,0.3);
+        }
+
+        .logout-btn:active {
+            transform: translateY(0);
+        }
+
+        /* =====================================================
+           REST OF YOUR STYLES
+        ====================================================== */
 
         .container {
             width: 100%;
@@ -511,18 +693,75 @@
             .memories-card { padding: 23px 17px; }
             .section-title h2 { font-size: 25px; }
             .badge { right: 13px; }
+            .password-card { padding: 32px 22px; }
+            .logout-btn {
+                top: 10px;
+                right: 10px;
+                padding: 8px 14px;
+                font-size: 13px;
+            }
         }
     </style>
 </head>
 
-<body>
 
+<body class="locked">
+
+<!-- =====================================================
+     🚪 LOGOUT BUTTON
+===================================================== -->
+<button class="logout-btn" id="logoutBtn" onclick="logout()">
+    🚪 Abmelden
+</button>
+
+
+<!-- =====================================================
+     🔒 PASSWORD OVERLAY
+===================================================== -->
+<div class="password-overlay" id="passwordOverlay">
+    <div class="password-card">
+        <div class="lock-icon">🔒</div>
+        <h2>Willkommen bei unserer Familie</h2>
+        <p class="pw-subtitle">
+            Diese Seite ist nur für unsere Familie.<br>
+            Bitte gib das Familien-Passwort ein.
+        </p>
+
+        <form id="passwordForm" onsubmit="return checkPassword(event)">
+            <div class="password-input-wrap">
+                <input
+                    type="password"
+                    id="passwordInput"
+                    placeholder="• • • •"
+                    maxlength="10"
+                    autocomplete="off"
+                    autofocus
+                >
+            </div>
+            <button type="submit" class="password-btn">
+                🔓 Eintreten
+            </button>
+            <div class="password-error" id="passwordError"></div>
+        </form>
+
+        <div class="password-hint">
+            💡 Tipp: Das Jahr, in dem unsere Geschichte begann ❤️
+        </div>
+    </div>
+</div>
+
+
+<!-- =====================================================
+     MAIN CONTENT (hidden until unlocked)
+===================================================== -->
 <div class="container">
 
     <header class="top-header">
         <div class="family-emoji">👨‍👩‍👦‍👦👶❤️</div>
         <h1>Unsere Familie</h1>
-        <p class="subtitle">Gemeinsam lachen · gemeinsam lernen · gemeinsam wachsen</p>
+        <p class="subtitle">
+            Gemeinsam lachen · gemeinsam lernen · gemeinsam wachsen
+        </p>
         <div class="german-title">
             <span class="german-flag">
                 <span class="flag-black"></span>
@@ -806,6 +1045,78 @@
     </footer>
 
 </div>
+
+
+<!-- =====================================================
+     🔒 PASSWORD SCRIPT
+===================================================== -->
+<script>
+    const CORRECT_PASSWORD = "2019";
+    const TARGET_PAGE = "2019.html";
+
+    // Check if already unlocked in this session
+    if (sessionStorage.getItem("family_unlocked") === "yes") {
+        document.body.classList.remove("locked");
+        document.body.classList.add("unlocked");
+        document.getElementById("passwordOverlay").style.display = "none";
+    }
+
+    function checkPassword(event) {
+        if (event) event.preventDefault();
+
+        const input = document.getElementById("passwordInput");
+        const error = document.getElementById("passwordError");
+        const value = input.value.trim();
+
+        if (value === CORRECT_PASSWORD) {
+            // Save unlock state for this session
+            sessionStorage.setItem("family_unlocked", "yes");
+            // Redirect to 2019.html
+            window.location.href = TARGET_PAGE;
+            return false;
+        } else {
+            // Wrong password → shake animation + error message
+            input.classList.add("shake");
+            error.textContent = "❌ Falsches Passwort – bitte nochmal versuchen.";
+            input.value = "";
+            input.focus();
+
+            setTimeout(() => {
+                input.classList.remove("shake");
+            }, 500);
+
+            return false;
+        }
+    }
+
+    // 🚪 LOGOUT FUNCTION
+    function logout() {
+        // Confirm logout
+        if (confirm("Möchtest du dich wirklich abmelden?")) {
+            // Clear session
+            sessionStorage.removeItem("family_unlocked");
+            // Show password overlay again
+            document.body.classList.add("locked");
+            document.body.classList.remove("unlocked");
+            document.getElementById("passwordOverlay").style.display = "flex";
+            // Clear input and error
+            document.getElementById("passwordInput").value = "";
+            document.getElementById("passwordError").textContent = "";
+            // Focus input
+            document.getElementById("passwordInput").focus();
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+    }
+
+    // Focus input on load
+    window.addEventListener("load", () => {
+        const input = document.getElementById("passwordInput");
+        if (input && sessionStorage.getItem("family_unlocked") !== "yes") {
+            input.focus();
+        }
+    });
+</script>
 
 </body>
 </html>

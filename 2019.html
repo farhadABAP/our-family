@@ -1,1 +1,811 @@
 
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unsere Familie ❤️</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            min-height: 100vh;
+            color: #263238;
+            background:
+                radial-gradient(circle at 5% 5%, #fff4d6 0%, transparent 30%),
+                radial-gradient(circle at 95% 20%, #e3f2fd 0%, transparent 30%),
+                radial-gradient(circle at 20% 95%, #fce4ec 0%, transparent 30%),
+                linear-gradient(135deg, #fffaf4, #f5f9ff);
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .top-header {
+            text-align: center;
+            padding: 35px 20px 25px;
+        }
+
+        .family-emoji {
+            font-size: 52px;
+            margin-bottom: 10px;
+        }
+
+        .top-header h1 {
+            color: #173f73;
+            font-size: clamp(32px, 6vw, 52px);
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #607080;
+            font-size: clamp(16px, 2vw, 20px);
+            line-height: 1.6;
+        }
+
+        .german-title {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
+        .german-title h2 {
+            color: #263238;
+            font-size: clamp(21px, 3vw, 30px);
+        }
+
+        .german-flag {
+            width: 44px;
+            height: 29px;
+            display: inline-flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+        }
+
+        .flag-black { background: #000; flex: 1; }
+        .flag-red { background: #dd0000; flex: 1; }
+        .flag-gold { background: #ffce00; flex: 1; }
+
+        .family-intro {
+            background: rgba(255,255,255,0.96);
+            border: 2px solid #ffd6d2;
+            border-radius: 26px;
+            padding: 34px;
+            text-align: center;
+            box-shadow: 0 12px 35px rgba(40,60,80,0.08);
+            margin-bottom: 35px;
+        }
+
+        .family-intro h2 {
+            color: #e85d75;
+            font-size: 28px;
+            margin-bottom: 16px;
+        }
+
+        .family-intro p {
+            max-width: 900px;
+            margin: 0 auto 13px;
+            color: #52606d;
+            font-size: 16px;
+            line-height: 1.75;
+        }
+
+        .big-family-line {
+            margin-top: 22px;
+            color: #173f73;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .quick-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 0 auto 40px;
+        }
+
+        .quick-nav a {
+            text-decoration: none;
+            background: white;
+            color: #173f73;
+            border: 2px solid #dce7f3;
+            border-radius: 30px;
+            padding: 11px 19px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .quick-nav a:hover {
+            background: #173f73;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 42px 0 25px;
+        }
+
+        .section-title h2 {
+            color: #173f73;
+            font-size: 30px;
+            margin-bottom: 7px;
+        }
+
+        .section-title p {
+            color: #718096;
+            font-size: 15px;
+        }
+
+        .letters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 26px;
+        }
+
+        .letter-card {
+            position: relative;
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(40,60,80,0.08);
+            border-top: 9px solid;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .letter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 42px rgba(40,60,80,0.13);
+        }
+
+        .letter-card.aroosh { border-color: #3498db; }
+        .letter-card.rushan { border-color: #e74c3c; }
+        .letter-card.zubian { border-color: #9b59b6; }
+
+        .badge {
+            position: absolute;
+            top: -17px;
+            right: 20px;
+            color: white;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 800;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+
+        .aroosh .badge { background: #3498db; }
+        .rushan .badge { background: #e74c3c; }
+        .zubian .badge { background: #9b59b6; }
+
+        .child-header {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .child-icon { font-size: 58px; margin-bottom: 9px; }
+
+        .letter-card h3 {
+            font-size: 25px;
+            color: #263238;
+            margin-bottom: 5px;
+        }
+
+        .age {
+            color: #8795a1;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .nickname-box {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 18px 0;
+        }
+
+        .nickname {
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            background: #f0f4f8;
+            color: #52606d;
+        }
+
+        .letter-content {
+            color: #4f5d69;
+            font-size: 15px;
+            line-height: 1.78;
+        }
+
+        .letter-content p { margin-bottom: 16px; }
+        .letter-content strong { color: #263238; }
+
+        .greeting {
+            font-size: 18px;
+            font-weight: 700;
+            color: #173f73;
+        }
+
+        .highlight {
+            padding: 16px 18px;
+            margin: 21px 0;
+            border-radius: 14px;
+            background: #f7f9fb;
+            font-weight: 600;
+        }
+
+        .aroosh .highlight { border-left: 5px solid #3498db; }
+        .rushan .highlight { border-left: 5px solid #e74c3c; }
+        .zubian .highlight { border-left: 5px solid #9b59b6; }
+
+        .memory-box {
+            background: linear-gradient(135deg, #fff8e8, #fffdf8);
+            border: 2px dashed #f0b84b;
+            border-radius: 17px;
+            padding: 18px;
+            margin: 22px 0;
+        }
+
+        .memory-box h4 {
+            color: #b9770e;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .memory-box p { margin-bottom: 8px; }
+
+        .song-box {
+            background: linear-gradient(135deg, #f3e5f5, #e8eaf6);
+            border-radius: 17px;
+            padding: 18px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .song-box .music { font-size: 30px; margin-bottom: 8px; }
+        .song-box h4 { color: #6a1b9a; margin-bottom: 10px; }
+
+        .song {
+            display: inline-block;
+            background: white;
+            border-radius: 20px;
+            padding: 8px 13px;
+            margin: 4px;
+            color: #5e35b1;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .story-box {
+            position: relative;
+            background: linear-gradient(135deg, #172554, #312e81, #4c1d95);
+            color: white;
+            border-radius: 20px;
+            padding: 24px 22px;
+            margin: 25px 0;
+            box-shadow: 0 8px 25px rgba(49,46,129,0.22);
+            overflow: hidden;
+        }
+
+        .story-box::before {
+            content: "✨";
+            position: absolute;
+            top: 12px;
+            right: 20px;
+            font-size: 34px;
+            opacity: 0.7;
+        }
+
+        .story-box h4 {
+            color: #fde68a;
+            font-size: 19px;
+            margin-bottom: 14px;
+        }
+
+        .story-box p {
+            color: #f5f3ff;
+            line-height: 1.75;
+            margin-bottom: 12px;
+        }
+
+        .magic-remote {
+            display: inline-block;
+            background: rgba(255,255,255,0.13);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 14px;
+            padding: 11px 14px;
+            margin-top: 4px;
+            font-weight: 800;
+            color: #fde68a;
+        }
+
+        .brave-box {
+            background: linear-gradient(135deg, #e0f7fa, #e3f2fd);
+            border: 2px solid #90caf9;
+            border-radius: 20px;
+            padding: 22px;
+            margin: 25px 0;
+        }
+
+        .brave-box h4 {
+            color: #1565c0;
+            font-size: 19px;
+            margin-bottom: 12px;
+        }
+
+        .brave-box p {
+            line-height: 1.75;
+            margin-bottom: 12px;
+        }
+
+        .brave-box .brave-emoji {
+            font-size: 31px;
+            margin-bottom: 7px;
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 25px;
+            color: #173f73;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .memories-section { margin-top: 45px; }
+
+        .memories-card {
+            background: white;
+            border-radius: 25px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(40,60,80,0.07);
+            border: 2px solid #e7eef5;
+        }
+
+        .memories-card h3 {
+            color: #173f73;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 17px;
+        }
+
+        .memory-item {
+            background: #f8fafc;
+            border-radius: 17px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .memory-item .memory-icon {
+            font-size: 35px;
+            margin-bottom: 8px;
+        }
+
+        .memory-item h4 {
+            color: #173f73;
+            margin-bottom: 7px;
+        }
+
+        .memory-item p {
+            color: #718096;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .arooshan-section { margin-top: 35px; }
+
+        .arooshan-card {
+            background: linear-gradient(135deg, #eff6ff, #fff1f2);
+            border: 2px solid #cbd5e1;
+            border-radius: 25px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .arooshan-card .big-arooshan {
+            font-size: clamp(35px, 7vw, 62px);
+            font-weight: 900;
+            color: #173f73;
+            letter-spacing: 2px;
+            margin: 12px 0;
+        }
+
+        .arooshan-card p {
+            max-width: 750px;
+            margin: 0 auto;
+            color: #607080;
+            line-height: 1.7;
+        }
+
+        .brothers {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .values-section { margin-top: 45px; }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 16px;
+        }
+
+        .value-card {
+            background: rgba(255,255,255,0.92);
+            border-radius: 19px;
+            padding: 22px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(40,60,80,0.06);
+        }
+
+        .value-card .icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+
+        .value-card h3 {
+            color: #173f73;
+            margin-bottom: 6px;
+        }
+
+        .value-card p {
+            color: #718096;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 45px 10px 20px;
+            color: #8795a1;
+            font-size: 14px;
+        }
+
+        footer .footer-heart {
+            font-size: 27px;
+            margin-bottom: 7px;
+        }
+
+        footer .parents {
+            color: #52606d;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+
+        @media (max-width: 650px) {
+            body { padding: 10px; }
+            .top-header { padding-top: 20px; }
+            .family-intro { padding: 23px 18px; }
+            .letter-card { padding: 25px 20px; }
+            .letters-grid { grid-template-columns: 1fr; }
+            .memories-card { padding: 23px 17px; }
+            .section-title h2 { font-size: 25px; }
+            .badge { right: 13px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header class="top-header">
+        <div class="family-emoji">👨‍👩‍👦‍👦👶❤️</div>
+        <h1>Unsere Familie</h1>
+        <p class="subtitle">Gemeinsam lachen · gemeinsam lernen · gemeinsam wachsen</p>
+        <div class="german-title">
+            <span class="german-flag">
+                <span class="flag-black"></span>
+                <span class="flag-red"></span>
+                <span class="flag-gold"></span>
+            </span>
+            <h2>Unser gemeinsamer Weg in Deutschland</h2>
+        </div>
+    </header>
+
+    <section class="family-intro">
+        <h2>❤️ Unsere kleine große Familie</h2>
+        <p>Wir sind Mama Tabassum, Papa Farhad und unsere drei Jungs: Aroosh, Rushan und Zubian.</p>
+        <p>Jeder von euch ist anders. Jeder von euch hat seine eigene Stimme, seinen eigenen Charakter, seine eigenen Lieblingssachen und seine eigenen kleinen Geschichten.</p>
+        <p>Aber eines bleibt immer gleich: <strong>Wir gehören zusammen.</strong></p>
+        <p>Wir wollen gemeinsam lachen, gemeinsam lernen, gemeinsam Ausflüge machen und gemeinsam neue Erinnerungen sammeln.</p>
+        <p>Manchmal fahren wir los und wissen gar nicht, welche kleine Geschichte am Ende des Tages daraus wird. Genau solche Tage lieben wir.</p>
+        <div class="big-family-line">Mama + Papa + TomTom + Laddu + Muffin = ❤️</div>
+    </section>
+
+    <nav class="quick-nav">
+        <a href="#aroosh">🚀 TomTom</a>
+        <a href="#rushan">🎨 Laddu</a>
+        <a href="#zubian">👶 Muffin</a>
+        <a href="#memories">🌍 Unsere Reisen</a>
+        <a href="aroosh.html">🚀 TomTom Lernwelt</a>
+        <a href="aroosh-exam.html">📝 Exam Prep</a>
+        <a href="aroosh-math.html">➕ Mathe</a>
+        <a href="aroosh-german.html">Deutsch</a>
+        <a href="aroosh-english.html">English</a>
+        <a href="aroosh-arabic.html">🕌 Arabisch</a>
+        <a href="aroosh-arabic-surah.html">📖 Am-Para & Gebete</a>
+        <a href="aroosh-bangla.html">Bangla</a>
+        <a href="rushan.html">🎨 Laddus Lernwelt</a>
+        <a href="rushan-english.html">🎨 ABC English</a>
+        <a href="rushan-german.html">ABC Deutsch</a>
+        <a href="rushan-numbers.html">🔢 Zahlen</a>
+    </nav>
+
+    <section>
+        <div class="section-title">
+            <h2>💌 Briefe von Mama und Papa</h2>
+            <p>Für unsere drei Lieblingsjungs – heute, morgen und wenn ihr einmal groß seid.</p>
+        </div>
+
+        <div class="letters-grid">
+
+            <article id="aroosh" class="letter-card aroosh">
+                <span class="badge">🚀 Unser großer Entdecker</span>
+                <div class="child-header">
+                    <div class="child-icon">👦💙🚀</div>
+                    <h3>Lieber Aroosh – unser TomTom,</h3>
+                    <div class="age">7 Jahre · Klasse 2 · Dresden</div>
+                </div>
+                <div class="nickname-box">
+                    <span class="nickname">TomTom</span>
+                    <span class="nickname">💙 Blau</span>
+                    <span class="nickname">🚀 Entdecker</span>
+                </div>
+                <div class="letter-content">
+                    <p class="greeting">Unser lieber TomTom,</p>
+                    <p>manchmal schauen wir dich an und können kaum glauben, wie groß du schon geworden bist. Du bist unser erster Junge, unser TomTom, unser großer Entdecker und unser ganz besonderer kleiner großer Mann.</p>
+                    <p>Als du in unser Leben gekommen bist, hast du Mama und Papa zu Eltern gemacht. Seitdem ist unser Leben nicht mehr dasselbe – und das ist das Schönste, was uns passieren konnte.</p>
+                    <p>Du warst der Anfang von etwas ganz Besonderem: unserer kleinen großen Familie.</p>
+                    <p>Dann kam Laddu und plötzlich wart ihr zwei kleine Jungs. Und heute bist du der große Bruder von Laddu und Muffin.</p>
+                    <div class="highlight">💙 Du bist nicht nur unser TomTom. Du bist der Junge, mit dem unsere Kinder-Geschichte angefangen hat.</div>
+                    <p>Wir lieben unsere gemeinsamen Ausflüge. Manchmal planen wir einen ganzen Tag, manchmal fahren wir einfach los. Und manchmal wird aus einem ganz normalen Tag plötzlich eine schöne Erinnerung, über die wir später wieder lachen.</p>
+                    <p>Wir haben gemeinsam schon einige Länder gesehen: <strong>Kroatien 🇭🇷</strong>, <strong>die Türkei 🇹🇷</strong> und <strong>Österreich 🇦🇹</strong>.</p>
+                    <p>Und diesen Sommer waren wir zusammen in <strong>Binz auf Rügen</strong>. 🌊🏖️</p>
+                    <p>Vielleicht wirst du später einmal viele Orte auf der Welt sehen. Aber wir hoffen, dass du dich immer daran erinnerst, wie schön es war, als wir diese Orte gemeinsam entdeckt haben.</p>
+                    <div class="memory-box">
+                        <h4>🌍 Ein kleiner Familien-Schatz</h4>
+                        <p>Kroatien 🇭🇷 · Türkei 🇹🇷 · Österreich 🇦🇹</p>
+                        <p>Und unser Sommer in Binz auf Rügen. 🌊</p>
+                        <p>Dazu kommen all die kleinen Dayouts, die vielleicht auf keiner Landkarte stehen, aber in unseren Herzen bleiben.</p>
+                    </div>
+                    <div class="song-box">
+                        <div class="music">🎵🙌</div>
+                        <h4>Wenn TomTom gute Laune bekommt ...</h4>
+                        <span class="song">„Gute Laune"</span>
+                        <span class="song">„Hoch die Hände – Wochenende!"</span>
+                    </div>
+                    <p>Natürlich kennen wir deine Lieblingslieder. Wenn <strong>„Gute Laune"</strong> läuft oder <strong>„Hoch die Hände – Wochenende!"</strong> kommt, wissen wir: TomTom ist glücklich! 😄</p>
+                    <p>Deine Lieblingsfarbe ist <strong>Blau</strong>. 💙</p>
+                    <p>Blau passt irgendwie wunderbar zu deinen Abenteuern – zum Himmel, zum Meer und zu all den Dingen, die du noch entdecken wirst.</p>
+                    <div class="story-box">
+                        <h4>🌙 Die Geschichte vom Prinzen Aroosh</h4>
+                        <p>Weißt du noch, was Mama und Papa dir als Gute-Nacht-Geschichte erzählt haben?</p>
+                        <p>Es gab einmal einen Prinzen namens <strong>Aroosh</strong>.</p>
+                        <p>Dieser Prinz war eigentlich sehr schlau. Aber jedes Mal, wenn er seine Hausaufgaben machen wollte, kam plötzlich ein wunderschöner kleiner Schmetterling. 🦋</p>
+                        <p>Der Schmetterling flog hierhin, flog dorthin und sagte: „Komm, schau mich an! Denk nicht mehr an deine Hausaufgaben!"</p>
+                        <p>Und natürlich war Prinz Aroosh neugierig. Er schaute dem Schmetterling hinterher. Seine Gedanken flogen mit ihm davon.</p>
+                        <p>Doch Mama und Papa wussten ein Geheimnis.</p>
+                        <p>Sie sagten: „Aroosh, du hast etwas, das viel stärker ist als der Schmetterling."</p>
+                        <p>Es war eine <strong>magische Fernbedienung</strong>. 🎮✨</p>
+                        <div class="magic-remote">🎮 FOKUS-MODUS: AKTIV</div>
+                        <p>Wenn Prinz Aroosh die magische Fernbedienung aktivierte, wurde sein Kopf ganz ruhig. Der Schmetterling durfte weiterfliegen, aber Aroosh konnte sich wieder auf seine Aufgabe konzentrieren.</p>
+                        <p>Er las die Aufgabe. Er dachte nach. Er rechnete. Und plötzlich war die Antwort richtig! ⭐</p>
+                        <p>Natürlich war die Fernbedienung keine echte Fernbedienung. Die Magie war in Aroosh selbst: <strong>seine Aufmerksamkeit, seine Geduld und sein Wille, es zu schaffen.</strong></p>
+                        <p>Und wenn der Schmetterling wiederkommt? Kein Problem. Prinz Aroosh kennt jetzt sein Geheimnis.</p>
+                        <p>Er drückt seinen unsichtbaren Knopf: <strong>FOKUS!</strong> 🚀</p>
+                    </div>
+                    <p>Jetzt bist du in der zweiten Klasse. Jeden Tag lernst du neue Dinge.</p>
+                    <p>Manche Aufgaben werden leicht sein. Andere werden schwierig sein. Und manchmal wirst du vielleicht denken: „Das kann ich nicht."</p>
+                    <div class="highlight">⭐ TomTom, du musst nicht alles sofort können. Du musst nur anfangen und weiterprobieren.</div>
+                    <p>Wenn eine Matheaufgabe schwierig ist, probierst du einen anderen Weg. Wenn ein deutsches Wort schwierig ist, liest du es noch einmal. Wenn du einen Fehler machst, hast du gerade etwas gelernt.</p>
+                    <p>Und wenn dein Kopf plötzlich an etwas ganz anderes denken möchte, erinnerst du dich an Prinz Aroosh und seine magische Fernbedienung. 🎮✨</p>
+                    <p>Dein Fokus gehört dir.</p>
+                    <p>Und weißt du, wer manchmal ganz genau zuschaut, was der große Bruder macht? Dein kleiner Laddu. 😄</p>
+                    <p>Du musst für ihn nicht perfekt sein. Du musst auch nicht immer alles wissen. Du bist einfach sein großer Bruder.</p>
+                    <p>Und für ihn bist du etwas ganz Besonderes.</p>
+                    <div class="highlight">🚀 TomTom: Sei neugierig. Sei mutig. Hab Spaß. Lern weiter. Lach viel. Und gib nicht auf!</div>
+                    <p>Und vor allem: <strong>Hab gute Laune!</strong> 😄</p>
+                    <p>Wir lieben dich über alles, TomTom. Egal, wie groß du wirst – für Mama und Papa wirst du immer unser erster kleiner Junge bleiben.</p>
+                </div>
+                <div class="signature">In Liebe,<br>Mama Tabassum & Papa Farhad ❤️</div>
+            </article>
+
+            <article id="rushan" class="letter-card rushan">
+                <span class="badge">🎨 Unser kleiner Entdecker</span>
+                <div class="child-header">
+                    <div class="child-icon">👦❤️🎨</div>
+                    <h3>Lieber Rushan – unser Laddu,</h3>
+                    <div class="age">4 Jahre · Kindergarten · Essen</div>
+                </div>
+                <div class="nickname-box">
+                    <span class="nickname">Laddu</span>
+                    <span class="nickname">❤️ Rot</span>
+                    <span class="nickname">🌈 Sonnenschein</span>
+                </div>
+                <div class="letter-content">
+                    <p class="greeting">Unser lieber Laddu,</p>
+                    <p>unser fröhlicher kleiner Junge!</p>
+                    <p>Wenn du irgendwo bist, dauert es meistens nicht lange, bis man deine Stimme hört, dein Lachen sieht oder irgendeinen kleinen Unsinn entdeckt. 😄</p>
+                    <p>Du bist unser Laddu: süß, lustig, neugierig, manchmal ein bisschen wild und immer voller Energie.</p>
+                    <p>Du bist erst vier Jahre alt und trotzdem entdeckst du jeden Tag so viele neue Dinge. Im Kindergarten lernst du neue Wörter, neue Spiele und neue Sachen.</p>
+                    <div class="song-box">
+                        <div class="music">🎵🌈</div>
+                        <h4>Laddu und seine Lieblingslieder</h4>
+                        <span class="song">„Ich kenne eine Blume ..."</span>
+                        <span class="song">„Ich geb dir einen Regenbogen"</span>
+                    </div>
+                    <p>Wir lieben es, wenn du deine Lieblingslieder singst. Besonders <strong>„Ich kenne eine Blume ..."</strong> und <strong>„Ich geb dir einen Regenbogen"</strong>. 🌈</p>
+                    <div class="highlight">🌈 Laddu, du bringst Farbe, Musik und gute Laune in unser Zuhause.</div>
+                    <p>Deine Lieblingsfarbe ist <strong>Rot</strong>. ❤️</p>
+                    <p>Eine kräftige, leuchtende Farbe – und irgendwie passt sie zu dir. Du bist klein, aber deine Persönlichkeit ist manchmal riesengroß. 😄</p>
+                    <p>Du hast deinen großen Bruder TomTom. Und zusammen seid ihr manchmal etwas ganz Besonderes.</p>
+                    <div class="highlight">👦 + 👦 = AROOSHAN ❤️</div>
+                    <p>Ihr seid nicht einfach nur Aroosh und Rushan. Zusammen seid ihr manchmal: <strong>Arooshan!</strong></p>
+                    <p>Ein Name für euch beide zusammen. Ein kleines Familienwort, das nur zu euch gehört.</p>
+                    <div class="brave-box">
+                        <div class="brave-emoji">🚿🦸‍♂️</div>
+                        <h4>🌟 Die Geschichte vom mutigen Prinzen Rushan</h4>
+                        <p>Unser Laddu hatte einmal vor etwas Angst: vor dem Wasser beim Baden – besonders wenn Wasser über seine Augen laufen könnte.</p>
+                        <p>Für einen kleinen Jungen kann so etwas wirklich beängstigend sein. Und Mama und Papa haben das verstanden.</p>
+                        <p>Aber dann gab es eine kleine Geschichte über einen Prinzen namens <strong>Rushan</strong>.</p>
+                        <p>Prinz Rushan hatte ein Geheimnis: Er musste nicht mutig sein, weil er niemals Angst hatte.</p>
+                        <p>Er war mutig, <strong>obwohl</strong> er ein bisschen Angst hatte.</p>
+                        <p>Und diesmal vertraute Rushan seinem Papa. Papa war da. Papa passte auf ihn auf.</p>
+                        <p>Rushan dachte: „Ich vertraue Daddy."</p>
+                        <p>Und dann kam das Wasser ... 💧</p>
+                        <p>Und plötzlich merkte er: <strong>Es war gar nichts Schlimmes passiert.</strong></p>
+                        <p>Der kleine Prinz hatte etwas Wichtiges gelernt: Manchmal sieht eine Sache vorher viel gruseliger aus, als sie wirklich ist.</p>
+                        <p>Und wenn man jemandem vertraut, der auf einen aufpasst, kann man einen kleinen Schritt nach dem anderen machen.</p>
+                        <p>Unser Laddu wurde ein bisschen mutiger. 🌟</p>
+                    </div>
+                    <p>Das bedeutet nicht, dass du niemals Angst haben darfst. Natürlich darfst du Angst haben.</p>
+                    <p>Angst ist nicht schlimm. Wichtig ist, dass du darüber sprechen kannst und dass du weißt: Mama und Papa sind bei dir.</p>
+                    <p>Du musst nicht alles auf einmal schaffen. Ein kleiner Schritt reicht.</p>
+                    <div class="highlight">🦸‍♂️ Mut bedeutet nicht: „Ich habe keine Angst." Mut bedeutet: „Ich versuche es trotzdem."</div>
+                    <p>Wir hoffen, dass du immer so neugierig, fröhlich und liebevoll bleibst.</p>
+                    <p>Sing deine Lieder. Stell deine tausend Fragen. Entdecke neue Wörter. Lerne neue Dinge. Und natürlich: hab ganz viel Spaß!</p>
+                    <p>Bleib unser Laddu. 🌈❤️</p>
+                    <p>Mama und Papa lieben dich unendlich.</p>
+                </div>
+                <div class="signature">In Liebe,<br>Mama Tabassum & Papa Farhad ❤️</div>
+            </article>
+
+            <article id="zubian" class="letter-card zubian">
+                <span class="badge">👶 Unser kleines Wunder</span>
+                <div class="child-header">
+                    <div class="child-icon">👶💜🍼</div>
+                    <h3>Lieber Zubian – unser Muffin,</h3>
+                    <div class="age">Geboren in Dresden · 04.06.2026</div>
+                </div>
+                <div class="nickname-box">
+                    <span class="nickname">Muffin</span>
+                    <span class="nickname">Zubi Dubi</span>
+                    <span class="nickname">Zubu</span>
+                </div>
+                <div class="letter-content">
+                    <p class="greeting">Unser kleiner Muffin,</p>
+                    <p>du bist noch ganz neu in unserer Familie, aber trotzdem hast du schon einen riesengroßen Platz in unseren Herzen.</p>
+                    <p>Seit du bei uns bist, ist unser Zuhause noch ein bisschen lauter, ein bisschen chaotischer und gleichzeitig noch viel schöner geworden.</p>
+                    <div class="highlight">💜 Unser Muffin ist da!</div>
+                    <p>Deine großen Brüder beobachten dich ganz genau. TomTom und Laddu wollen natürlich wissen, was ihr kleiner Bruder macht.</p>
+                    <p>Und du hast schon jetzt deine ganz eigene Stimme.</p>
+                    <div class="highlight">👶 „Aaaaooooo!" 😂</div>
+                    <p>Manchmal kommt von dir dieses wunderschöne „Aaaaooooo!" und wir müssen einfach lachen.</p>
+                    <p>Manchmal klingt es fast so, als würdest du versuchen, deine großen Brüder nachzumachen.</p>
+                    <p>Und manchmal sagst du einfach: <strong>„Hallo!"</strong> zu Rushan.</p>
+                    <p>Schon jetzt hast du deine ganz eigene kleine Persönlichkeit.</p>
+                    <p>Und natürlich hast du schon viele Namen bekommen.</p>
+                    <div class="memory-box">
+                        <h4>👶 Wie unser kleiner Zubu alles heißt</h4>
+                        <p>Für Mama und Papa: <strong>Muffin</strong>.</p>
+                        <p>Manchmal: <strong>Zubi Dubi</strong>.</p>
+                        <p>Und manchmal einfach: <strong>Zubu</strong>.</p>
+                    </div>
+                    <p>Noch wissen wir nicht, was für ein Junge du einmal sein wirst.</p>
+                    <p>Vielleicht wirst du laut und lustig. Vielleicht ruhig und neugierig. Vielleicht liebst du Bücher. Vielleicht liebst du Musik. Vielleicht möchtest du die ganze Welt entdecken.</p>
+                    <p>Vielleicht wirst du auch etwas lieben, an das Mama und Papa heute noch gar nicht denken.</p>
+                    <p>Und genau das ist schön.</p>
+                    <p>Du musst jetzt noch nichts wissen. Du musst noch nichts können. Du darfst einfach wachsen.</p>
+                    <div class="memory-box">
+                        <h4>👦 Deine großen Brüder</h4>
+                        <p>TomTom wird dir bestimmt irgendwann Mathe erklären.</p>
+                        <p>Laddu wird dir wahrscheinlich seine Lieblingslieder vorsingen.</p>
+                        <p>Und zusammen werden sie dir bestimmt erklären, was <strong>Arooshan</strong> bedeutet. 😄</p>
+                    </div>
+                    <p>Wir freuen uns auf jeden neuen Laut, jedes Lächeln, jedes kleine „Hallo" und jedes neue Abenteuer mit dir.</p>
+                    <div class="highlight">👶 Noch musst du nichts können. Du darfst einfach unser kleiner Muffin sein.</div>
+                    <p>Willkommen in unserer Familie, kleiner Zubu.</p>
+                    <p>Du bist der jüngste Teil unserer kleinen Familie, aber deine Liebe ist schon jetzt riesengroß.</p>
+                    <p>Und wenn du irgendwann groß bist und diese Worte liest, sollst du wissen:</p>
+                    <div class="highlight">💜 Du wurdest von Anfang an unendlich geliebt.</div>
+                </div>
+                <div class="signature">In Liebe,<br>Mama Tabassum & Papa Farhad ❤️</div>
+            </article>
+
+        </div>
+    </section>
+
+    <section class="arooshan-section">
+        <div class="arooshan-card">
+            <div class="brothers">👦💙 + 👦❤️</div>
+            <h2>Wenn TomTom und Laddu zusammen sind ...</h2>
+            <div class="big-arooshan">AROOSHAN</div>
+            <p>Zwei Brüder, zwei Persönlichkeiten, zwei kleine Entdecker – und manchmal ein gemeinsamer Name.</p>
+            <p style="margin-top: 12px;">Egal, ob ihr zusammen spielt, singt, lacht, euch streitet oder wieder Frieden schließt: Ihr seid Brüder. ❤️</p>
+        </div>
+    </section>
+
+    <section id="memories" class="memories-section">
+        <div class="section-title">
+            <h2>🌍 Unsere Familien-Erinnerungen</h2>
+            <p>Orte sind schön – aber zusammen sind sie noch schöner.</p>
+        </div>
+        <div class="memories-card">
+            <h3>🧳 Gemeinsam unterwegs</h3>
+            <div class="memory-grid">
+                <div class="memory-item"><div class="memory-icon">🇭🇷</div><h4>Kroatien</h4><p>Ein gemeinsames Abenteuer als Familie.</p></div>
+                <div class="memory-item"><div class="memory-icon">🇹🇷</div><h4>Türkei</h4><p>Gemeinsam reisen, entdecken und Erinnerungen sammeln.</p></div>
+                <div class="memory-item"><div class="memory-icon">🇦🇹</div><h4>Österreich</h4><p>Wieder unterwegs – wieder zusammen.</p></div>
+                <div class="memory-item"><div class="memory-icon">🌊🏖️</div><h4>Binz · Rügen</h4><p>Unser Sommerabenteuer auf Rügen.</p></div>
+                <div class="memory-item"><div class="memory-icon">🚗</div><h4>Unsere Dayouts</h4><p>Große und kleine Ausflüge – Hauptsache zusammen.</p></div>
+                <div class="memory-item"><div class="memory-icon">❤️</div><h4>Wir fünf</h4><p>Die schönsten Erinnerungen sind die, die wir gemeinsam erleben.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="values-section">
+        <div class="section-title">
+            <h2>🌱 Was uns wichtig ist</h2>
+            <p>Dinge, die wir unseren Kindern mitgeben möchten.</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card"><div class="icon">❤️</div><h3>Familie</h3><p>Wir gehören zusammen und helfen einander.</p></div>
+            <div class="value-card"><div class="icon">📚</div><h3>Lernen</h3><p>Jeden Tag gibt es etwas Neues zu entdecken.</p></div>
+            <div class="value-card"><div class="icon">💪</div><h3>Mut</h3><p>Auch wenn etwas schwierig oder ungewohnt ist, können wir einen kleinen Schritt machen.</p></div>
+            <div class="value-card"><div class="icon">🌍</div><h3>Neugier</h3><p>Wir entdecken die Welt gemeinsam.</p></div>
+            <div class="value-card"><div class="icon">😊</div><h3>Gute Laune</h3><p>Lachen, Musik und gemeinsame Freude gehören zu unserer Familie.</p></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-heart">❤️</div>
+        <p>Unsere Familie · Gemeinsam lernen · Gemeinsam wachsen</p>
+        <p class="parents">Mama Tabassum & Papa Farhad</p>
+        <p style="margin-top: 12px;">Für TomTom · Laddu · Muffin</p>
+    </footer>
+
+</div>
+
+</body>
+</html>
